@@ -1,0 +1,68 @@
+// D:\react\Strapi-FIL\next\components\dynamic-zone\blog-highlights-block.tsx
+
+import React from 'react';
+// Import BlockCategorySingle và types từ component của nó
+import { BlockCategorySingle, BlockCategorySingleProps } from './block-category-single'; 
+
+interface BlogHighlightsBlockProps {
+   data: BlockCategorySingleProps[]; // Mảng chứa 4 khối từ Strapi /global
+   locale: string; 
+}
+
+export const BlogHighlightsBlock: React.FC<BlogHighlightsBlockProps> = ({ data, locale }) => {
+  // Kiểm tra số lượng khối. Phải có đủ 4 khối theo thiết kế.
+  if (!data || data.length < 4) {
+    console.error("BlogHighlightsBlock: Dữ liệu không đủ 4 khối.");
+    return null; 
+  }
+  
+  // Phân loại 4 box dựa trên tiêu đề (title) cố định 
+  // Tiêu đề này phải khớp chính xác với tiêu đề bạn nhập trong Strapi Content Manager!
+  const pressReleases = data.find(item => item.title === 'Press Releases');
+  const marketNews = data.find(item => item.title === 'Market News');
+  // Tên đầy đủ theo thiết kế (Federation Events and Activities)
+  const federationEvents = data.find(item => item.title === 'Federation Events and Activities'); 
+  const regulatoryWatch = data.find(item => item.title === 'Regulatory Watch');
+  
+  // Kiểm tra lại lần nữa: nếu thiếu một trong 4 khối thì không render
+  if (!pressReleases || !marketNews || !federationEvents || !regulatoryWatch) {
+        console.error("BlogHighlightsBlock: Thiếu một hoặc nhiều khối cố định.");
+    return null;
+  }
+
+  return (
+    // Layout bao ngoài (có background)
+    <section className="w-full bg-[#efede7] py-16 px-2 bg-[url('/bg-line2.svg')] bg-top bg-repeat-y">
+      <h2 className="text-center text-2xl md:text-3xl font-serif font-bold text-[#0A2540] mb-12 mt-12">
+        More News
+      </h2>
+      {/* Container cho 4 Box, dùng flex-row trên md */}
+      <div className="flex flex-col md:flex-row justify-center gap-4 md:gap-2 max-w-screen-xl mx-auto">
+        
+        {/* CỘT TRÁI (Box 1: Press Releases) */}
+        <div className="w-full md:w-1/2">
+          <BlockCategorySingle 
+            {...pressReleases} 
+            locale={locale} 
+            isPrimaryBlock={true} // Bật cờ để kích hoạt styles lớn và HighlightPoints
+          />
+        </div>
+        
+        {/* CỘT PHẢI (Chứa Box 2, 3, 4) */}
+        <div className="w-full md:w-1/2 flex flex-col gap-1 md:gap-2">
+          
+          {/* HÀNG TRÊN: 2 Box Ngang (Box 2 và Box 3) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-2">
+            <BlockCategorySingle {...marketNews} locale={locale} />
+            <BlockCategorySingle {...federationEvents} locale={locale} />
+          </div>
+          
+          {/* HÀNG DƯỚI: 1 Box Dọc (Box 4) */}
+          <div className="w-full">
+            <BlockCategorySingle {...regulatoryWatch} locale={locale} />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};

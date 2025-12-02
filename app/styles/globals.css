@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.custom-box > div:nth-child(odd) .cta-block .cta-item {
+  border-bottom: 1px solid rgb(51 51 51 / 20%);
+} 
+.custom-box > div:nth-child(even) .cta-block .cta-item {
+  @apply border-white
+} 
+.custom-box > div:nth-child(even) svg path {
+    @apply fill-white;
+}
+.custom-box > div:nth-child(even) .cta-block span {
+   @apply text-white
+} 
+.custom-box > div:nth-child(even) p {
+    @apply text-white;
+}
+.img-right >div {
+  @apply flex-row-reverse
+}
+.img-right >div >div {
+  @apply ml-0 lg:mr-[-60px]
+}
+.two-box-center .list-block-cta {
+  @apply block md:flex w-full;
+} 
+.two-box-center .list-block-cta >div {
+  @apply md:w-[50%]; 
+}
+.two-box-center h2,
+.two-box-center .list-block-cta >div {
+  @apply text-center;
+}
+.two-box-center .cta-item {
+  @apply justify-center;
+}
+.two-box-center .cta-item >div:last-child {
+  @apply w-auto;
+}
+.single-content-style h2,
+.single-content-style h3,
+.single-content-style strong {
+  @apply text-xl font-inter font-medium text-[#0A2540];   
+}
+.single-content-style p {
+  @apply text-[15px] leading-7 font-inter font-normal text-[#88938F]; 
+}

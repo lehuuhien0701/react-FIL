@@ -1,0 +1,165 @@
+import React from 'react';
+import Link from 'next/link';
+
+// Giả định bạn đã có Icon này, cần import (hoặc thay bằng SVG inline nếu không có)
+// Ví dụ: import CheckIcon1 from '@/components/icons/CheckIcon1'; 
+
+// --- TYPES (Export để BlogHighlightsBlock sử dụng) ---
+interface Category {
+    slug: string;
+}
+
+interface HighlightPoint {
+    id: number;
+    title: string;
+}
+
+export interface BlockCategorySingleProps {
+    id: number;
+    title: string;
+    description: string;
+    HighlightPoints: HighlightPoint[]; // Mảng các gạch đầu dòng
+    categories: { data: { attributes: Category }[] }; // Quan hệ với Categories
+    locale: string;
+    isPrimaryBlock?: boolean; // Tùy chỉnh cho khối lớn (Press Releases)
+}
+
+// --- HÀM HỖ TRỢ ---
+
+// Lấy slug của Category (chỉ lấy cái đầu tiên)
+const getCategorySlug = (categories: BlockCategorySingleProps['categories']) => {
+    if (categories?.data?.length > 0) {
+        return categories.data[0].attributes.slug;
+    }
+    return null;
+};
+
+// Xác định styles dựa trên Title và vị trí (Khớp với HTML/Design)
+const getBoxStyles = (title: string, isPrimaryBlock: boolean = false) => {
+    // Colors từ HTML bạn cung cấp
+    const COLOR_GREY_DARK = 'bg-[#88938F] text-white';        // Press Releases
+    const COLOR_BLUE_DARK = 'bg-[#0A2540] text-white';        // Federation Events
+    const COLOR_CREAM_LIGHT = 'bg-[#EDF0E5] text-[#0A2540]';  // Market News
+    const COLOR_WHITE = 'bg-white text-[#0A2540]';            // Regulatory Watch
+    
+    switch (title) {
+        case 'Press Releases':
+            // Box lớn bên trái có thêm background image và min-height lớn
+            return {
+                base: `${COLOR_GREY_DARK} ${isPrimaryBlock ? "bg-[url('/bg-g1.png')] bg-[position:bottom_right] bg-no-repeat min-h-[340px]" : "min-h-[340px]"}`,
+                linkColor: 'text-[#fff]',
+                linkStrokeColor: 'white',
+            }; 
+        case 'Federation Events and Activities':
+            return {
+                base: `${COLOR_BLUE_DARK} min-h-[170px]`,
+                linkColor: 'text-[#BBA25A]',
+                linkStrokeColor: '#BBA25A',
+            };
+        case 'Market News':
+            return {
+                base: `${COLOR_CREAM_LIGHT} min-h-[170px]`,
+                linkColor: 'text-[#0A2540]',
+                linkStrokeColor: '#0A2540',
+            }; 
+        case 'Regulatory Watch':
+            // Thêm border-t-[5px] từ Box Regulatory Watch trong HTML của bạn
+            return {
+                base: `${COLOR_WHITE} border-t-[5px] border-[#efede7] min-h-[170px]`, 
+                linkColor: 'text-[#BBA25A]',
+                linkStrokeColor: '#BBA25A',
+            }; 
+        default:
+            return {
+                base: `${COLOR_WHITE} min-h-[170px]`,
+                linkColor: 'text-[#0A2540]',
+                linkStrokeColor: '#0A2540',
+            };
+    }
+};
+
+// --- COMPONENT CHÍNH ---
+export const BlockCategorySingle: React.FC<BlockCategorySingleProps> = (props) => {
+    console.log("BlockCategorySingle props:", props); 
+
+    const { title, description, HighlightPoints, categories, locale, isPrimaryBlock } = props; 
+
+    // Lấy slug và name category
+    const categoryData = categories?.data?.[0]?.attributes;
+    const categorySlug = categoryData?.slug;
+    // const categoryName = title || categoryData?.name || "Category";
+    const categoryName = title || "Category"; // Loại bỏ truy cập categoryData?.name vì không tồn tại
+    const href = categorySlug ? `/${locale}/blog/category/${categorySlug}` : '#';
+    const { base: styles, linkColor, linkStrokeColor } = getBoxStyles(title, isPrimaryBlock);
+    const textColor = styles.includes('text-white') ? 'text-white' : 'text-[#0A2540]';
+    const descriptionColor = styles.includes('text-white') ? 'opacity-90 text-white' : 'text-gray-700';
+    
+    // SVG cho icon check
+    const CheckIconSVG = (props: { className?: string }) => (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" {...props}>
+          <path fillRule="evenodd" d="M16.704 4.077a.75.75 0 0 1 .296 1.134l-9.5 12a.75.75 0 0 1-1.134.296l-3.5-3a.75.75 0 0 1 .296-1.134l3.197 2.747 9.176-11.603a.75.75 0 0 1 1.134-.296Z" clipRule="evenodd" />
+        </svg>
+    );
+
+    // SVG cho mũi tên link
+    const ArrowSVG = (props: { strokeColor: string, width: string, height: string }) => (
+        <svg width={props.width} height={props.height} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12.0001L12.6667 3.3335M12.6667 3.3335V11.6535M12.6667 3.3335H4.34667" stroke={props.strokeColor} strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    );
+
+    return (
+        // Dùng <article> cho các khối độc lập. Cần padding/margin để box Market News và Federation Events không bị dính vào nhau.
+        // Cần đảm bảo rằng các padding/margin này KHÔNG XUNG ĐỘT với gap của BlogHighlightsBlock
+        <article className={`aaaaaaaaa relative rounded-none shadow-lg w-full px-8 py-12 flex flex-col gap-4 ${styles}`}>
+            
+            {/* Hiển thị tên category nổi bật */}
+            <h3 className={`font-bold text-xl ${textColor} mb-3`}>
+                {categoryName}
+            </h3>
+
+            {/* Nếu cần, hiển thị description */}
+            {description && (
+                <p className={`text-[15px] leading-[26px] ${descriptionColor}`}>
+                    {description}
+                </p>
+            )}
+
+            {/* Phần Highlight Points (CHỈ XUẤT HIỆN Ở KHỐI LỚN BÊN TRÁI: Press Releases) */}
+            {HighlightPoints && HighlightPoints.length > 0 && isPrimaryBlock ? (
+                <div className="flex flex-col gap-0 pb-2 flex-1">
+                    {HighlightPoints.map((item, index) => (
+                        // Áp dụng styles border-b và py/pb dựa trên vị trí trong list
+                        <div key={item.id} className={`flex items-start ${index === 0 ? 'pb-5' : 'py-5'} ${index < HighlightPoints.length - 1 ? 'border-b border-[#fff] ' : ''}`}>
+                            <div className="flex items-center gap-4 flex-1">
+                                <div className='w-4 flex-shrink-0'>
+                                    {/* Giả định CheckIcon1 là màu xanh lục (text-teal-500) */}
+                                    <CheckIconSVG className="text-teal-500 w-4 h-4 mt-1" /> 
+                                </div>
+                                <div className='w-[calc(100%-16px)]'>
+                                    <span className="text-[#fff] text-[15px] leading-6">{item.title}</span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : <div className='flex-1'></div> // Dùng div rỗng để đẩy link xuống dưới (nếu cần)
+            }
+
+            {/* Link "Find out more" dẫn đến trang category */}
+            <div className={`mt-3 ${isPrimaryBlock ? 'mt-3' : 'mt-auto'}`}>
+                <Link 
+                    href={href} 
+                    className={`inline-flex items-center gap-2 font-medium text-sm transition-opacity hover:opacity-80 ${linkColor}`}
+                >
+                    Find out more
+                    <ArrowSVG strokeColor={linkStrokeColor} width="10" height="10" />
+                </Link>
+            </div>
+        </article>
+    );
+};
+
+// Để sử dụng dynamic import với ssr: false cho BlockCategorySingle,
+// bạn cần export mặc định hoặc export thêm như sau:
+export default BlockCategorySingle;
