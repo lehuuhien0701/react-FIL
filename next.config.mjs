@@ -5,7 +5,7 @@ const nextConfig = {
       { hostname: process.env.IMAGE_HOSTNAME || "localhost" },
       {
         protocol: "https",
-        hostname: "cms.mc-production.lu",
+        hostname: "cms.federation-immobiliere.lu",
         pathname: "/**",
       },
     ],

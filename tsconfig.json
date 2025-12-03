@@ -22,6 +22,6 @@
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "lib/next-metadata.ts", "components/dynamic-zone/blockcta.tsxbk", "translations/types.ts-bk", "components/dynamic-zone/block-category-single.tsxbkkk"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "lib/next-metadata.ts", "components/dynamic-zone/blockcta.tsxbk", "translations/types.ts-bk", "components/dynamic-zone/block-category-single.tsxbkkk", "components/dynamic-zone/block-category-single.tsxbk2", "components/dynamic-zone/hero.tsxbkkk"],
   "exclude": ["node_modules"]
 }

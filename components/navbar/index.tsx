@@ -48,12 +48,28 @@ export function Navbar({ data, logo, footer, locale }: Props) {
             document.body.classList.remove("menu-open");
         };
 
+        // Nếu bạn có đoạn JS/jQuery nào tự động ẩn submenu khi click vào bất kỳ item, hãy kiểm tra lại:
+        // Đặc biệt, đoạn này:
+        // document.addEventListener("click", onDocumentClick);
+        // và trong onDocumentClick:
+        // if (!target) return;
+        // if (menu.contains(target)) return;
+        // if (svgOpen.contains(target)) return;
+        // if (svgClose && svgClose.contains(target)) return;
+        // closeHandler();
+
+        // Nếu muốn submenu không bị ẩn khi click vào arrow hoặc vào item con, hãy thêm điều kiện:
+        // if (target.closest('.submenu')) return;
+
         const onDocumentClick = (e: MouseEvent) => {
             const target = e.target as Node | null;
             if (!target) return;
             if (menu.contains(target)) return;
             if (svgOpen.contains(target)) return;
             if (svgClose && svgClose.contains(target)) return;
+            // Không đóng menu nếu click vào arrow cấp 2
+            if ((target as HTMLElement).closest('.arrow-menu-2')) return;
+            if ((target as HTMLElement).closest('.submenu')) return;
             closeHandler();
         };
 
@@ -151,38 +167,144 @@ export function Navbar({ data, logo, footer, locale }: Props) {
     };
     
 
+    // Đặt state cho cấp 3 ở ngoài hàm renderMenuItems (trong component)
+    const [openThirdLevel, setOpenThirdLevel] = useState<{ [key: number]: boolean }>({});
+
+    // Đóng tất cả menu cấp 3 khi mở menu cấp 2 khác
+    const closeAllThirdLevel = () => setOpenThirdLevel({});
+
     function renderMenuItems(menuData: any[]) {
         if (!Array.isArray(menuData)) {
             return [];
         }
+
+        // Loại bỏ useState trong hàm này, dùng state ở ngoài như trên
 
         return menuData
             .filter(item => !item.parent) 
             .sort((a, b) => a.order - b.order) 
             .map(item => {
                 const children = menuData
-                    .filter(child => child.parent?.id === item.id) 
-                    .sort((a, b) => a.order - b.order); 
+                    .filter(child => child.parent?.id === item.id)
+                    .sort((a, b) => a.order - b.order);
 
                 const isActive =
                     item.url === currentPath || children.some(child => child.url === currentPath);
 
+                // SVG cho icon cấp 2
+                const ArrowIcon = ({ onClick }: { onClick: (e: React.MouseEvent) => void }) => (
+                    <span
+                        className="arrow-menu-2 ml-2 cursor-pointer flex items-center justify-center absolute w-[30px] h-[38px] top-0 right-0"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onClick(e);
+                        }}
+                    >
+                        <svg width="4" height="8" viewBox="0 0 4 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.5 7.09998L3.21666 4.38333C3.5375 4.0625 3.5375 3.5375 3.21666 3.21666L0.5 0.5" stroke="#0A2540" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                    </span>
+                );
+
+                const toggleThirdLevel = (id: number) => {
+                    setOpenThirdLevel(prev => {
+                        // Đóng tất cả, chỉ mở đúng id
+                        const newState: { [key: number]: boolean } = {};
+                        newState[id] = !prev[id];
+                        return newState;
+                    });
+                };
+
+                // Hàm render cấp 3
+                const renderSubMenu = (parentId: number, level = 2) => {
+                    const subItems = menuData
+                        .filter(sub => sub.parent?.id === parentId)
+                        .sort((a, b) => a.order - b.order);
+
+                    if (!subItems.length) return null;
+
+                    return (
+                        <ul className={`submenu md:absolute top-0 left-[100%] w-[190px] bg-white space-y-3 transition-all duration-300 overflow-hidden`}>
+                            {subItems.map(sub => {
+                                const isSubActive = sub.url === currentPath;
+                                const hasThirdLevel = menuData.some(third => third.parent?.id === sub.id);
+
+                                return (
+                                    <li
+                                        key={sub.id}
+                                        className={`relative flex items-center font-inter font-medium text-sm leading-[18px] text-[#0A2540] ${isSubActive ? "border-[#D9BA92]" : "border-transparent"}`}
+                                    >
+                                        {sub.url ? (
+                                            <Link
+                                                href={sub.url || "#"}
+                                                className={`${isSubActive ? "text-[#0A2540] block bg-[#EDF0E5] px-[8px] py-[10px] w-full text-left" : "block px-[8px] py-[10px] w-full text-center"}`}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    closeAllSubmenus();
+                                                    closeAllThirdLevel();
+                                                    const svgClose = document.querySelector<SVGElement>("svg.close");
+                                                    if (svgClose) svgClose.dispatchEvent(new Event("click"));
+                                                }}
+                                            >
+                                                {sub.icon?.url && (
+                                                    <Image
+                                                        className="mr-4"
+                                                        alt={sub.icon.alternativeText || ""}
+                                                        src={strapiImage(sub.icon.url)}
+                                                        width={24}
+                                                        height={24}
+                                                    />
+                                                )}
+                                                {sub.title}
+                                            </Link>
+                                        ) : (
+                                            <div
+                                                className="flex items-center gap-3 px-[8px] py-[10px] w-full cursor-pointer"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    toggleThirdLevel(sub.id);
+                                                }}
+                                            >
+                                                {sub.icon?.url && (
+                                                    <Image
+                                                        className="mr-4"
+                                                        alt={sub.icon.alternativeText || ""}
+                                                        src={strapiImage(sub.icon.url)}
+                                                        width={24}
+                                                        height={24}
+                                                    />
+                                                )}
+                                                <span>{sub.title}</span>
+                                                {hasThirdLevel && (
+                                                    <ArrowIcon onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        toggleThirdLevel(sub.id);
+                                                    }} />
+                                                )}
+                                            </div>
+                                        )}
+                                        {/* Render cấp 3 nếu có và được mở */}
+                                        {hasThirdLevel && openThirdLevel[sub.id] && renderSubMenu(sub.id, level + 1)}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    );
+                };
+
                 return (
                     <li
                         key={item.id}
-                        className={`relative font-inter font-medium text-sm leading-[18px] text-white group ${
-                            isActive ? "border-[#D9BA92]" : "border-transparent"
-                        }`}
+                        className={`relative font-inter font-medium text-sm leading-[18px] text-white group ${isActive ? "border-[#D9BA92]" : "border-transparent"}`}
                     >
                         {item.url ? (
-                            // 🌟 SỬA ĐỔI: Thêm closeAllSubmenus vào Link cha (có URL)
                             <Link
                                 href={item.url}
                                 className={`pl-[10px] lg:pl-[20px] xl:pl-[40px] ${item.url === currentPath ? "text-[#CCAB80]" : ""}`}
                                 onClick={(e) => {
-                                    e.stopPropagation(); 
-                                    closeAllSubmenus(); // 👈 Đóng submenu nếu có bất kỳ cái nào đang mở
-                                    
+                                    e.stopPropagation();
+                                    closeAllSubmenus();
+                                    closeAllThirdLevel(); // Đóng tất cả menu cấp 3 khi click vào menu cha khác
                                     const svgClose = document.querySelector<SVGElement>("svg.close");
                                     if (svgClose) svgClose.dispatchEvent(new Event("click"));
                                 }}
@@ -190,62 +312,61 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                 {item.title}
                             </Link>
                         ) : (
-                            // Menu cha KHÔNG có URL (chỉ dùng để toggle)
                             <div
                                 className="flex items-center gap-3 pl-[10px] lg:pl-[20px] xl:pl-[40px] cursor-pointer"
-                                onClick={() => toggleSubmenu(item.id)} // 👈 Giữ nguyên logic Accordion
+                                onClick={() => {
+                                    toggleSubmenu(item.id);
+                                    closeAllThirdLevel(); // Đóng tất cả menu cấp 3 khi mở menu cha khác
+                                }}
                             >
                                 <span>{item.title}</span>
                                 <svg
-									width="12"
-									height="10"
-									viewBox="0 0 12 10"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-									className={`transition-transform duration-300 ${
-										openSubmenus[item.id] ? "" : ""
-									}`}
-								>
-									<path
-										d="M5.7 9.34375L0.15 1.87891C0.05 1.74349 0 1.59961 0 1.44727C0 1.29492 0.0375 1.15104 0.1125 1.01562L0.8625 0H11.1375L11.8875 1.01562C11.9625 1.15104 12 1.29492 12 1.44727C12 1.59961 11.9625 1.74349 11.8875 1.87891L6.3375 9.34375C6.2375 9.44531 6.125 9.49609 6 9.49609C5.875 9.49609 5.7625 9.44531 5.6625 9.34375H5.7Z"
-										fill="#CCAB80"
-									/>
-								</svg>
+                                    width="12"
+                                    height="10"
+                                    viewBox="0 0 12 10"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className={`transition-transform duration-300 ${openSubmenus[item.id] ? "" : ""}`}
+                                >
+                                    <path
+                                        d="M5.7 9.34375L0.15 1.87891C0.05 1.74349 0 1.59961 0 1.44727C0 1.29492 0.0375 1.15104 0.1125 1.01562L0.8625 0H11.1375L11.8875 1.01562C11.9625 1.15104 12 1.29492 12 1.44727C12 1.59961 11.9625 1.74349 11.8875 1.87891L6.3375 9.34375C6.2375 9.44531 6.125 9.49609 6 9.49609C5.875 9.49609 5.7625 9.44531 5.6625 9.34375H5.7Z"
+                                        fill="#CCAB80"
+                                    />
+                                </svg>
                             </div>
                         )}
-                        {children.length > 0 && (
-                            <ul
-                                className={`lg:absolute w-[196px] left-[20px] top-[44px] mt-5 lg:mt-0 submenu bg-white transition-all duration-300 overflow-hidden 
-                                    ${
-                                        openSubmenus[item.id] 
-                                            ? "max-h-screen lg:block" 
-                                            : "max-h-0 lg:hidden"
-                                    }
-                                `}
-                            >
+                        {children.length > 0 && openSubmenus[item.id] && (
+                            <ul className={`lg:absolute w-[196px] left-[20px] top-[44px] mt-5 lg:mt-0 submenu bg-white transition-all duration-300 overflow-hidden-bk max-h-screen lg:block`}>
                                 {children.map(child => {
                                     const isChildActive = child.url === currentPath;
+                                    const hasThirdLevel = menuData.some(third => third.parent?.id === child.id);
+                                    // Kiểm tra cấp 3 active
+                                    const isThirdLevelActive = menuData.some(
+                                        third => third.parent?.id === child.id && third.url === currentPath
+                                    );
 
                                     return (
                                         <li
                                             key={child.id}
-                                            className={`flex items-center font-inter font-medium text-sm leading-[18px] text-[#0A2540] ${
-                                                isChildActive ? "border-[#D9BA92]" : "border-transparent"
+                                            className={`relative flex items-center font-inter font-medium text-sm leading-[18px] text-[#0A2540] ${
+                                                isChildActive || isThirdLevelActive ? "border-[#D9BA92]" : "border-transparent"
                                             }`}
                                         >
                                             <Link
                                                 href={child.url || "#"}
-                                                className={`${isChildActive ? "text-[#0A2540] block bg-[#EDF0E5] px-[8px] py-[10px] w-full text-center" : "block px-[8px] py-[10px] w-full text-center"}`}
+                                                className={`${
+                                                    isChildActive || isThirdLevelActive
+                                                        ? "text-[#0A2540] block bg-[#EDF0E5] px-[8px] py-[10px] w-full text-center"
+                                                        : "block px-[8px] py-[10px] w-full text-center"
+                                                }`}
                                                 onClick={(e) => {
-                                                    e.stopPropagation(); 
-                                                    
-                                                    closeAllSubmenus(); // 👈 Đóng tất cả submenu
-                                                    
+                                                    e.stopPropagation();
+                                                    closeAllSubmenus();
+                                                    closeAllThirdLevel();
                                                     const svgClose = document.querySelector<SVGElement>("svg.close");
                                                     if (svgClose) svgClose.dispatchEvent(new Event("click"));
                                                 }}
                                             >
-                                                {/* ... (Image và Title) */}
                                                 {child.icon?.url && (
                                                     <Image
                                                         className="mr-4"
@@ -257,6 +378,14 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                                 )}
                                                 {child.title}
                                             </Link>
+                                            {hasThirdLevel && (
+                                                <ArrowIcon onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    toggleThirdLevel(child.id);
+                                                }} />
+                                            )}
+                                            {/* Render cấp 3 nếu có và được mở */}
+                                            {hasThirdLevel && openThirdLevel[child.id] && renderSubMenu(child.id, 3)}
                                         </li>
                                     );
                                 })}
