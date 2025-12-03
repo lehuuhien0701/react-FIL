@@ -17,6 +17,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd /home/projects/FIL/react-fil
+            git checkout main
             git pull origin main
             docker build --no-cache -t react-fil .
             docker rm -f react-fil || true
