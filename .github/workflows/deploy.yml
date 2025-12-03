@@ -18,6 +18,8 @@ jobs:
           script: |
             cd /home/projects/FIL/react-fil
             git pull origin main
-            docker build -t react-fil .
-            docker rm -f react-fil || true
+            docker-compose stop react-fil
+            docker-compose rm -f react-fil
+            docker-compose build react-fil
+            docker-compose up -d react-fil
             docker run -d -p 3001:3000 --name react-fil react-fil
