@@ -45,10 +45,10 @@ export const CookieConsent = ({ translations }: CookieConsentProps) => {
           </p>
         </div>
         <div className="flex gap-6 w-full">
-          <a className="text-base w-full font-bold py-[10px] border border-primary text-primary text-center rounded-[40px] cursor-pointer" onClick={declineCookies}>
+          <a className="text-base w-full font-bold py-[10px] border border-primary text-white text-center rounded-[40px] cursor-pointer" onClick={declineCookies}>
             {translations.decline}
           </a>
-          <a className="text-base w-full font-bold py-[10px] bg-primary text-black text-center rounded-[40px] cursor-pointer" onClick={acceptCookies}>
+          <a className="text-base w-full font-bold py-[10px] bg-primary text-white text-center rounded-[40px] cursor-pointer" onClick={acceptCookies}>
             {translations.accept}
           </a>
         </div>
