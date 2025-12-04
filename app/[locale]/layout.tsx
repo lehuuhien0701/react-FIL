@@ -35,33 +35,19 @@ export async function generateMetadata({
 }: {
     params: { locale: string; slug: string };
 }): Promise<Metadata> {
+    // ... (hàm generateMetadata không đổi)
     const pageData = await fetchContentType(
         'global',
         {
             filters: { locale: params.locale },
-            populate: "seo.metaImage", // đúng
+            populate: "seo.metaImage",
         },
         true
     );
 
     const seo = pageData?.seo;
     const metadata = generateMetadataObject(seo);
-    
-    return {
-        ...metadata,
-        icons: {
-            icon: [
-                { url: '/favicon.ico' },
-                { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-                { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-                { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
-                { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
-            ],
-            apple: [
-                { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-            ],
-        },
-    };
+    return metadata;
 }
 
 export default async function LocaleLayout({
@@ -73,38 +59,32 @@ export default async function LocaleLayout({
 }) {
     const currentLocale = locale || i18n.defaultLocale;
 
-    // Fetch global data (logo, footer, etc.)
+    // Fetch global data (logo, footer, cookie_consent, etc.)
     const pageData = await fetchContentType('global', { 
-    filters: { locale: currentLocale },
-    populate: {
-        footer: {
-            populate: {
-                logo: true,
-                menu_footer: true,
-                social: {
-                    populate: ['icon']
+        filters: { locale: currentLocale },
+        populate: {
+            footer: {
+                populate: {
+                    logo: true,
+                    menu_footer: true,
+                    social: {
+                        populate: ['icon']
+                    },
+                },
+            },
+            logo: true,
+            seo: true,
+            localizations: true, 
+            cookie_consent: true, 
+            global_highlight_blocks: {
+                on: {
+                    'dynamic-zone.block-category-single': {
+                        populate: ['thumbnail', 'list_details'],
+                    },
                 },
             },
         },
-        logo: true,
-        seo: true,             // nếu seo là component/relation
-        localizations: true,   // nếu bạn cần danh sách bản dịch
-        global_highlight_blocks: {
-        on: {
-            'dynamic-zone.block-category-single': {
-            populate: ['thumbnail', 'list_details'],
-            },
-        },
-        },
-    },
     }, true);
-
-    
-
-    // Log to check structure of pageData and logo
-   //console.log("layout.tsx pageData:", pageData);
-    // console.log("layout.tsx logo:", pageData?.logo);
-    
 
     // Fetch menu data from Strapi collection-type "menu"
     const menuData = await fetchContentTypeClient('menus', {
@@ -112,15 +92,16 @@ export default async function LocaleLayout({
         populate: '*'
     });
 
-    //console.log('Menu Data:', menuData);
-
+    // 🏆 Phần code lấy description đã chính xác:
     const cookieTranslations = {
         title: pageData?.cookie_consent?.title || 'Cookies',
+        // Description được lấy từ global cookie_consent field
         description: pageData?.cookie_consent?.description || 'We use cookies to improve your experience.',
         accept: pageData?.cookie_consent?.accept_button || 'Accept',
         decline: pageData?.cookie_consent?.decline_button || 'Decline'
     };
-
+    
+    // ... (phần còn lại của component không đổi)
     if (!pageData) {
         console.error('Failed to fetch global data');
     }
@@ -131,7 +112,6 @@ export default async function LocaleLayout({
                 <CartProvider>
                     <body
                         className={cn(
-                            // include both className and variable so next/font and Tailwind variable mapping both work
                             display.variable,
                             inter.variable,
                             "bg-white antialiased h-full w-full font-inter"

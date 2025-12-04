@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import parse from "html-react-parser";
+import parse from "html-react-parser"; 
 
 interface CookieConsentProps {
   translations: {

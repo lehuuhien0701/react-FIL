@@ -175,7 +175,7 @@ export const WhyJoin = ({
                 <Image
                   className="object-cover m-auto"
                   alt=""
-                  src="/list-logo.svg"
+                  src="/list-logo.svg" 
                   width={920}
                   height={128}
                   priority
