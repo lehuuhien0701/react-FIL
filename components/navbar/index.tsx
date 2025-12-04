@@ -395,7 +395,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                                 <ArrowIcon onClick={(e) => {
                                                     e.stopPropagation();
                                                     toggleThirdLevel(child.id);
-                                                }} />
+                                                }} id={child.id} />
                                             )}
                                             {/* Render cấp 3 nếu có và được mở */}
                                             {hasThirdLevel && openThirdLevel[child.id] && renderSubMenu(child.id, 3)}
@@ -419,7 +419,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                             <Link
                               href={currentLocale === i18n.defaultLocale ? "/" : `/${currentLocale}`}
                               aria-label="Go to home"
-                              className="text-[#2F324A] hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[#CCAB80] flex items-center gap-2"
+                              className="text-[#2F324A] flex items-center gap-2"
                             >
                               {logo?.url ? (
                                 <Image
