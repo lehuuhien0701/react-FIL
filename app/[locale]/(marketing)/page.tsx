@@ -71,9 +71,46 @@ const pageData = await fetchContentType(
         slug: "homepage",
         locale: params.locale,
       },
-          populate: {
+      populate: {
         localizations: { populate: "*" },
-        dynamic_zone: { populate: "*" }
+        dynamic_zone: {
+          on: {
+            "dynamic-zone.governance-structure": { 
+              populate: {
+                governance_structure: { // Trường lặp lại cấp 1 (component chính)
+                  populate: ["thumbnail", "list_details"] // Thêm "list_details" vào mảng populate
+                },
+              },
+            }, 
+
+
+            "dynamic-zone.section-block-commitment-card": { 
+              populate: {
+                SectionBlockCommitmentCard: { // Đúng tên repeatable component như Strapi schema
+                  populate: ["icon", "background", "blockcta"]
+                },
+              },
+            }, 
+            // "dynamic-zone.list-category-single": { populate: "*" },
+            "dynamic-zone.thank-you-page": { populate: "*" }, 
+            "dynamic-zone.form-contact": { populate: "*" }, 
+            "dynamic-zone.image-address-social": { populate: "*" },
+            "dynamic-zone.blog": { populate: "*" },
+            "dynamic-zone.our-services-box": { populate: "*" },
+            "dynamic-zone.member-profile": { populate: "*" },
+            "dynamic-zone.member-directory-block": { populate: "*" },
+            "dynamic-zone.banner-page": { populate: "*" },
+            "dynamic-zone.section-block": { populate: "*" },
+            "dynamic-zone.our-role": { populate: "*" },
+            //"dynamic-zone.section-block-commitment-card": { populate: "*" },
+            "dynamic-zone.background-full": { populate: "*" },
+            "dynamic-zone.real-estate-barometer": { populate: "*" },
+            "dynamic-zone.news-innovation": { populate: "*" },
+            "dynamic-zone.why-join": { populate: "*" },
+            "dynamic-zone.three-pillars-section": { populate: "*" },
+            "dynamic-zone.our-founding-values": { populate: "*" }, 
+          },
+        }
       }
     },
     true

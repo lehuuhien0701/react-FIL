@@ -95,7 +95,17 @@ const pageData = await fetchContentType(
               },
             },
           }, 
+
+
+          "dynamic-zone.section-block-commitment-card": { 
+            populate: {
+              SectionBlockCommitmentCard: { // Đúng tên repeatable component như Strapi schema
+                populate: ["icon", "background", "blockcta"]
+              },
+            },
+          }, 
           // "dynamic-zone.list-category-single": { populate: "*" },
+          "dynamic-zone.thank-you-page": { populate: "*" }, 
           "dynamic-zone.form-contact": { populate: "*" }, 
           "dynamic-zone.image-address-social": { populate: "*" },
           "dynamic-zone.blog": { populate: "*" },
@@ -105,7 +115,7 @@ const pageData = await fetchContentType(
           "dynamic-zone.banner-page": { populate: "*" },
           "dynamic-zone.section-block": { populate: "*" },
           "dynamic-zone.our-role": { populate: "*" },
-          "dynamic-zone.section-block-commitment-card": { populate: "*" },
+          //"dynamic-zone.section-block-commitment-card": { populate: "*" },
           "dynamic-zone.background-full": { populate: "*" },
           "dynamic-zone.real-estate-barometer": { populate: "*" },
           "dynamic-zone.news-innovation": { populate: "*" },

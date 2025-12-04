@@ -1,6 +1,7 @@
 "use client";
 import Image from 'next/image';
-import React from "react";
+import React, { useState } from "react";
+
 import parse from "html-react-parser";
 import { strapiImage } from "@/lib/strapi/strapiImage";
 import { usePathname } from "next/navigation";
@@ -16,9 +17,26 @@ interface FooterLinkItem {
   URL: string;
   target?: '_self' | '_blank'; // Thêm trường target, mặc định là '_self'
 }
- 
+ 
 
 export const Footer = ({ data, locale }: { data: any, locale: string }) => {
+  // ----------------------------------------------------------------------
+  // ✅ FIX: Đã di chuyển tất cả các Hooks lên trên cùng, trước mọi điều kiện.
+  // ----------------------------------------------------------------------
+  
+  // Newsletter state & logic (MOVED TO TOP)
+  const [newsletter, setNewsletter] = useState({
+    email: '',
+    agreement: false
+  });
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
+  const [newsletterError, setNewsletterError] = useState('');
+  const [newsletterSuccess, setNewsletterSuccess] = useState('');
+
+  // ----------------------------------------------------------------------
+  // Logic điều kiện và Early Return được đặt sau khi gọi Hooks
+  // ----------------------------------------------------------------------
+
   const pathname = usePathname();
   const href = locale === i18n.defaultLocale ? '/' : `/${locale || ''}`;
   const isThankYouPage = pathname?.includes('/thank-you');
@@ -26,16 +44,20 @@ export const Footer = ({ data, locale }: { data: any, locale: string }) => {
   if (isThankYouPage) {
     return null;
   }
-   
+    
 
   // Lấy dữ liệu tĩnh và social
   const copyright = data?.copyright ?? "Copyright © Fédération Immobilière du Luxembourg 2025";
-  const designed_developed_by = data?.designed_developed_by ?? "Designed by";
-
+  const designed_developed_by = data?.designed_developed_by ?? "Designed by"; 
   const email = data?.email ?? "hello@example.com";
   const phone = data?.phone ?? "(123) 555-1234";
   const address = data?.address ?? "Luxembourg 1234";
   const logo = data?.logo; 
+
+  // lấy dữ liệu tĩnh newsletter
+  const title_newsletter = data?.title_newsletter ?? "Subscribe to receive our news, analyses, and invitations.";
+  const placeholder_newsletter = data?.placeholder_newsletter ?? "Enter your email";
+  const checking_newsletter = data?.checking_newsletter ?? "Checking this box and submitting the form means I agree my personal data is used only to contact me about my request here. No other use of my info.";
 
   // LẤY DỮ LIỆU MENU FOOTER ĐỘNG
   // Giả sử menu_footer là một Repeatable Component (Link)
@@ -43,6 +65,46 @@ export const Footer = ({ data, locale }: { data: any, locale: string }) => {
 
   //console.log("logo :", data); 
   //console.log("menu_footer :", menu_footer); 
+
+  const validateNewsletter = () => {
+    if (!newsletter.email.trim()) {
+      return 'Please enter your email.';
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newsletter.email)) {
+      return 'Invalid email format.';
+    }
+    if (!newsletter.agreement) {
+      return 'You must agree to the terms.';
+    }
+    return '';
+  };
+
+  const handleNewsletterChange = (field: string, value: string | boolean) => {
+    setNewsletter(prev => ({ ...prev, [field]: value }));
+    setNewsletterError('');
+    setNewsletterSuccess('');
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errorMsg = validateNewsletter();
+    if (errorMsg) {
+      setNewsletterError(errorMsg);
+      return;
+    }
+    setNewsletterLoading(true);
+    setNewsletterError('');
+    setNewsletterSuccess('');
+    try {
+      // await fetch('/api/newsletter', { method: 'POST', body: JSON.stringify(newsletter) });
+      setNewsletterSuccess('Thank you for subscribing!');
+      setNewsletter({ email: '', agreement: false });
+    } catch {
+      setNewsletterError('Subscription failed. Please try again.');
+    } finally {
+      setNewsletterLoading(false);
+    }
+  };
 
   return ( 
     <footer className="bg-white px-5 lg:px-20 py-10 lg:py-20">
@@ -118,30 +180,52 @@ export const Footer = ({ data, locale }: { data: any, locale: string }) => {
                 </div>
               </div>
             </div>
+            
             <div className="w-full md:w-[292px] flex flex-col gap-10">
-              <div className="flex flex-col gap-[14px]">
-                <p className="text-navy text-sm leading-5">Subscribe to receive our news, analyses, and invitations.</p>
+              <form className="flex flex-col gap-[14px]" onSubmit={handleNewsletterSubmit}>
+                <p className="text-navy text-sm leading-5">{parse(title_newsletter)}{" "}</p>
                 <div className="relative">
                   <input
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder={placeholder_newsletter}
                     className="w-full h-[35px] px-[15px] rounded-[5px] border border-navy text-navy text-sm placeholder:text-navy"
+                    value={newsletter.email}
+                    onChange={e => handleNewsletterChange('email', e.target.value)}
                   />
-                  <button className="absolute top-[7px] right-[10px]" aria-label="Subscribe">
+                  <button
+                    type="submit"
+                    className="absolute top-[7px] right-[10px]"
+                    aria-label="Subscribe"
+                    disabled={newsletterLoading}
+                  >
                     <svg width="20" height="21" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M15 0.558594C23.0081 0.558594 29.5 7.05046 29.5 15.0586C29.5 23.0667 23.0081 29.5586 15 29.5586C6.99187 29.5586 0.5 23.0667 0.5 15.0586C0.5 7.05046 6.99187 0.558594 15 0.558594Z" stroke="#0A2540" />
                       <path d="M11 15.0586H19M19 15.0586L15.5 11.0586M19 15.0586L15.5 19.0586" stroke="#0A2540" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
                 </div>
+                {/* Checkbox and agreement */}
                 <div className="flex items-center gap-2.5">
-                  <input type="checkbox" className="w-4 h-4 rounded border border-navy/60" />
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 rounded border border-navy/60"
+                    checked={newsletter.agreement}
+                    onChange={e => handleNewsletterChange('agreement', e.target.checked)}
+                  />
                   <span className="flex-1 text-navy text-xs leading-[14px] opacity-60">
-                    Checking this box and submitting the form means I agree my personal data is used only to contact me about my request here. No other use of my info.
+                    {parse(checking_newsletter)}
                   </span>
                 </div>
-              </div>
+                {/* Error and Success Messages */}
+                {newsletterError && (
+                  <span className="text-red-500 text-xs">{newsletterError}</span>
+                )}
+                {newsletterSuccess && (
+                  <span className="text-green-600 text-xs">{newsletterSuccess}</span>
+                )}
+              </form>
             </div>
+
           </div>
         </div>
 
@@ -150,9 +234,12 @@ export const Footer = ({ data, locale }: { data: any, locale: string }) => {
           <p className="text-center md:text-left text-navy text-sm leading-5">
             {parse(copyright)}{" "}
           </p>
-          <div className="justify-center md:justify-start mt-[10px] md:mt-0 text-center md:text-left flex items-center gap-2.5">
-            <span className="justify-center md:justify-start flex gap-2 text-navy text-sm">{parse(designed_developed_by)}{" "}</span>
-          </div>
+          {/* Hiển thị ở home page và các trang home locale (/, /en, /fr, ...) */}
+          {pathname === '/' || /^\/[a-z]{2}\/?$/.test(pathname) ? (
+            <div className="justify-center md:justify-start mt-[10px] md:mt-0 text-center md:text-left flex items-center gap-2.5">
+              <span className="justify-center md:justify-start flex gap-2 text-navy text-sm">{parse(designed_developed_by)}{" "}</span>
+            </div>
+          ) : null}
         </div>
       </div>
     </footer>

@@ -25,6 +25,9 @@ export const GovernanceStructure = ({
   }[];
   layout?: "GovernanceStructure" | "AvailableContent" | "ObjectivesofthePartnerships" | "ASinglePointOfContact";
 }) => {
+  // Log toàn bộ mảng governance_structure để kiểm tra dữ liệu
+  console.log('governance_structure array:', governance_structure);
+
   const getImageSrc = (media: any) => {
     try {
       const url =
@@ -70,6 +73,13 @@ export const GovernanceStructure = ({
           </h2>
           <div className="flex flex-col md:flex-row justify-center items-start gap-[10px] max-w-screen-xl mx-auto">
             {Array.isArray(governance_structure) && governance_structure.map((item, idx) => {
+              // Log từng item để kiểm tra các field
+              console.log(
+                'governance_structure item:',
+                item,
+                'thumbnail:', item?.thumbnail,
+                'list_details:', item?.list_details
+              );
               let bgClass = "bg-[#0a2540]";
               if (idx === 0) bgClass = "bg-[#001D40] text-white";
               else if (idx === 1) bgClass = "bg-[#EDF0E5] text-[#0A2540]";

@@ -23,6 +23,7 @@ export const BookingForm = ({
     name: '', 
     email: '',
     phone: '',
+    purpose: '', // <-- add purpose here
     message: '',
     agreement: true
   });
@@ -42,6 +43,10 @@ export const BookingForm = ({
     
     if (!formData.phone.trim()) {
       newErrors.phone = data.form_message?.required_fields || 'This field is required';
+    }
+    // Purpose validation
+    if (!formData.purpose.trim()) {
+      newErrors.purpose = data.form_message?.required_fields || 'This field is required';
     }
   
 
@@ -63,7 +68,7 @@ export const BookingForm = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData), // purpose is now included
       });
 
       if (!response.ok) {
@@ -75,6 +80,7 @@ export const BookingForm = ({
         name: '', 
         email: '',
         phone: '',
+        purpose: '', // reset purpose
         message: '',
         agreement: true
       });
@@ -118,7 +124,7 @@ export const BookingForm = ({
           <div className="text-[14px] mb-2 text-white/80">{full_name_label}</div>
           <input
             type="text"
-            className="w-full bg-transparent border border-[#88938F] pr-40 px-3 py-[14px] text-[#88938F] text-[15px]"
+            className="w-full bg-transparent border border-[#88938F] pr-[40px] px-3 py-[14px] text-[#88938F] text-[15px]"
             placeholder=""
             value={formData.name}
             onChange={e => handleInputChange('name', e.target.value)}
@@ -137,7 +143,7 @@ export const BookingForm = ({
           <div className="text-[14px] mb-2 text-white/80">{email_label}</div>
           <input
             type="email"
-            className="w-full bg-transparent border border-[#88938F] pr-40 px-3 py-[14px] text-[#88938F] text-[15px]"
+            className="w-full bg-transparent border border-[#88938F] pr-[40px] px-3 py-[14px] text-[#88938F] text-[15px]"
             value={formData.email}
             onChange={e => handleInputChange('email', e.target.value)}
           />
@@ -150,10 +156,10 @@ export const BookingForm = ({
 
         {/* Phone */}
         <label className="text-sm relative">
-          <div className="text-[14px] mb-2 text-white/80">{phone_label}</div>
+          <div className="text-[14px] mb-2 text-white/80">{phone_label}</div> 
           <input
             type="tel"
-            className="w-full bg-transparent border border-[#88938F] pr-40 px-3 py-[14px] text-[#88938F] text-[15px]"
+            className="w-full bg-transparent border border-[#88938F] pr-[40px] px-3 py-[14px] text-[#88938F] text-[15px]"
             value={formData.phone}
             onChange={e => handleInputChange('phone', e.target.value)}
           />
@@ -173,24 +179,19 @@ export const BookingForm = ({
           <div className="text-[14px] mb-2 text-white/80">{purpose_label}</div>
           <select
             className="w-full bg-transparent border border-[#88938F] px-3 py-[14px] text-[#88938F] text-[15px]"
+            value={formData.purpose} // <-- make select controlled
             onChange={e => handleInputChange('purpose', e.target.value)}
           >
             <option value="">{select_purpose}</option>
-            {Array.isArray(data.member) && data.member.length > 0
-              ? data.member.map((item: any, idx: number) => (
-                  <option key={item.id ?? idx} value={item.title}>
-                    {item.title}
-                  </option>
+            {Array.isArray(data.member) && data.member.length > 0 &&
+                data.member.map((item: any, idx: number) => (
+                    <option key={item.id ?? idx} value={item.title}>
+                        {item.title}
+                    </option>
                 ))
-              : (
-                <>
-                  <option>Membership</option>
-                  <option>Information</option>
-                  <option>Other</option>
-                </>
-              )
             }
           </select>
+          {errors.purpose && <p className="text-red-500 text-xs mt-1">{errors.purpose}</p>} {/* show error */}
         </label>
       </div>
 

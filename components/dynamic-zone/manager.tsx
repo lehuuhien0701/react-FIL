@@ -19,6 +19,7 @@ const componentMapping: { [key: string]: any } = {
   // support both keys (with and without hyphen) and both export styles (named or default)  
    
   // 'dynamic-zone.block-category-single': dynamic(() => import('./block-category-single').then(mod => mod.BlockCategorySingle), { ssr: false }),
+  'dynamic-zone.thank-you-page': dynamic(() => import('./thank-you').then(mod => mod.ThankYouPage), { ssr: false }), 
   'dynamic-zone.form-contact': dynamic(() => import('./form-contact').then(mod => mod.FormContact), { ssr: false }), 
   'dynamic-zone.our-services-box': dynamic(() => import('./our-services-box').then(mod => mod.OurServicesBox), { ssr: false }),
   'dynamic-zone.member-profile': dynamic(() => import('./member-profile').then(mod => mod.MemberProfile), { ssr: false }),

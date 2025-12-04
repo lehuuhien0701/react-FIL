@@ -12,9 +12,17 @@ const CheckIcon = () => (
   </svg>
 );
 export const SectionBlockCommitmentCard = ({
-  SectionBlockCommitmentCard = null
-}: {
-   SectionBlockCommitmentCard ?: any[] | null;
+  SectionBlockCommitmentCard = [],
+}: { 
+   SectionBlockCommitmentCard?: {
+    id?: string;
+    title?: string;
+    description?: string;
+    note?: string;
+    thumbnail?: any;
+    icon?: any;
+    blockcta?: { id?: string; title?: string }[]; // list_details có field title
+  }[];
  }) => {
 
   return (
@@ -23,7 +31,8 @@ export const SectionBlockCommitmentCard = ({
       <Container className="custom-box px-5 lg:px-20 py-10 lg:py-20 md:flex gap-10 max-w-[1440px] m-auto w-full">
         {Array.isArray(SectionBlockCommitmentCard) && SectionBlockCommitmentCard.length > 0 ? (
           SectionBlockCommitmentCard.map((rawItem: any, idx: number) => {
-            //console.log('Rendering SectionBlockCommitmentCard item:', rawItem);
+            // Kiểm tra kỹ các field media/component
+     
             // normalize Strapi nested shapes
             const title = rawItem?.title ?? "";
             const background = rawItem?.background ?? null;

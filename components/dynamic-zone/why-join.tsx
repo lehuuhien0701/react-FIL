@@ -173,11 +173,11 @@ export const WhyJoin = ({
               <div className="">
                 {/* Đổi img thành Image */}
                 <Image
-                  className="w-full object-cover"
+                  className="object-cover m-auto"
                   alt=""
-                  src="/list-icon-circle.svg"
-                  width={1440}
-                  height={200}
+                  src="/list-icon-circle.png"
+                  width={920}
+                  height={128}
                   priority
                 />
               </div>
