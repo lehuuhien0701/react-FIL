@@ -112,7 +112,7 @@ export const Footer = ({ data, locale }: { data: any, locale: string }) => {
         <div className="mb-10 lg:mb-0 lg:flex justify-between">
           <div className="md:w-[215px] lg:w-[315px] flex flex-col gap-[19px] mb-5">
             {/* Logo */}
-            <Link href={href} aria-label="Go to home" className="m-auto md:m-0 text-[#2F324A] hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-[#CCAB80] flex items-center gap-2">
+            <Link href={href} aria-label="Go to home" className="m-auto md:m-0 text-[#2F324A] flex items-center gap-2">
               {logo?.url ? (
                 <Image
                   src={strapiImage(logo.url)}
