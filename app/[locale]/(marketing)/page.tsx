@@ -91,6 +91,7 @@ const pageData = await fetchContentType(
                 },
               },
             }, 
+            "dynamic-zone.bannerhome": { populate: "*" },
             // "dynamic-zone.list-category-single": { populate: "*" },
             "dynamic-zone.thank-you-page": { populate: "*" }, 
             "dynamic-zone.form-contact": { populate: "*" }, 
