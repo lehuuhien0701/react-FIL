@@ -34,9 +34,11 @@ export const RealEstateBarometer = ({
 
   const bgSrc = getImageSrc(background);
   const ArrowRight = () => (
-    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 15.0587L15.8333 4.22534M15.8333 4.22534V14.6253M15.8333 4.22534H5.43334" stroke="#0A2540" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg> 
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 11.8334L11.8333 1M11.8333 1V11.4M11.8333 1H1.43334" stroke="#0A2540" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+
   );
   // normalize details (repeatable) if needed
   const normalizedDetails = Array.isArray(details)
@@ -52,7 +54,7 @@ export const RealEstateBarometer = ({
             <Image width={2500} height={471}
                 src={strapiImage(background?.url)}
                 alt={background?.alternativeText ?? ""}
-                className="absolute right-[-191px] bottom-0 left-0 top-0 ring-0 m-auto"
+                className="absolute right-[-191px] bottom-0 left-0 top-0 ring-0 m-auto object-cover"
               />
             <div className="lg:flex justify-between items-center w-full relative z-10">
               {title && (
@@ -62,13 +64,13 @@ export const RealEstateBarometer = ({
 
               {primary_button && (
                 <Link
-                  className="flex items-center gap-3 text-white text-sm leading-[14px]"
+                  className="flex items-center gap-3 text-[#BBA25A] text-sm leading-[14px]"
                   href={primary_button?.URL ?? "#"}
                   target={primary_button?.target ?? undefined}
                   rel={primary_button?.target === "_blank" ? "noopener noreferrer" : undefined}
                 > 
                   {primary_button?.text ?? "Join now"}
-                  <div className="w-[60px] h-[60px] rounded-full bg-white flex items-center justify-center">
+                  <div className="w-[60px] h-[60px] rounded-full bg-[#BBA25A] flex items-center justify-center">
                     <ArrowRight  />
                   </div>
                 </Link>
