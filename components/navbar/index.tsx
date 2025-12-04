@@ -173,6 +173,8 @@ export function Navbar({ data, logo, footer, locale }: Props) {
     // Đóng tất cả menu cấp 3 khi mở menu cấp 2 khác
     const closeAllThirdLevel = () => setOpenThirdLevel({});
 
+    const [arrowRotated, setArrowRotated] = useState<{ [key: number]: boolean }>({});
+
     function renderMenuItems(menuData: any[]) {
         if (!Array.isArray(menuData)) {
             return [];
@@ -192,15 +194,23 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                     item.url === currentPath || children.some(child => child.url === currentPath);
 
                 // SVG cho icon cấp 2
-                const ArrowIcon = ({ onClick }: { onClick: (e: React.MouseEvent) => void }) => (
+                const ArrowIcon = ({ onClick, id }: { onClick: (e: React.MouseEvent) => void, id: number }) => (
                     <span
-                        className="arrow-menu-2 ml-2 cursor-pointer flex items-center justify-center absolute w-[30px] h-[38px] top-0 right-0"
+                        className={`arrow-menu-2 ml-2 cursor-pointer flex items-center justify-center absolute w-[30px] h-[38px] top-0 right-0`}
                         onClick={(e) => {
                             e.stopPropagation();
+                            setArrowRotated(prev => ({ ...prev, [id]: !prev[id] }));
                             onClick(e);
                         }}
                     >
-                        <svg width="4" height="8" viewBox="0 0 4 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg
+                            width="4"
+                            height="8"
+                            viewBox="0 0 4 8"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            style={{ transform: arrowRotated[id] ? "rotate(90deg)" : "none", transition: "transform 0.3s" }}
+                        >
                             <path d="M0.5 7.09998L3.21666 4.38333C3.5375 4.0625 3.5375 3.5375 3.21666 3.21666L0.5 0.5" stroke="#0A2540" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </span>
@@ -224,7 +234,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                     if (!subItems.length) return null;
 
                     return (
-                        <ul className={`submenu md:absolute top-0 left-[100%] w-[190px] bg-white space-y-3 transition-all duration-300 overflow-hidden`}>
+                        <ul className={`submenu lg:absolute top-0 left-[100%] lg:w-[190px] bg-white space-y-3 transition-all duration-300 overflow-hidden`}>
                             {subItems.map(sub => {
                                 const isSubActive = sub.url === currentPath;
                                 const hasThirdLevel = menuData.some(third => third.parent?.id === sub.id);
@@ -232,12 +242,12 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                 return (
                                     <li
                                         key={sub.id}
-                                        className={`relative flex items-center font-inter font-medium text-sm leading-[18px] text-[#0A2540] ${isSubActive ? "border-[#D9BA92]" : "border-transparent"}`}
+                                        className={`relative block lg:flex items-center font-inter font-medium text-sm leading-[18px] text-[#0A2540] ${isSubActive ? "border-[#D9BA92]" : "border-transparent"}`}
                                     >
                                         {sub.url ? (
                                             <Link
                                                 href={sub.url || "#"}
-                                                className={`${isSubActive ? "text-[#0A2540] block bg-[#EDF0E5] px-[8px] py-[10px] w-full text-left" : "block px-[8px] py-[10px] w-full text-center"}`}
+                                                className={`${isSubActive ? "text-[#0A2540] block bg-[#EDF0E5] px-[8px] py-[10px] w-full text-center" : "block px-[8px] py-[10px] w-full text-center"}`}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     closeAllSubmenus();
@@ -276,10 +286,13 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                                 )}
                                                 <span>{sub.title}</span>
                                                 {hasThirdLevel && (
-                                                    <ArrowIcon onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        toggleThirdLevel(sub.id);
-                                                    }} />
+                                                    <ArrowIcon
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            toggleThirdLevel(sub.id);
+                                                        }}
+                                                        id={sub.id}
+                                                    />
                                                 )}
                                             </div>
                                         )}
@@ -326,7 +339,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                     viewBox="0 0 12 10"
                                     fill="none"
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className={`transition-transform duration-300 ${openSubmenus[item.id] ? "" : ""}`}
+                                    className={`transition-transform duration-300 ${openSubmenus[item.id] ? "rotate-180" : ""}`}
                                 >
                                     <path
                                         d="M5.7 9.34375L0.15 1.87891C0.05 1.74349 0 1.59961 0 1.44727C0 1.29492 0.0375 1.15104 0.1125 1.01562L0.8625 0H11.1375L11.8875 1.01562C11.9625 1.15104 12 1.29492 12 1.44727C12 1.59961 11.9625 1.74349 11.8875 1.87891L6.3375 9.34375C6.2375 9.44531 6.125 9.49609 6 9.49609C5.875 9.49609 5.7625 9.44531 5.6625 9.34375H5.7Z"
@@ -336,7 +349,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                             </div>
                         )}
                         {children.length > 0 && openSubmenus[item.id] && (
-                            <ul className={`lg:absolute w-[196px] left-[20px] top-[44px] mt-5 lg:mt-0 submenu bg-white transition-all duration-300 overflow-hidden-bk max-h-screen lg:block`}>
+                            <ul className={`lg:absolute m-auto w-[95%] lg:w-[196px] left-[20px] top-[44px] mt-5 lg:mt-0 submenu bg-white transition-all duration-300 overflow-hidden-bk max-h-screen lg:block`}>
                                 {children.map(child => {
                                     const isChildActive = child.url === currentPath;
                                     const hasThirdLevel = menuData.some(third => third.parent?.id === child.id);
@@ -348,7 +361,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                     return (
                                         <li
                                             key={child.id}
-                                            className={`relative flex items-center font-inter font-medium text-sm leading-[18px] text-[#0A2540] ${
+                                            className={`relative block lg:flex items-center font-inter font-medium text-sm leading-[18px] text-[#0A2540] ${
                                                 isChildActive || isThirdLevelActive ? "border-[#D9BA92]" : "border-transparent"
                                             }`}
                                         >
@@ -423,33 +436,33 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                               )}
                             </Link>
                         </h1>
-                        <div className="flex items-center gap-10">
-                            <div className='flex items-center'>
-                                <ul className='hidden lg:flex items-center pr-10'>
-                                    {renderMenuItems(data)}
-                                </ul>
-                                <div className="hidden sm:block">
-                                    <LocaleSwitcher currentLocale={locale} />
-                                </div>
-                                <div className='flex items-center lg:hidden border-l border-[#E5E7EB] ml-5 md:ml-10 pl-5 md:pl-10'>
-                                    <svg className='open cursor-pointer' width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <rect x="15.1602" y="30.2928" width="20.9723" height="3.22651" rx="1.61326" fill="#CCAB80"/>
-                                        <rect x="23.2265" y="21.4199" width="12.9061" height="3.22651" rx="1.61326" fill="#CCAB80"/>
-                                        <rect x="3.86743" y="13.3536" width="32.2651" height="3.22651" rx="1.61326" fill="#CCAB80"/>
-                                        <rect x="15.1602" y="4.48069" width="20.9723" height="3.22651" rx="1.61326" fill="#CCAB80"/>
-                                    </svg>
-                                    <span className='font-inter font-bold text-base leading-6 text-[#CCAB80] ml-[10px]'>
-                                        {(translations as any)[currentLocale]?.menu || (translations as any)[i18n.defaultLocale]?.menu || "Menu"} 
-                                    </span>
-                                </div>
+                        <div className="flex items-center">
+                            {/* Menu desktop: chỉ hiện khi lg trở lên */}
+                            <ul className='hidden lg:flex items-center pr-10'>
+                                {renderMenuItems(data)}
+                            </ul>
+                            <div className="block">
+                                <LocaleSwitcher currentLocale={locale} />
+                            </div>
+                            {/* Menu mobile: chỉ hiện khi nhỏ hơn lg */}
+                            <div className='flex items-center lg:hidden pl-5 md:pl-10'>
+                                <svg className='open cursor-pointer' width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="15.1602" y="30.2928" width="20.9723" height="3.22651" rx="1.61326" fill="#CCAB80"/>
+                                    <rect x="23.2265" y="21.4199" width="12.9061" height="3.22651" rx="1.61326" fill="#CCAB80"/>
+                                    <rect x="3.86743" y="13.3536" width="32.2651" height="3.22651" rx="1.61326" fill="#CCAB80"/>
+                                    <rect x="15.1602" y="4.48069" width="20.9723" height="3.22651" rx="1.61326" fill="#CCAB80"/>
+                                </svg>
+                                <span className='font-inter font-bold text-base leading-6 text-[#CCAB80] ml-[10px]'>
+                                    {(translations as any)[currentLocale]?.menu || (translations as any)[i18n.defaultLocale]?.menu || "Menu"} 
+                                </span>
                             </div>
                         </div>
                     </div>
                 </nav>
             </div>
 
-            {/* Menu overlay */}
-            <div className='menu-click bg-[linear-gradient(180deg,#383842_0%,#19191D_100%)] absolute top-0 left-0 right-0 z-[99999] hidden'>
+            {/* Menu overlay mobile: chỉ hiện khi nhỏ hơn lg và khi click vào nút mở menu */}
+            <div className='menu-click bg-[linear-gradient(180deg,#383842_0%,#19191D_100%)] absolute top-0 left-0 right-0 z-[99999] hidden lg:hidden'>
                 <div className='max-w-[1400px] mx-auto w-full px-0 md:px-10 lg:px-20 relative'>
                     <div className='absolute top-6 right-[20px] sm:right-[40px] md:right-[90px] lg:right-[130px]'>
                         <svg className='close cursor-pointer' width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -458,7 +471,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                     </div>
 
                     {/* primary nav list */}
-                    <div className='px-6 pb-20 pt-24'>
+                    <div className='md:px-6 pb-20 pt-24'>
                         <ul className='space-y-6'>
                             {renderMenuItems(data)}
                         </ul>
