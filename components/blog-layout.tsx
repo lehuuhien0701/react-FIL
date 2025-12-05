@@ -93,7 +93,7 @@ export async function BlogLayout({
 
           <div className='mt-4'>
               <p className='text-center'>{globalData?.Articles?.share_label ?? "Share this post"}</p>
-              <div className='flex justify-center gap-6'>
+              <div className='flex justify-center gap-6 mt-4'>
                   <div className="flex items-center gap-4">
                     <a
                       href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
@@ -104,10 +104,16 @@ export async function BlogLayout({
                       className="text-secondary hover:text-primary transition-colors"
                     >
                       <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M17.0374 34H16.9626C7.60952 34 0 26.3905 0 17.0374V16.9626C0 7.60954 7.60952 0 16.9626 0H17.0374C26.3905 0 34 7.60954 34 16.9626V17.0374C34 26.3905 26.3905 34 17.0374 34ZM16.9626 1.15087C8.24364 1.15087 1.15086 8.24366 1.15086 16.9626V17.0374C1.15086 25.7564 8.24364 32.8491 16.9626 32.8491H17.0374C25.7564 32.8491 32.8491 25.7564 32.8491 17.0374V16.9626C32.8491 8.24366 25.7564 1.15087 17.0374 1.15087H16.9626Z" fill="#2F324A"/>
-                      <path d="M19.2878 13.1879V16.7659H23.7141L23.0132 21.5857H19.2878V32.6904C18.5409 32.794 17.7768 32.8481 17.0011 32.8481C16.1057 32.8481 15.2264 32.7768 14.3702 32.6387V21.5857H10.2881V16.7659H14.3702V12.388C14.3702 9.67199 16.5718 7.46924 19.289 7.46924V7.47154C19.2971 7.47154 19.304 7.46924 19.312 7.46924H23.7152V11.6377H20.8381C19.983 11.6377 19.289 12.3316 19.289 13.1867L19.2878 13.1879Z" fill="#2F324A"/>
-                      </svg>
-
+                      <path d="M17 0.5C26.1127 0.5 33.5 7.8873 33.5 17C33.5 26.1127 26.1127 33.5 17 33.5C7.8873 33.5 0.5 26.1127 0.5 17C0.5 7.8873 7.8873 0.5 17 0.5Z" stroke="#0A2540"/>
+                      <g clip-path="url(#clip0_2280_15249)">
+                      <path d="M17.3771 15.5506H20.7771L20.3993 17.0617H17.3771V23.8617H15.866V17.0617H12.8438V15.5506H15.866V14.1362C15.866 12.789 16.0065 12.3002 16.2694 11.8076C16.5271 11.3209 16.9251 10.9228 17.4118 10.6652C17.9045 10.4022 18.3933 10.2617 19.7405 10.2617C20.1349 10.2617 20.4809 10.2995 20.7771 10.375V11.7728H19.7405C18.7401 11.7728 18.4356 11.8318 18.1251 11.998C17.8954 12.1204 17.7246 12.2911 17.6022 12.5208C17.436 12.8314 17.3771 13.1358 17.3771 14.1362V15.5506Z" fill="#0A2540" stroke="#0A2540" stroke-width="0.8"/>
+                      </g>
+                      <defs>
+                      <clipPath id="clip0_2280_15249">
+                      <rect width="10" height="16" fill="white" transform="translate(12 9)"/>
+                      </clipPath>
+                      </defs>
+                      </svg> 
                     </a>
                     <a
                       href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(

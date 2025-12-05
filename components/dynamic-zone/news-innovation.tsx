@@ -160,12 +160,12 @@ export const NewsInnovation = ({
                     <p className="text-white text-xl leading-[30px]">{title_box1_small}</p>
                   </div>
                   {button_text_box1_small && (
-                    <a href={button_link_box1_small} className="flex items-center gap-2.5 text-gold text-[13.7px] leading-[19.6px]">
+                    <Link href={button_link_box1_small || "#"} className="flex items-center gap-2.5 text-gold text-[13.7px] leading-[19.6px]">
                       {button_text_box1_small}
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M0.5 9.16663L9.16667 0.5M9.16667 0.5V8.82003M9.16667 0.5H0.84667" stroke="#BBA25A" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M0.5 9.16663L9.16667 0.5M9.16667 0.5V8.82003M9.16667 0.5H0.84667" stroke="#BBA25A" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg>
-                    </a>
+                    </Link>
                   )}
                 </div>
                 <div className="flex-1 h-[300px] p-10 bg-[#EDF0E5] flex flex-col justify-between"> 
@@ -181,12 +181,12 @@ export const NewsInnovation = ({
                     <p className="text-[#0A2540] text-xl leading-[30px]">{title_box2_small}</p>
                   </div>
                   {button_text_box2_small && (
-                    <a href={button_link_box2_small} className="flex items-center gap-2.5 text-[#0A2540] text-[13.7px] leading-[19.6px]">
+                    <Link href={button_link_box2_small || "#"} className="flex items-center gap-2.5 text-[#0A2540] text-[13.7px] leading-[19.6px]">
                       {button_text_box2_small}
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M0.5 9.16663L9.16667 0.5M9.16667 0.5V8.82003M9.16667 0.5H0.84667" stroke="#0A2540" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M0.5 9.16663L9.16667 0.5M9.16667 0.5V8.82003M9.16667 0.5H0.84667" stroke="#0A2540" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg> 
-                    </a>
+                    </Link>
                   )}
                 </div>
               </div>
@@ -214,12 +214,12 @@ export const NewsInnovation = ({
                   </p>
                 </div>
                 {button_text_box_big && (
-                    <a href={button_link_box_big} className="flex items-center gap-2.5 text-white text-[13.7px] leading-[19.6px]">
+                    <Link href={button_link_box_big || "#"} className="flex items-center gap-2.5 text-white text-[13.7px] leading-[19.6px]">
                       {button_text_box_big}
                       <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M0.5 9.16663L9.16667 0.5M9.16667 0.5V8.82003M9.16667 0.5H0.84667" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M0.5 9.16663L9.16667 0.5M9.16667 0.5V8.82003M9.16667 0.5H0.84667" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
                       </svg> 
-                    </a>
+                    </Link>
                   )}  
               </div>
             </div> 

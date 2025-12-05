@@ -47,3 +47,30 @@
 .single-content-style p {
   @apply text-[15px] leading-7 font-inter font-normal text-[#88938F]; 
 }
+
+/*checkbox*/
+.custom-radio-button::before {
+  content: '';
+  @apply h-[10px] w-[10px] rounded-full bg-transparent transition-all duration-200 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+.peer:checked + .custom-radio-button {
+  @apply border-[#228EA9];
+}
+.peer:checked + .custom-radio-button::before {
+  @apply bg-[#228EA9];
+}
+.custom-checkbox-button2 {
+  @apply relative h-[18px] w-[18px] rounded-[4px] border-2 border-[#0a254099] 
+          flex items-center justify-center transition-all duration-200; 
+}
+.peer2:checked + .custom-checkbox-button2 {
+  @apply border-[#0a254099]; 
+}
+.peer1.peer2:checked + .custom-checkbox-button2 {
+  @apply border-[#88938F]; 
+}
+
+
+.peer2:checked + .custom-checkbox-button2 > svg {
+  @apply opacity-100;
+}
