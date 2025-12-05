@@ -25,7 +25,7 @@ export const WhyJoin = ({
   blockcta = [],
   list_details_top_section = [],
   pmembers_directory_search = "hide", // thêm prop mới, mặc định hide
-  layout, // thêm prop layout
+  layout = "default", // mặc định là "default"
 }: { 
   title_top_section?: string;
   description_top_section?: string;
@@ -63,8 +63,7 @@ export const WhyJoin = ({
 
   return (
     <>
-
-       <section className="relative bg-navy "> 
+      <section className="relative bg-navy "> 
           <div 
             className="h-full absolute z-10 left-0 right-0 bottom-0 overflow-hidden" 
             style={{ backgroundImage: "url('/bg-text.svg')", backgroundRepeat: "no-repeat", backgroundPosition: "top left" }}
@@ -123,28 +122,32 @@ export const WhyJoin = ({
                 </div>
               ) : (
               <>
-                <h2 className="font-display text-[32px] leading-[40px] lg:text-[37.3px] lg:leading-[45.6px] mb-9 font-bold text-[#BBA25A]">{title_top_section}</h2>
-                <div className="lg:flex md:gap-[100px]">
-                  <div className='mb-10 lg:mb-0'>
-                    <p className="w-[380px] text-[#D9D9D9] text-[15px] leading-[26px] pb-4">
-                      {typeof description_top_section === "string" && description_top_section.trim()
-                        ? parse(description_top_section)
-                        : null}
-                    </p> 
-                  </div>
-                  <div className="w-full">
-                    {Array.isArray(list_details_top_section) && list_details_top_section.length > 0 && list_details_top_section.map((detailsid, idx) => (
-                      <div key={detailsid?.id ?? idx} className="flex items-start gap-[60px] pb-3 mb-3 border-b border-white/20">
-                        <div className="flex items-center gap-[15px] flex-1"> 
-                          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M5.84192 11.077C5.56569 11.077 5.28999 10.9733 5.07904 10.7653L0 5.75889L1.52576 4.25442L5.84192 8.50885L14.4742 0L16 1.50447L6.6048 10.7653C6.39385 10.9733 6.11816 11.077 5.84192 11.077Z" fill="#BBA25A"/>
-                          </svg> 
-                          <span className="text-white text-sm leading-5">{detailsid?.title ?? ""}</span>
+                {title_top_section && (
+                <div className="relative z-10 flex flex-col gap-10 px-5 lg:px-20 py-10 lg:py-20 max-w-[1440px] w-full m-auto">
+                  <h2 className="font-display text-[32px] leading-[40px] lg:text-[37.3px] lg:leading-[45.6px] font-bold text-[#BBA25A]">{title_top_section}</h2>
+                  <div className="lg:flex md:gap-[100px]">
+                    <div className='mb-10 lg:mb-0'>
+                      <p className="w-[380px] text-[#D9D9D9] text-[15px] leading-[26px] pb-4">
+                        {typeof description_top_section === "string" && description_top_section.trim()
+                          ? parse(description_top_section)
+                          : null}
+                      </p> 
+                    </div>
+                    <div className="w-full">
+                      {Array.isArray(list_details_top_section) && list_details_top_section.length > 0 && list_details_top_section.map((detailsid, idx) => (
+                        <div key={detailsid?.id ?? idx} className="flex items-start gap-[60px] pb-3 mb-3 border-b border-white/20">
+                          <div className="flex items-center gap-[15px] flex-1"> 
+                            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.84192 11.077C5.56569 11.077 5.28999 10.9733 5.07904 10.7653L0 5.75889L1.52576 4.25442L5.84192 8.50885L14.4742 0L16 1.50447L6.6048 10.7653C6.39385 10.9733 6.11816 11.077 5.84192 11.077Z" fill="#BBA25A"/>
+                            </svg> 
+                            <span className="text-white text-sm leading-5">{detailsid?.title ?? ""}</span>
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>  
+                      ))}
+                    </div>
+                  </div>  
+                </div>
+                )}
               </>
             )}
            

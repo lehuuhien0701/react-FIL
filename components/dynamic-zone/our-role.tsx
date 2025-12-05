@@ -167,7 +167,7 @@ export const OurRole = ({
                 const mod = count % 3;
                 
                 // Thiết lập Grid 12 cột để có thể dùng col-span-6 (50%) hoặc col-span-4 (33.3%)
-                let gridClass = "text-center grid grid-cols-1 gap-10 mt-20";
+                let gridClass = "text-center grid grid-cols-1 md:gap-10 mt-5 md:mt-20";
                 if (count > 0) gridClass += " md:grid-cols-12"; // Dùng grid 12 cột cho MD trở lên
 
                 return (
@@ -229,7 +229,7 @@ export const OurRole = ({
                 const count = items.length;
                 const mod = count % 4;
 
-                let gridClass = "text-center grid grid-cols-1 gap-10";
+                let gridClass = "text-center grid grid-cols-1 md:gap-10";
                 if (count > 0) gridClass += " md:grid-cols-12";
 
                 return (
