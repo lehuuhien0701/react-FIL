@@ -361,7 +361,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                     return (
                                         <li
                                             key={child.id}
-                                            className={`relative block lg:flex items-center font-inter font-medium text-sm leading-[18px] text-[#0A2540] ${
+                                            className={`px-1 border-b border-[#EDEBE7] relative block lg:flex items-center font-inter font-medium text-sm leading-[18px] text-[#0A2540] ${
                                                 isChildActive || isThirdLevelActive ? "border-[#D9BA92]" : "border-transparent"
                                             }`}
                                         >
