@@ -12,7 +12,7 @@ export default async function fetchContentTypeClient(
 
     const response = await fetch(`${url.href}?${queryString}`);
 
-    console.log(`FetchContentTypeClient: url=${url.toString()}?${queryString}, status=${response.status}`);
+    //console.log(`FetchContentTypeClient: url=${url.toString()}?${queryString}, status=${response.status}`);
     if (!response.ok) {
       throw new Error(`Lỗi khi fetch từ Strapi (url=${url.toString()}, status=${response.status})`);
     }

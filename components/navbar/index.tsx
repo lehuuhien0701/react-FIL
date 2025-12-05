@@ -232,7 +232,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                     if (!subItems.length) return null;
 
                     return (
-                        <ul className={`submenu lg:absolute top-0 left-[100%] lg:w-[190px] bg-white space-y-3 transition-all duration-300 overflow-hidden`}>
+                        <ul className={`submenu lg:absolute top-0 left-[100%] lg:w-[190px] bg-white transition-all duration-300 overflow-hidden`}>
                             {subItems.map(sub => {
                                 const isSubActive = sub.url === currentPath;
                                 const hasThirdLevel = menuData.some(third => third.parent?.id === sub.id);
@@ -325,7 +325,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                             </Link>
                         ) : (
                             <div
-                                className={`inline-flex xl:flex px-10 items-center gap-3 pl-[10px] lg:pl-[20px] xl:pl-[40px] cursor-pointer${item.is_active == true ? " border border-[#BBA25A] rounded-full py-[10px] xl:pl-5 xl:pr-5 xl:ml-10 [&>span]:text-[#BBA25A] w-auto" : ""}`}
+                                className={`inline-flex xl:flex items-center gap-3 pl-[10px] lg:pl-[20px] xl:pl-[40px] cursor-pointer${item.is_active == true ? " border border-[#BBA25A] rounded-full pr-10 py-[10px] pl-10 xl:pl-5 xl:pr-5 xl:ml-10 [&>span]:text-[#BBA25A] w-auto" : ""}`}
                                 onClick={() => {
                                     toggleSubmenu(item.id);
                                     closeAllThirdLevel(); // Đóng tất cả menu cấp 3 khi mở menu cha khác
@@ -345,7 +345,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                             </div>
                         )}
                         {children.length > 0 && openSubmenus[item.id] && (
-                            <ul className={`lg:absolute m-auto w-[95%] lg:w-[196px] left-[20px] top-[44px] mt-5 lg:mt-0 submenu bg-white transition-all duration-300 overflow-hidden-bk max-h-screen lg:block`}>
+                            <ul className={`lg:absolute m-auto w-[95%] lg:w-[196px] left-[20px] top-[54px] mt-5 lg:mt-0 submenu bg-white transition-all duration-300 overflow-hidden-bk max-h-screen lg:block`}>
                                 {children.map(child => {
                                     const isChildActive = child.url === currentPath;
                                     const hasThirdLevel = menuData.some(third => third.parent?.id === child.id);
