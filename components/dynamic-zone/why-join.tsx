@@ -12,6 +12,7 @@ import parse from "html-react-parser";
 export const WhyJoin = ({ 
   title_top_section = "",
   description_top_section = "",
+  our_missions_in_action = null,
   title = "",
   description = "",
   button_text = "",
@@ -24,9 +25,11 @@ export const WhyJoin = ({
   blockcta = [],
   list_details_top_section = [],
   pmembers_directory_search = "hide", // thêm prop mới, mặc định hide
+  layout, // thêm prop layout
 }: { 
   title_top_section?: string;
   description_top_section?: string;
+  our_missions_in_action?: any[] | null; 
   title?: string;
   description?: string;
   button_text?: string;
@@ -39,6 +42,7 @@ export const WhyJoin = ({
   blockcta?: { id?: string | number; title?: string }[];
   list_details_top_section?: { id?: string | number; title?: string }[];
   pmembers_directory_search?: "hide" | "show";
+  layout?: string; // kiểu dữ liệu cho prop layout
 }) => {
   const getImageSrc = (media: any) => {
     try {
@@ -68,30 +72,82 @@ export const WhyJoin = ({
         
         </div>  
           <article className="overflow-hidden relative z-20">
-            {title_top_section && (
-            <div className="pt-15 pb-20 relative max-w-[1290px] m-auto w-full">
+              {layout === "list_col_top_section" ? (
+                <div className="relative z-10 flex flex-col gap-10 lg:gap-20 px-5 lg:px-20 py-10 lg:py-20 max-w-[1440px] w-full m-auto">
+                  <h2 className="text-center font-display text-[32px] leading-[40px] lg:text-[37.3px] lg:leading-[45.6px] font-bold text-gold">
+                    {title_top_section}
+                  </h2>
+               
+                  {/* JS logic for grid columns and item width */}
+                  {(() => {
+                    const items = Array.isArray(our_missions_in_action) ? our_missions_in_action : [];
+                    const count = items.length;
+                    const mod = count % 4;
+    
+                    let gridClass = "text-center grid grid-cols-1 gap-10";
+                    if (count > 0) gridClass += " md:grid-cols-12";
+    
+                    return (
+                      <div className={gridClass}>
+                        {items.map((item, idx) => {
+                          let itemClass = "col-span-12"; // mobile 100%
+                          // Logic cho màn hình MD trở lên:
+                          if (mod === 0) {
+                            // Chia hết cho 4: mỗi item chiếm 3/12
+                            itemClass += " md:col-span-3";
+                          } else if (mod === 3 && idx >= count - 3) {
+                            // 3 item cuối: mỗi item chiếm 4/12
+                            itemClass += " md:col-span-4";
+                          } else if (mod === 2 && idx >= count - 2) {
+                            // 2 item cuối: mỗi item chiếm 6/12
+                            itemClass += " md:col-span-6";
+                          } else if (mod === 1 && idx === count - 1) {
+                            // 1 item cuối: chiếm 12/12
+                            itemClass += " md:col-span-12";
+                          } else {
+                            // Các item còn lại: chiếm 3/12
+                            itemClass += " md:col-span-3";
+                          }
+                          return (
+                            <div key={item?.id ?? idx} className={itemClass}>
+                              <h3 className="text-xl text-[#BBA25A] font-semibold mb-3">{item?.title}</h3>
+                              <p className="text-sm text-white/80 leading-[26px] mb-5">{item?.description}</p>
+                              <p className="text-xs text-white/40 mt-3 text-[#88938F]">{item?.sub_description}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })()}
+                   
+                </div>
+              ) : (
+              <>
                 <h2 className="font-display text-[32px] leading-[40px] lg:text-[37.3px] lg:leading-[45.6px] mb-9 font-bold text-[#BBA25A]">{title_top_section}</h2>
-                <div className="lg:flex md:gap-[100px]"> 
+                <div className="lg:flex md:gap-[100px]">
                   <div className='mb-10 lg:mb-0'>
-                    <p className="w-[380px] text-[#D9D9D9] text-[15px] leading-[26px] pb-4">  
-                    {parse(description_top_section)}
-                  </p> 
+                    <p className="w-[380px] text-[#D9D9D9] text-[15px] leading-[26px] pb-4">
+                      {typeof description_top_section === "string" && description_top_section.trim()
+                        ? parse(description_top_section)
+                        : null}
+                    </p> 
                   </div>
                   <div className="w-full">
-                       {Array.isArray(list_details_top_section) && list_details_top_section.length > 0 && list_details_top_section.map((detailsid, idx) => (
-                          <div key={detailsid?.id ?? idx} className="flex items-start gap-[60px] pb-3 mb-3 border-b border-white/20">
-                            <div className="flex items-center gap-[15px] flex-1"> 
-                              <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M5.84192 11.077C5.56569 11.077 5.28999 10.9733 5.07904 10.7653L0 5.75889L1.52576 4.25442L5.84192 8.50885L14.4742 0L16 1.50447L6.6048 10.7653C6.39385 10.9733 6.11816 11.077 5.84192 11.077Z" fill="#BBA25A"/>
-                              </svg> 
-                              <span className="text-white text-sm leading-5">{detailsid?.title ?? ""}</span>
-                            </div>
-                          </div>
-                        ))}
+                    {Array.isArray(list_details_top_section) && list_details_top_section.length > 0 && list_details_top_section.map((detailsid, idx) => (
+                      <div key={detailsid?.id ?? idx} className="flex items-start gap-[60px] pb-3 mb-3 border-b border-white/20">
+                        <div className="flex items-center gap-[15px] flex-1"> 
+                          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M5.84192 11.077C5.56569 11.077 5.28999 10.9733 5.07904 10.7653L0 5.75889L1.52576 4.25442L5.84192 8.50885L14.4742 0L16 1.50447L6.6048 10.7653C6.39385 10.9733 6.11816 11.077 5.84192 11.077Z" fill="#BBA25A"/>
+                          </svg> 
+                          <span className="text-white text-sm leading-5">{detailsid?.title ?? ""}</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>  
-            </div>
+              </>
             )}
+           
 
             <div className='lg:flex relative max-w-[1440px] m-auto w-full'> 
                 
@@ -106,7 +162,7 @@ export const WhyJoin = ({
                   <div className="flex flex-col">
                     <div>
                       <h2 className="mb-5 font-display text-[32px] leading-[40px] lg:text-[37.3px] lg:leading-[45.6px] font-bold text-gold">{title}</h2>
-                      <p className="w-[380px] text-[#D9D9D9] text-[15px] leading-[26px]">{description}</p>
+                      <p className="text-[#D9D9D9] text-[15px] leading-[26px]">{description}</p>
                     </div>
                     <div className="flex items-center mt-4 text-[#D9D9D9] text-[15px] leading-[26px]">
                       {icon_comment && (
