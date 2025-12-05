@@ -89,8 +89,10 @@ export default async function LocaleLayout({
     // Fetch menu data from Strapi collection-type "menu"
     const menuData = await fetchContentTypeClient('menus', {
         filters: { locale: currentLocale },
-        populate: '*'
+        populate: '*',
+        pagination: { pageSize: 1000 }
     });
+
 
     // 🏆 Phần code lấy description đã chính xác:
     const cookieTranslations = {

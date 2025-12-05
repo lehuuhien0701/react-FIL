@@ -3,9 +3,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { HtmlParser } from "../html-parser";
 import { strapiImage } from "@/lib/strapi/strapiImage";
-import { BookingForm } from "../booking-form";
 import { LocaleSwitcher } from "../locale-switcher";
 import { translations } from '@/translations/common';
 import { Locale } from '@/translations/types';
@@ -196,7 +194,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                 // SVG cho icon cấp 2
                 const ArrowIcon = ({ onClick, id }: { onClick: (e: React.MouseEvent) => void, id: number }) => (
                     <span
-                        className={`arrow-menu-2 ml-2 cursor-pointer flex items-center justify-center absolute w-[30px] h-[38px] top-0 right-0`}
+                        className={`arrow-menu-2 ml-2 cursor-pointer flex items-center justify-end absolute h-[38px] top-0 right-0 pr-[12px] w-full`}
                         onClick={(e) => {
                             e.stopPropagation();
                             setArrowRotated(prev => ({ ...prev, [id]: !prev[id] }));
@@ -305,15 +303,16 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                     );
                 };
 
+                console.log('Rendering menu item:', item.title, item.is_active);
                 return (
                     <li
                         key={item.id}
-                        className={`relative font-inter font-medium text-sm leading-[18px] text-white group ${isActive ? "border-[#D9BA92]" : "border-transparent"}`}
+                        className={`relative  font-inter font-medium text-sm leading-[18px] text-white group ${isActive ? "border-[#D9BA92]" : "border-transparent"}`}
                     >
                         {item.url ? (
                             <Link
                                 href={item.url}
-                                className={`pl-[10px] lg:pl-[20px] xl:pl-[40px] ${item.url === currentPath ? "text-[#CCAB80]" : ""}`}
+                                className={`pl-[10px] lg:pl-[20px] xl:pl-[40px] ${item.url === currentPath ? "text-[#CCAB80]" : ""} ${item.is_active == true ? "border border-[#BBA25A] rounded-full py-[10px] xl:pl-5 xl:pr-5 xl:ml-10 [&>span]:text-[#BBA25A] w-auto" : ""}`} 
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     closeAllSubmenus();
@@ -326,26 +325,23 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                             </Link>
                         ) : (
                             <div
-                                className="flex items-center gap-3 pl-[10px] lg:pl-[20px] xl:pl-[40px] cursor-pointer"
+                                className={`inline-flex xl:flex px-10 items-center gap-3 pl-[10px] lg:pl-[20px] xl:pl-[40px] cursor-pointer${item.is_active == true ? " border border-[#BBA25A] rounded-full py-[10px] xl:pl-5 xl:pr-5 xl:ml-10 [&>span]:text-[#BBA25A] w-auto" : ""}`}
                                 onClick={() => {
                                     toggleSubmenu(item.id);
                                     closeAllThirdLevel(); // Đóng tất cả menu cấp 3 khi mở menu cha khác
                                 }}
                             >
                                 <span>{item.title}</span>
-                                <svg
-                                    width="12"
-                                    height="10"
-                                    viewBox="0 0 12 10"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className={`transition-transform duration-300 ${openSubmenus[item.id] ? "rotate-180" : ""}`}
+                                
+
+                                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                className={`transition-transform duration-300 rotate-90 ${openSubmenus[item.id] ? "rotate-0" : ""}`}
                                 >
-                                    <path
-                                        d="M5.7 9.34375L0.15 1.87891C0.05 1.74349 0 1.59961 0 1.44727C0 1.29492 0.0375 1.15104 0.1125 1.01562L0.8625 0H11.1375L11.8875 1.01562C11.9625 1.15104 12 1.29492 12 1.44727C12 1.59961 11.9625 1.74349 11.8875 1.87891L6.3375 9.34375C6.2375 9.44531 6.125 9.49609 6 9.49609C5.875 9.49609 5.7625 9.44531 5.6625 9.34375H5.7Z"
-                                        fill="#CCAB80"
-                                    />
+                                <path d="M0.5 9.73997L4.30333 5.93666C4.7525 5.4875 4.7525 4.7525 4.30333 4.30333L0.5 0.5" stroke="#BBA25A" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
+
+
+
                             </div>
                         )}
                         {children.length > 0 && openSubmenus[item.id] && (
