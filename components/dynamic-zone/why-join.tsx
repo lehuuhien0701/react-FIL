@@ -234,18 +234,11 @@ export const WhyJoin = ({
               <div className=" ">
                 {list_logo.length > 0 && (
                   <div className="flex flex-wrap items-center justify-center gap-8 py-6">
-                      {list_logo.map((logo, idx) => {
-                          
-                          // 💡 Logic: Nếu index là số lẻ (1, 3, 5...), dịch chuyển phần tử xuống 16px (translate-y-4)
-                          const verticalOffsetClass = idx % 2 !== 0 ? 'mt-0 lg:mt-20' : 'mt-0'; 
-                          
-                          // NOTE: Bạn có thể dùng translate-y-4/6 nếu bạn muốn hiệu ứng lấn chồng lên nhau (overlap)
-                          // hoặc dùng mt-x/mb-x để tạo khoảng cách xen kẽ (tách rời)
-                          
+                      {list_logo.map((logo, idx) => { 
+                          const verticalOffsetClass = idx % 2 !== 0 ? 'mt-0 lg:mt-20' : 'mt-0';  
                           return (
                               <div 
-                                  key={logo?.id ?? idx} 
-                                  // Thêm lớp dịch chuyển dọc vào div bọc ngoài
+                                  key={logo?.id ?? idx}  
                                   className={`flex items-center justify-center md:mx-5 ${verticalOffsetClass}`}
                               >
                                   {logo?.image?.url && (

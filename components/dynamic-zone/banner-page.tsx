@@ -16,11 +16,13 @@ export const BannerPage = ({
   subtitle = "", 
   description = "", 
   background_logos = null, 
+  list_logo = [],
 }: { 
   title?: string;
   subtitle?: string;
   description?: string;
   background_logos?: { id?: string; url?: string } | null;
+  list_logo?: { id?: string | number; image?: { url?: string } }[];
 }) => {
   const getImageSrc = (media: any) => {
     try {
@@ -55,7 +57,39 @@ export const BannerPage = ({
               <p className="flex justify-center items-center content-center text-white text-lg bg-image">
               {description}
               </p>
-              {background_logos && (  
+
+
+              <div className="w-full relative min-h-[200px] md:overflow-hidden">
+                <div className=" ">
+                    {list_logo.length > 0 && (
+                      <div className="flex flex-wrap items-center justify-center gap-8 py-6">
+                          {list_logo.map((logo, idx) => { 
+                              const verticalOffsetClass = idx % 2 !== 0 ? 'mt-0 lg:mt-20' : 'mt-0';  
+                              return (
+                                  <div 
+                                      key={logo?.id ?? idx}  
+                                      className={`flex items-center justify-center md:mx-5 ${verticalOffsetClass}`}
+                                  >
+                                      {logo?.image?.url && (
+                                          <Image
+                                              src={strapiImage(logo.image.url)}
+                                              alt=""
+                                              width={88}
+                                              height={88}
+                                              className="object-cover w-[88px] h-[88px] rounded-full"
+                                          />
+                                      )}
+                                  </div>
+                              );
+                          })}
+                      </div>
+                  )}
+                </div> 
+              </div>
+
+
+
+              {/*background_logos && (  
                 <Image
                   alt=""
                   src={background_logos?.url ? strapiImage(background_logos.url) : ""} 
@@ -63,7 +97,7 @@ export const BannerPage = ({
                   height={128}
                   className="mt-20 m-auto flex-1 object-cover"
                 /> 
-              )}
+              )}*/}
 
 
               {/* {background_logos && (

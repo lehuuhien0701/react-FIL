@@ -104,6 +104,27 @@ const pageData = await fetchContentType(
               },
             },
           }, 
+
+          
+            "dynamic-zone.why-join": { 
+              populate: {
+                list_logo: { // Đúng tên repeatable component như Strapi schema
+                  populate: ["image"]
+                }, 
+                background: true,
+                icon_comment: true,        
+                list_details_top_section: true,
+                blockcta: true,
+                our_missions_in_action: true, 
+              },
+            },  
+            "dynamic-zone.banner-page": { 
+              populate: {
+                list_logo: { // Đúng tên repeatable component như Strapi schema
+                  populate: ["image"]
+                },  
+              },
+            },  
  
           // "dynamic-zone.list-category-single": { populate: "*" },
           "dynamic-zone.thank-you-page": { populate: "*" }, 
@@ -113,14 +134,14 @@ const pageData = await fetchContentType(
           "dynamic-zone.our-services-box": { populate: "*" },
           "dynamic-zone.member-profile": { populate: "*" },
           "dynamic-zone.member-directory-block": { populate: "*" },
-          "dynamic-zone.banner-page": { populate: "*" },
+          //"dynamic-zone.banner-page": { populate: "*" },
           "dynamic-zone.section-block": { populate: "*" },
           "dynamic-zone.our-role": { populate: "*" },
           //"dynamic-zone.section-block-commitment-card": { populate: "*" },
           "dynamic-zone.background-full": { populate: "*" },
           "dynamic-zone.real-estate-barometer": { populate: "*" },
           "dynamic-zone.news-innovation": { populate: "*" },
-          "dynamic-zone.why-join": { populate: "*" },
+          //"dynamic-zone.why-join": { populate: "*" },
           "dynamic-zone.three-pillars-section": { populate: "*" },
           "dynamic-zone.our-founding-values": { populate: "*" }, 
         },
