@@ -24,6 +24,7 @@ export const WhyJoin = ({
   link_members_directory = "",
   blockcta = [],
   list_details_top_section = [],
+  list_logo = [],
   pmembers_directory_search = "hide", // thêm prop mới, mặc định hide
   layout = "default", // mặc định là "default"
 }: { 
@@ -41,6 +42,7 @@ export const WhyJoin = ({
   link_members_directory?: string;
   blockcta?: { id?: string | number; title?: string }[];
   list_details_top_section?: { id?: string | number; title?: string }[];
+  list_logo?: { id?: string | number; image?: { url?: string } }[];
   pmembers_directory_search?: "hide" | "show";
   layout?: string; // kiểu dữ liệu cho prop layout
 }) => {
@@ -216,7 +218,7 @@ export const WhyJoin = ({
 
           {/* Member Search & Logo Carousel */}
           {pmembers_directory_search === "show" && (
-          <article className="pt-20 flex flex-col items-center gap-[72px] relative z-20">
+          <article className="pb-20 pt-20 flex flex-col items-center gap-10 relative z-20">
             <div className="px-5 lg:px-20 flex flex-col items-center gap-5 w-full">
               <div className="w-full md:w-[600px] px-5 py-4 rounded-[5px] border border-white flex items-center justify-between">
                 <span className="text-white text-[15px] leading-[26px]">{text_search_members_directory}</span>
@@ -228,20 +230,43 @@ export const WhyJoin = ({
                 </Link>
               </div>
             </div>
-            <div className="w-full relative h-[200px] overflow-hidden">
-              <div className="">
-                {/* Đổi img thành Image */}
-                <Image
-                  className="object-cover m-auto"
-                  alt=""
-                  src="/list-logo.svg" 
-                  width={920}
-                  height={128}
-                  priority
-                />
+            <div className="w-full relative min-h-[200px] md:overflow-hidden">
+              <div className=" ">
+                {list_logo.length > 0 && (
+                  <div className="flex flex-wrap items-center justify-center gap-8 py-6">
+                      {list_logo.map((logo, idx) => {
+                          
+                          // 💡 Logic: Nếu index là số lẻ (1, 3, 5...), dịch chuyển phần tử xuống 16px (translate-y-4)
+                          const verticalOffsetClass = idx % 2 !== 0 ? 'mt-0 lg:mt-20' : 'mt-0'; 
+                          
+                          // NOTE: Bạn có thể dùng translate-y-4/6 nếu bạn muốn hiệu ứng lấn chồng lên nhau (overlap)
+                          // hoặc dùng mt-x/mb-x để tạo khoảng cách xen kẽ (tách rời)
+                          
+                          return (
+                              <div 
+                                  key={logo?.id ?? idx} 
+                                  // Thêm lớp dịch chuyển dọc vào div bọc ngoài
+                                  className={`flex items-center justify-center md:mx-5 ${verticalOffsetClass}`}
+                              >
+                                  {logo?.image?.url && (
+                                      <Image
+                                          src={strapiImage(logo.image.url)}
+                                          alt=""
+                                          width={88}
+                                          height={88}
+                                          className="object-cover w-[88px] h-[88px] rounded-full"
+                                      />
+                                  )}
+                              </div>
+                          );
+                      })}
+                  </div>
+              )}
               </div>
+              {/*
               <div className="absolute left-0 top-0 w-[170px] h-[200px] bg-gradient-to-r from-navy to-transparent"></div>
               <div className="absolute right-0 top-0 w-[170px] h-[200px] bg-gradient-to-l from-navy to-transparent"></div>
+              */}  
             </div>
           </article>
           )}
