@@ -112,8 +112,10 @@ const pageData = await fetchContentType(
                   populate: ["image"]
                 }, 
                 background: true,
+                multiple_logo: true,
                 icon_comment: true,        
                 list_details_top_section: true,
+                list_details_top_section2: true,
                 blockcta: true,
                 our_missions_in_action: true, 
               },

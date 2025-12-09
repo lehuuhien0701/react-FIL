@@ -18,12 +18,16 @@ export const WhyJoin = ({
   button_text = "",
   button_link = "",
   background = null,
+  multiple_logo = null,
   icon_comment = null,
   icon_text = "",
   text_search_members_directory = "",
   link_members_directory = "",
   blockcta = [],
+  subtitle_box_left = "",
+  subtitle_box_right = "",
   list_details_top_section = [],
+  list_details_top_section2 = [],
   list_logo = [],
   pmembers_directory_search = "hide", // thêm prop mới, mặc định hide
   layout = "default", // mặc định là "default"
@@ -36,12 +40,16 @@ export const WhyJoin = ({
   button_text?: string;
   button_link?: string;
   background?: { id?: string; url?: string } | null;
+  multiple_logo?: { id?: string; url?: string } | null;
   icon_comment?: { id?: string; url?: string } | null;
   icon_text?: string;    
   text_search_members_directory?: string;
   link_members_directory?: string;
   blockcta?: { id?: string | number; title?: string }[];
+  subtitle_box_left?: string;
+  subtitle_box_right?: string;
   list_details_top_section?: { id?: string | number; title?: string }[];
+  list_details_top_section2?: { id?: string | number; title?: string }[];
   list_logo?: { id?: string | number; image?: { url?: string } }[];
   pmembers_directory_search?: "hide" | "show";
   layout?: string; // kiểu dữ liệu cho prop layout
@@ -65,15 +73,30 @@ export const WhyJoin = ({
 
   return (
     <>
-      <section className="relative bg-navy "> 
+      
+      <section className="relative bg-navy"> 
           <div 
             className="h-full absolute z-10 left-0 right-0 bottom-0 overflow-hidden" 
             style={{ backgroundImage: "url('/bg-text.svg')", backgroundRepeat: "no-repeat", backgroundPosition: "top left" }}
-        > 
-        
+        >  
         </div>  
-          <article className="overflow-hidden relative z-20">
-              {layout === "list_col_top_section" ? (
+        
+          <article className="relative z-20">
+              
+              {(layout === "curved_background" || layout === "why_it_matters_curved_background") && (
+                <div className="relative">
+                  <div
+                    className="min-h-[80px] absolute z-10 left-0 right-0 bottom-0 overflow-hidden bg-custom-blue -mb-1"
+                    style={{
+                      backgroundImage: "url('/Vector01.svg')",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center top",
+                      backgroundSize: "cover"
+                    }}
+                  ></div>
+                </div>
+              )}
+              {layout === "list_col_top_section" ? ( 
                 <div className="relative z-10 flex flex-col gap-10 lg:gap-20 px-5 lg:px-20 py-10 lg:py-20 max-w-[1440px] w-full m-auto">
                   <h2 className="text-center font-display text-[32px] leading-[40px] lg:text-[37.3px] lg:leading-[45.6px] font-bold text-gold">
                     {title_top_section}
@@ -127,27 +150,67 @@ export const WhyJoin = ({
                 {title_top_section && (
                 <div className="relative z-10 flex flex-col gap-10 px-5 lg:px-20 py-10 lg:py-20 max-w-[1440px] w-full m-auto">
                   <h2 className="font-display text-[32px] leading-[40px] lg:text-[37.3px] lg:leading-[45.6px] font-bold text-[#BBA25A]">{title_top_section}</h2>
-                  <div className="lg:flex md:gap-[100px]">
-                    <div className='mb-10 lg:mb-0'>
-                      <p className="w-[380px] text-[#D9D9D9] text-[15px] leading-[26px] pb-4">
-                        {typeof description_top_section === "string" && description_top_section.trim()
-                          ? parse(description_top_section)
-                          : null}
-                      </p> 
-                    </div>
-                    <div className="w-full">
-                      {Array.isArray(list_details_top_section) && list_details_top_section.length > 0 && list_details_top_section.map((detailsid, idx) => (
-                        <div key={detailsid?.id ?? idx} className="flex items-start gap-[60px] pb-3 mb-3 border-b border-white/20">
-                          <div className="flex items-center gap-[15px] flex-1"> 
-                            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.84192 11.077C5.56569 11.077 5.28999 10.9733 5.07904 10.7653L0 5.75889L1.52576 4.25442L5.84192 8.50885L14.4742 0L16 1.50447L6.6048 10.7653C6.39385 10.9733 6.11816 11.077 5.84192 11.077Z" fill="#BBA25A"/>
-                            </svg> 
-                            <span className="text-white text-sm leading-5">{detailsid?.title ?? ""}</span>
-                          </div>
+                  
+
+                 {layout === "why_it_matters_curved_background" ? ( 
+                     <div className="lg:flex md:gap-[100px]">
+                        <div className='w-6/12'>
+                        {subtitle_box_left && (
+                           <strong className="text-gray-500 text-sm leading-5 font-semibold mb-5 block">{subtitle_box_left}</strong>
+                        )}
+                        
+                           {Array.isArray(list_details_top_section) && list_details_top_section.length > 0 && list_details_top_section.map((detailsid, idx) => (
+                            <div key={detailsid?.id ?? idx} className="flex items-start gap-[60px] pb-3 mb-3 border-b border-white/20">
+                              <div className="flex items-center gap-[15px] flex-1"> 
+                                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.84192 11.077C5.56569 11.077 5.28999 10.9733 5.07904 10.7653L0 5.75889L1.52576 4.25442L5.84192 8.50885L14.4742 0L16 1.50447L6.6048 10.7653C6.39385 10.9733 6.11816 11.077 5.84192 11.077Z" fill="#BBA25A"/>
+                                </svg> 
+                                <span className="text-white text-sm leading-5">{detailsid?.title ?? ""}</span>
+                              </div>
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  </div>  
+                        <div className="w-6/12"> 
+                          {subtitle_box_right && (
+                            <strong className="text-gray-500 text-sm leading-5 font-semibold mb-5 block">{subtitle_box_right}</strong>
+                          )}   
+                           {Array.isArray(list_details_top_section2) && list_details_top_section2.length > 0 && list_details_top_section2.map((detailsid, idx) => (
+                            <div key={detailsid?.id ?? idx} className="flex items-start gap-[60px] pb-3 mb-3 border-b border-white/20">
+                              <div className="flex items-center gap-[15px] flex-1"> 
+                                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.84192 11.077C5.56569 11.077 5.28999 10.9733 5.07904 10.7653L0 5.75889L1.52576 4.25442L5.84192 8.50885L14.4742 0L16 1.50447L6.6048 10.7653C6.39385 10.9733 6.11816 11.077 5.84192 11.077Z" fill="#BBA25A"/>
+                                </svg> 
+                                <span className="text-white text-sm leading-5">{detailsid?.title ?? ""}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div> 
+                  
+                  ) : (
+                     <div className="lg:flex md:gap-[100px]">
+                        <div className='mb-10 lg:mb-0'>
+                          <p className="w-[380px] text-[#D9D9D9] text-[15px] leading-[26px] pb-4">
+                            {typeof description_top_section === "string" && description_top_section.trim()
+                              ? parse(description_top_section)
+                              : null}
+                          </p> 
+                        </div>
+                        <div className="w-full">
+                          {Array.isArray(list_details_top_section) && list_details_top_section.length > 0 && list_details_top_section.map((detailsid, idx) => (
+                            <div key={detailsid?.id ?? idx} className="flex items-start gap-[60px] pb-3 mb-3 border-b border-white/20">
+                              <div className="flex items-center gap-[15px] flex-1"> 
+                                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M5.84192 11.077C5.56569 11.077 5.28999 10.9733 5.07904 10.7653L0 5.75889L1.52576 4.25442L5.84192 8.50885L14.4742 0L16 1.50447L6.6048 10.7653C6.39385 10.9733 6.11816 11.077 5.84192 11.077Z" fill="#BBA25A"/>
+                                </svg> 
+                                <span className="text-white text-sm leading-5">{detailsid?.title ?? ""}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>  
+                  )} 
+
                 </div>
                 )}
               </>
@@ -230,37 +293,48 @@ export const WhyJoin = ({
                 </Link>
               </div>
             </div>
-            <div className="w-full relative min-h-[200px] md:overflow-hidden">
-              <div className=" ">
-                {list_logo.length > 0 && (
-                  <div className="flex flex-wrap items-center justify-center gap-8 py-6">
-                      {list_logo.map((logo, idx) => { 
-                          const verticalOffsetClass = idx % 2 !== 0 ? 'mt-0 lg:mt-20' : 'mt-0';  
-                          return (
-                              <div 
-                                  key={logo?.id ?? idx}  
-                                  className={`flex items-center justify-center md:mx-5 ${verticalOffsetClass}`}
-                              >
-                                  {logo?.image?.url && (
-                                      <Image
-                                          src={strapiImage(logo.image.url)}
-                                          alt=""
-                                          width={88}
-                                          height={88}
-                                          className="object-cover w-[88px] h-[88px] rounded-full"
-                                      />
-                                  )}
-                              </div>
-                          );
-                      })}
-                  </div>
-              )}
+            {list_logo.length > 0 && (
+              <div className="w-full relative min-h-[200px] md:overflow-hidden">
+                <div className=" ">
+                  
+                    <div className="flex flex-wrap items-center justify-center gap-8 py-6">
+                        {list_logo.map((logo, idx) => { 
+                            const verticalOffsetClass = idx % 2 !== 0 ? 'mt-0 lg:mt-20' : 'mt-0';  
+                            return (
+                                <div 
+                                    key={logo?.id ?? idx}  
+                                    className={`flex items-center justify-center md:mx-5 ${verticalOffsetClass}`}
+                                >
+                                    {logo?.image?.url && (
+                                        <Image
+                                            src={strapiImage(logo.image.url)}
+                                            alt=""
+                                            width={88}
+                                            height={88}
+                                            className="object-cover w-[88px] h-[88px] rounded-full"
+                                        />
+                                    )}
+                                </div>
+                            );
+                        })}
+                    </div>
+                
+                </div>
+                {/*
+                <div className="absolute left-0 top-0 w-[170px] h-[200px] bg-gradient-to-r from-navy to-transparent"></div>
+                <div className="absolute right-0 top-0 w-[170px] h-[200px] bg-gradient-to-l from-navy to-transparent"></div>
+                */}  
               </div>
-              {/*
-              <div className="absolute left-0 top-0 w-[170px] h-[200px] bg-gradient-to-r from-navy to-transparent"></div>
-              <div className="absolute right-0 top-0 w-[170px] h-[200px] bg-gradient-to-l from-navy to-transparent"></div>
-              */}  
-            </div>
+              )}
+              {multiple_logo && ( 
+                <Image
+                    alt=""
+                    src={multiple_logo?.url ? strapiImage(multiple_logo.url) : ""}
+                    width={920}
+                    height={128}
+                    className="w-full lg:w-[50%] flex-1 object-cover"
+                  />
+              )}
           </article>
           )}
       </section>

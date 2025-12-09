@@ -93,19 +93,20 @@ const pageData = await fetchContentType(
             }, 
 
 
-            "dynamic-zone.why-join": { 
+           "dynamic-zone.why-join": { 
               populate: {
                 list_logo: { // Đúng tên repeatable component như Strapi schema
                   populate: ["image"]
                 }, 
                 background: true,
+                multiple_logo: true,
                 icon_comment: true,        
                 list_details_top_section: true,
+                list_details_top_section2: true,
                 blockcta: true,
                 our_missions_in_action: true, 
               },
-            }, 
-
+            },  
 
             
 

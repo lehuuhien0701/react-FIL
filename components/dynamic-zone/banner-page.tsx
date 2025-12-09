@@ -58,17 +58,17 @@ export const BannerPage = ({
               {description}
               </p>
 
-
+              {list_logo.length > 0 && (  
               <div className="w-full relative min-h-[200px] md:overflow-hidden">
                 <div className=" ">
-                    {list_logo.length > 0 && (
+                    
                       <div className="flex flex-wrap items-center justify-center gap-8 py-6">
                           {list_logo.map((logo, idx) => { 
                               const verticalOffsetClass = idx % 2 !== 0 ? 'mt-0 lg:mt-20' : 'mt-0';  
                               return (
                                   <div 
                                       key={logo?.id ?? idx}  
-                                      className={`flex items-center justify-center md:mx-5 ${verticalOffsetClass}`}
+                                      className={`bg-white rounded-full flex items-center justify-center md:mx-5 ${verticalOffsetClass}`}
                                   >
                                       {logo?.image?.url && (
                                           <Image
@@ -83,10 +83,10 @@ export const BannerPage = ({
                               );
                           })}
                       </div>
-                  )}
+                  
                 </div> 
               </div>
-
+              )}
 
 
               {/*background_logos && (  

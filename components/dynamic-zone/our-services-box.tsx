@@ -75,7 +75,7 @@ export const OurServicesBox = ({
         <h2 className="text-center text-[32px] font-serif font-bold text-[#0A2540] mb-20">
           {title_section}
         </h2>
-        <div className="flex flex-col md:flex-row justify-center gap-6 md:gap-10 max-w-screen-xl mx-auto">
+        <div className="flex flex-col md:flex-row justify-center gap-[10px] max-w-screen-xl mx-auto"> 
           
 
 
@@ -143,7 +143,7 @@ export const OurServicesBox = ({
 
           {/* Board of Directors */}
           <div className="relative w-full md:w-1/3 flex flex-col gap-4">
-              <div className="bg-[#EDF0E5] p-10 mb-[10px] min-h-[251px]">
+              <div className="bg-[#EDF0E5] p-10 mb-[10px] min-h-[190px]">
                 {box_center_1_icon?.url && (
                   <Image
                     alt='icon comment'
@@ -154,11 +154,11 @@ export const OurServicesBox = ({
                   />
                 )}
                 <h3 className="font-inter font-medium text-xl mb-3 text-[#0A2540]">{box_center_1_title}</h3>
-                <p className="text-[15px] leading-[26px] mb-5 text-[#0A2540]">
+                <p className="text-[15px] leading-[26px] text-[#0A2540] m-0">
                   {box_center_1_description}
                 </p> 
               </div>
-              <div className="bg-white p-10 min-h-[251px]">
+              <div className="bg-white p-10 min-h-[190px]">
                 {box_center_2_icon?.url && (
                   <Image
                     alt='icon comment'
@@ -169,7 +169,7 @@ export const OurServicesBox = ({
                   />
                 )}
                 <h3 className="font-inter font-medium text-xl mb-3 text-[#0A2540]">{box_center_2_title}</h3>
-                <p className="text-[15px] leading-[26px] mb-5 text-[#88938F]">
+                <p className="text-[15px] leading-[26px] text-[#88938F] m-0">
                   {box_center_2_description}
                 </p> 
               </div>

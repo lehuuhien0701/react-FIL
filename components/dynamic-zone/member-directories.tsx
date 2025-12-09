@@ -14,7 +14,7 @@ interface Member {
   button_text?: string;
   button_link?: string;
   thumbnail?: Media;
-  logo?: Media;
+  logo?: Media; 
 }
 
 export const MemberDirectoryBlock = ({ locale, text_search }: { locale?: string; text_search?: string }) => {
@@ -38,7 +38,7 @@ export const MemberDirectoryBlock = ({ locale, text_search }: { locale?: string;
           setFilteredMembers(res.data); // default: hiển thị tất cả
         }
       } catch (error) {
-        console.error("Lỗi khi fetch member-directory:", error);
+        console.error("error fetch member-directory1:", error);
       } finally {
         setLoading(false);
       }

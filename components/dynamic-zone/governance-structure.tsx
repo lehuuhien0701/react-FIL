@@ -67,7 +67,7 @@ export const GovernanceStructure = ({
   return (
     <>
       {layout === "GovernanceStructure" && (
-        <section className="w-full py-16 px-2">
+        <section className="w-full py-16 px-2 bg-[#EDEBE7] bg-[url('/bg-line2.svg')] bg-top bg-repeat-y">
           <h2 className="text-center text-[32px] font-serif font-bold text-[#0A2540] mb-20">
             {title_section}
           </h2>
@@ -87,7 +87,7 @@ export const GovernanceStructure = ({
               return (
                 <div
                   key={item.id ?? idx}
-                  className={`min-h-[394px] relative rounded-none shadow-lg w-full md:w-1/3 px-8 pt-8 flex flex-col gap-4 ${bgClass}`}
+                  className={`min-h-[330px] relative rounded-none shadow-lg w-full md:w-1/3 px-8 pt-8 flex flex-col gap-4 ${bgClass}`}
                 >
                   <div className="relative z-10">
                     <h3 className="font-bold text-lg mb-2 text-center">{item.title}</h3>
@@ -124,7 +124,7 @@ export const GovernanceStructure = ({
                     </div>
                   </div>
                   {item.thumbnail?.url && (
-                    <div className="flex justify-center absolute left-0 bottom-0">
+                    <div className={`flex justify-center absolute ${idx === 2 ? "right-0" : "left-0"} bottom-0`}>
                       <Image
                         src={item.thumbnail?.url ? strapiImage(item.thumbnail.url) : ""}
                         alt={item.thumbnail?.alternativeText ?? ""}
