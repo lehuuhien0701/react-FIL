@@ -86,9 +86,9 @@ export const BannerPage = ({
                                           </div> 
                                           <div>
                                               {logo?.name && ( 
-                                                  <span className="flex mt-3 text-sm text-center items-center text-white">
-                                                      <strong className="text-base">{logo.name}</strong> -  {logo.position}
-                                                  </span> 
+                                                  <span className="block mt-3 text-sm text-center items-center text-white">
+                                                      <strong className="text-base block">{logo.name}</strong> {logo.position}
+                                                  </span>  
                                               )} 
                                           </div>
                                         </div>
