@@ -1,6 +1,3 @@
- 
-
-
 "use client";
 import React from "react";
 import { Container } from "../container";
@@ -22,7 +19,11 @@ export const BannerPage = ({
   subtitle?: string;
   description?: string;
   background_logos?: { id?: string; url?: string } | null;
-  list_logo?: { id?: string | number; image?: { url?: string } }[];
+  list_logo?: { 
+    id?: string | number; 
+    image?: { url?: string }; 
+    name_and_position?: string; 
+  }[];
 }) => {
   const getImageSrc = (media: any) => {
     try {
@@ -58,34 +59,45 @@ export const BannerPage = ({
               {description}
               </p>
 
-              {list_logo.length > 0 && (  
-              <div className="w-full relative min-h-[200px] md:overflow-hidden">
-                <div className=" ">
+              {Array.isArray(list_logo) && list_logo.length > 0 && (  
+                <div className="w-full relative min-h-[200px] md:overflow-hidden">
+                  <div className=" ">
+                      
+                        <div className="flex flex-wrap items-center justify-center gap-8 py-6">
+                            {list_logo.map((logo, idx) => { 
+                                const verticalOffsetClass = idx % 2 !== 0 ? 'mt-0 lg:mt-20' : 'mt-0';  
+                                return (
+                                    <>
+                                        <div className="text-center">
+                                          <div 
+                                              key={logo?.id ?? idx}  
+                                              className={`m-auto block w-[88px] h-[88px] rounded-full bg-white flex-col items-center justify-center ${verticalOffsetClass}`}
+                                          >
+                                              {logo?.image?.url && (
+                                                  <Image
+                                                      src={strapiImage(logo.image.url)}
+                                                      alt=""
+                                                      width={88}
+                                                      height={88}
+                                                      className="object-cover w-[88px] h-[88px] rounded-full"
+                                                  />
+                                              )}  
+                                          </div> 
+                                          <div>
+                                              {logo?.name_and_position && ( 
+                                                  <span className="mt-3 block text-sm text-center text-white">
+                                                      {logo.name_and_position}
+                                                  </span> 
+                                              )} 
+                                          </div>
+                                        </div>
+                                    </>
+                                );
+                            })}
+                        </div>
                     
-                      <div className="flex flex-wrap items-center justify-center gap-8 py-6">
-                          {list_logo.map((logo, idx) => { 
-                              const verticalOffsetClass = idx % 2 !== 0 ? 'mt-0 lg:mt-20' : 'mt-0';  
-                              return (
-                                  <div 
-                                      key={logo?.id ?? idx}  
-                                      className={`bg-white rounded-full flex items-center justify-center md:mx-5 ${verticalOffsetClass}`}
-                                  >
-                                      {logo?.image?.url && (
-                                          <Image
-                                              src={strapiImage(logo.image.url)}
-                                              alt=""
-                                              width={88}
-                                              height={88}
-                                              className="object-cover w-[88px] h-[88px] rounded-full"
-                                          />
-                                      )}
-                                  </div>
-                              );
-                          })}
-                      </div>
-                  
-                </div> 
-              </div>
+                  </div> 
+                </div>
               )}
 
 
