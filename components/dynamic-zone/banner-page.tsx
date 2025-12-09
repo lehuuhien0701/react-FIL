@@ -22,7 +22,8 @@ export const BannerPage = ({
   list_logo?: { 
     id?: string | number; 
     image?: { url?: string }; 
-    name_and_position?: string; 
+    name?: string; 
+    position?: string; 
   }[];
 }) => {
   const getImageSrc = (media: any) => {
@@ -84,9 +85,9 @@ export const BannerPage = ({
                                               )}  
                                           </div> 
                                           <div>
-                                              {logo?.name_and_position && ( 
-                                                  <span className="mt-3 block text-sm text-center text-white">
-                                                      {logo.name_and_position}
+                                              {logo?.name && ( 
+                                                  <span className="flex mt-3 text-sm text-center items-center text-white">
+                                                      <strong className="text-base">{logo.name}</strong> -  {logo.position}
                                                   </span> 
                                               )} 
                                           </div>
