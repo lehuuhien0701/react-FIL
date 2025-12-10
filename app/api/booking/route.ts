@@ -24,11 +24,6 @@ export async function POST(request: Request) {
       process.env.MAILJET_SECRET_KEY || ''
     );
 
-    const recipientEmails = {
-      secretimmo: process.env.SECRETIMMO_EMAIL,
-      nextimmo: process.env.NEXTIMMO_EMAIL
-    };
-
     // HTML cho email người dùng
     const userEmailHtml = `
     <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; border-radius: 8px;">
@@ -94,6 +89,13 @@ export async function POST(request: Request) {
 
     // Gửi email cho quản trị viên
     try {
+      const adminEmail = process.env.EMAIL_USER;
+
+      // Kiểm tra email hợp lệ trước khi gửi
+      if (!adminEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(adminEmail)) {
+        throw new Error(`Invalid admin email: "${adminEmail}"`);
+      }
+
       await mailjet
         .post('send', { version: 'v3.1' })
         .request({
@@ -105,7 +107,7 @@ export async function POST(request: Request) {
               },
               To: [
                 {
-                  Email: (recipientEmails as any)[formData.emailType] || process.env.ADMIN_EMAIL,
+                  Email: adminEmail,
                   Name: 'Admin'
                 }
               ],

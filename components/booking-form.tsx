@@ -27,6 +27,7 @@ export const BookingForm = ({
     message: '',
     agreement: true
   });
+  const [showError, setShowError] = useState<string | null>(null);
 
   const validateForm = () => {
     const newErrors: {[key: string]: string} = {};
@@ -56,40 +57,34 @@ export const BookingForm = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!validateForm()) {
       return;
     }
-    
     try {
       setLoading(true);
+      setShowError(null);
       const response = await fetch('/api/booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData), // purpose is now included
+        body: JSON.stringify(formData),
       });
-
       if (!response.ok) {
         throw new Error('Failed to submit form');
       }
-
-      // Reset form after successful submission
       setFormData({
         name: '', 
         email: '',
         phone: '',
-        purpose: '', // reset purpose
+        purpose: '',
         message: '',
         agreement: true
       });
-
-      // Redirect to the Thank You page
       router.push('/thank-you');
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert(data.form_message.submit_error);
+      setShowError(data.form_message?.submit_error || 'Error submitting form');
     } finally {
       setLoading(false);
     }
@@ -114,7 +109,22 @@ export const BookingForm = ({
   const submitLabel = data?.submit_label || "Submit";
 
   return (
-    <form onSubmit={handleSubmit} className={`space-y-5 ${className || ''}`}>  
+    <form onSubmit={handleSubmit} className={`space-y-5 ${className || ''}`}>
+      {/* Popup lỗi */}
+      {showError && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-lg p-6 shadow-lg text-center max-w-xs">
+            <div className="text-red-600 mb-4">{showError}</div>
+            <button
+              className="mt-2 px-4 py-2 bg-primary text-white rounded"
+              onClick={() => setShowError(null)}
+              type="button"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Hàng 3 ô: Full Name – Email – Phone */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -239,8 +249,10 @@ export const BookingForm = ({
           className="inline-flex items-center text-[16px] gap-3 text-[#BBA25A] font-medium"
           disabled={loading}
         >
+          {loading ? (
+            <span className="animate-spin mr-2 w-5 h-5 border-2 border-[#BBA25A] border-t-transparent rounded-full"></span>
+          ) : null}
           {submitLabel}
-
           <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
             <circle cx="30" cy="30" r="30" fill="#BBA25A" />
             <path d="M25 35L35.8333 24.167M35.8333 24.167V34.567M35.8333 24.167H25.4333"
