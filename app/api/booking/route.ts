@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import Mailjet from 'node-mailjet';
 import { NextResponse } from 'next/server';
 import { translations } from '@/translations/common';
 import type { Translations } from '@/translations/types'; // thêm dòng này
@@ -18,30 +18,15 @@ export async function POST(request: Request) {
       : 'en';
     const t = translations[locale as keyof typeof translations] || translations['en']; // fallback nếu không có bản dịch
 
-    // Tạo transporter cho nodemailer
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: Number(process.env.EMAIL_PORT),
-      secure: Number(process.env.EMAIL_PORT) === 465, // true for 465, false for 587
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-    // DEBUG: log cấu hình transporter (ẩn pass)
-    console.log("[booking API] transporter config:", {
-      host: process.env.EMAIL_HOST,
-      port: process.env.EMAIL_PORT,
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS ? "***" : undefined,
-    });
+    // Khởi tạo Mailjet client thay cho nodemailer
+    const mailjet = Mailjet.apiConnect(
+      process.env.MAILJET_API_KEY || '',
+      process.env.MAILJET_SECRET_KEY || ''
+    );
 
     const recipientEmails = {
-    secretimmo: process.env.SECRETIMMO_EMAIL,
-    nextimmo: process.env.NEXTIMMO_EMAIL
+      secretimmo: process.env.SECRETIMMO_EMAIL,
+      nextimmo: process.env.NEXTIMMO_EMAIL
     };
 
     // HTML cho email người dùng
@@ -53,14 +38,13 @@ export async function POST(request: Request) {
       <h3>${t.email_personal_info || "Informations personnelles :"}</h3>
       <ul>
         <li><strong>${t.first_name_label || "Nom"} :</strong> ${formData.name}</li>
-        <li><strong>${t.last_name_label || "Prénom"} :</strong> ${formData.lastName}</li>
         <li><strong>${t.email_label || "Email"} :</strong> ${formData.email}</li>
         <li><strong>${t.phone_label || "Téléphone"} :</strong> ${formData.phone}</li>
         <li><strong>${t.message_label || "Message"} :</strong> ${formData.message}</li>
       </ul>
       <p>${t.email_contact_soon || "Nous vous contacterons très prochainement."}</p>
       <hr style="border-top: 1px solid #ddd; margin: 20px 0;" />
-      <p style="color: #999;">© ${currentYear} Fiduciaire Premier Luxembourg S.A.. Tous droits réservés.</p>
+      <p style="color: #999;">© ${currentYear} Fédération Immobilière du Luxembourg (FIL).. Tous droits réservés.</p>
     </div>
     `;
 
@@ -71,43 +55,66 @@ export async function POST(request: Request) {
       <h3>${t.email_personal_info || "Informations personnelles :"}</h3>
       <ul>
         <li><strong>${t.first_name_label || "Nom"} :</strong> ${formData.name}</li>
-        <li><strong>${t.last_name_label || "Prénom"} :</strong> ${formData.lastName}</li>
         <li><strong>${t.email_label || "Email"} :</strong> ${formData.email}</li>
         <li><strong>${t.phone_label || "Téléphone"} :</strong> ${formData.phone}</li>
         <li><strong>${t.message_label || "Message"} :</strong> ${formData.message}</li>
       </ul>
       <hr style="border-top: 1px solid #ddd; margin: 20px 0;" />
-      <p style="color: #999;">© ${currentYear} Fiduciaire Premier Luxembourg S.A.. Tous droits réservés.</p>
+      <p style="color: #999;">© ${currentYear} Fédération Immobilière du Luxembourg (FIL).. Tous droits réservés.</p>
     </div>
     `;
 
-    // Tùy chọn gửi email cho người dùng
-    const userMailOptions = {
-      from: '"Fiduciaire Premier Luxembourg S.A." <noreply@nextimmo.lu>',
-      to: formData.email,
-      subject: 'Votre demande de propriété a été reçue',
-      html: userEmailHtml,
-    };
-
-    // Tùy chọn gửi email cho quản trị viên
-    const adminMailOptions = {
-      from: '"Fiduciaire Premier Luxembourg S.A." <noreply@nextimmo.lu>',
-      to: (recipientEmails as any)[formData.emailType] || process.env.ADMIN_EMAIL,
-      subject: 'Nouvelle demande de propriété',
-      html: adminEmailHtml,
-    };
-
-    // Gửi email
+    // Gửi email cho người dùng
     try {
-      const userResult = await transporter.sendMail(userMailOptions);
-      console.log("[booking API] userMailOptions result:", userResult);
+      await mailjet
+        .post('send', { version: 'v3.1' })
+        .request({
+          Messages: [
+            {
+              From: {
+                Email: process.env.EMAIL_USER || 'contact@federation-immobiliere.lu',
+                Name: 'Fédération Immobilière du Luxembourg (FIL).'
+              },
+              To: [
+                {
+                  Email: formData.email,
+                  Name: formData.name
+                }
+              ],
+              Subject: 'Votre demande de propriété a été reçue',
+              HTMLPart: userEmailHtml
+            }
+          ]
+        });
+      console.log("[booking API] userMailOptions result: sent via Mailjet");
     } catch (err) {
       console.error("[booking API] Error sending user email:", err);
       throw err;
     }
+
+    // Gửi email cho quản trị viên
     try {
-      const adminResult = await transporter.sendMail(adminMailOptions);
-      console.log("[booking API] adminMailOptions result:", adminResult);
+      await mailjet
+        .post('send', { version: 'v3.1' })
+        .request({
+          Messages: [
+            {
+              From: {
+                Email: process.env.EMAIL_USER || 'contact@federation-immobiliere.lu',
+                Name: 'Fédération Immobilière du Luxembourg (FIL).'
+              },
+              To: [
+                {
+                  Email: (recipientEmails as any)[formData.emailType] || process.env.ADMIN_EMAIL,
+                  Name: 'Admin'
+                }
+              ],
+              Subject: 'Nouvelle demande de propriété',
+              HTMLPart: adminEmailHtml
+            }
+          ]
+        });
+      console.log("[booking API] adminMailOptions result: sent via Mailjet");
     } catch (err) {
       console.error("[booking API] Error sending admin email:", err);
       throw err;

@@ -239,7 +239,7 @@ export const BookingForm = ({
           className="inline-flex items-center text-[16px] gap-3 text-[#BBA25A] font-medium"
           disabled={loading}
         >
-          {loading ? "Submitting..." : submitLabel}
+          {submitLabel}
 
           <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
             <circle cx="30" cy="30" r="30" fill="#BBA25A" />
