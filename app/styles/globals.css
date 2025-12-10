@@ -74,3 +74,15 @@
 .peer2:checked + .custom-checkbox-button2 > svg {
   @apply opacity-100;
 }
+/**/
+.page-default h2, .page-default h3 {  
+  /* @apply font-display italic-normal font-bold text-[32px] leading-[40px] text-primary; */
+  @apply font-display font-bold text-[32px] leading-[40px] text-primary mb-4;
+  
+}
+.page-default p, .page-default {
+  @apply font-inter font-normal text-[16px] leading-[26px] text-[#88938F];
+} 
+.page-default strong {
+  @apply font-inter font-bold text-[16px] leading-[26px] text-[#0A2540];
+}

@@ -63,23 +63,23 @@ export const BannerHome = ({
                 </p>
               </div>
               <div className="flex items-center gap-[25px]">
-                {primary_button && (
+                {primary_button?.text && (
                   <Link
                     className="flex items-center justify-center gap-2.5 px-5 h-10 rounded-full border border-beige/20 bg-navy text-white text-sm leading-[14px]"
                     href={primary_button?.URL ?? "#"}
                   >
-                    {primary_button?.text ?? "Join now"}
+                    {primary_button.text}
                     <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M5.19727 12.6203L9.0006 8.81703C9.44977 8.36787 9.44977 7.63287 9.0006 7.1837L5.19727 3.38037" stroke="white" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </Link>
                 )}
-                {second_button && (
+                {second_button?.text && (
                   <Link
                     className="flex items-center gap-2.5 text-[#BBA25A] text-sm leading-[14px]"
                     href={second_button?.URL ?? "#"}
                   >
-                    {second_button?.text ?? "Access the Members Area"}
+                    {second_button.text}
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M4 12.0001L12.6667 3.3335M12.6667 3.3335V11.6535M12.6667 3.3335H4.34667" stroke="#BBA25A" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
