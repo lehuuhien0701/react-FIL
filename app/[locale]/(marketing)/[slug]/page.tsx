@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import PageContent from '@/lib/shared/PageContent';
 import fetchContentType from '@/lib/strapi/fetchContentType';
 import { generateMetadataObject } from '@/lib/shared/metadata';
@@ -10,22 +11,30 @@ params,
 }: {
 params: { locale: string; slug: string };
 }): Promise<Metadata> {
-// Lệnh gọi API cho Metadata (Giữ nguyên)
 const pageData = await fetchContentType(
-"pages",
-{
-filters: {
-slug: params.slug,
-locale: params.locale,
-},
-populate: "seo.metaImage",
-},
-true,
+  "pages",
+  {
+  filters: {
+  slug: params.slug,
+  locale: params.locale,
+  },
+  populate: "seo.metaImage",
+  },
+  true,
 );
 
-const seo = pageData?.seo;
-const metadata = generateMetadataObject(seo);
-return metadata;
+
+  // Xóa hoặc giữ lại console.log nếu cần debug
+  // console.log("Page data:", pageData);
+
+  // Trả về metadata mặc định nếu không có dữ liệu
+  if (!pageData || !pageData.slug) {
+    return {};
+  }
+
+  const seo = pageData?.seo;
+  const metadata = generateMetadataObject(seo);
+  return metadata;
 }
 
 export default async function Page({ params }: { params: { locale: string, slug: string } }) {
@@ -153,33 +162,6 @@ const pageData = await fetchContentType(
   true
 );
 
-const globalData = await fetchContentType(
-  "global",
-  {
-    populate: {
-      global_highlight_blocks: {
-        on: {
-          "global.global_highlight_blocks": {
-            populate: ["thumbnail", "list_details"],
-          },
-        },
-      },
-    },
-  },
-  true
-);
-
-
-
-
-
-
-
-
-
-// Truy cập dữ liệu block bên trong dynamic zone
-const highlightBlocks = globalData?.global_highlight_blocks ?? [];
-//console.log("Highlight blocks:", highlightBlocks);
 
 const localizedSlugs = pageData?.localizations?.reduce(
 (acc: Record<string, string>, localization: any) => {
@@ -188,6 +170,10 @@ return acc;
 },
 { [params.locale]: params.slug }
 ) || { [params.locale]: params.slug };
+
+if (!pageData || !pageData.slug) {
+  notFound();
+}
 
 return (
 <>
@@ -203,17 +189,17 @@ backgroundSize: 'cover',
 backgroundPosition: 'center'
 }}
 >
-{pageData.banner_title ? (
-<h1 className="mb-3 text-[50px] md:text-[66px] lg:text-[78px] leading-none text-center font-bold">
-{pageData.banner_title}
-</h1>
-) : null}
+  {pageData.banner_title ? (
+  <h1 className="mb-3 text-[50px] md:text-[66px] lg:text-[78px] leading-none text-center font-bold">
+  {pageData.banner_title}
+  </h1>
+  ) : null}
 
-{pageData.banner_description ? (
-<div className="mx-auto text-[28px] text-center">
-{pageData.banner_description}
-</div>
-) : null}
+  {pageData.banner_description ? (
+    <div className="mx-auto text-[28px] text-center">
+    {pageData.banner_description}
+    </div>
+  ) : null}
 
 </div>
 ) : null }
