@@ -58,7 +58,8 @@ export async function BlogLayout({
   const highlightBlocks = globalData?.global_highlight_blocks ?? [];
   // Debug: log the highlightBlocks array to inspect thumbnail structure
  //console.log('highlightBlocks:', globalData);
-
+console.log('Fetched globalData:', globalData);
+    console.log('share_label:', globalData?.share_label);
   // Thêm dòng này để lấy currentLocale từ params hoặc fallback về i18n.defaultLocale
   const params = typeof window !== "undefined" ? (require('next/navigation').useParams() as any) : {};
   const currentLocale: Locale = (params?.locale as Locale) || (locale as Locale) || (i18n.defaultLocale as Locale);
@@ -69,11 +70,11 @@ export async function BlogLayout({
 
         <div className='max-w-[1440px] mx-auto w-full'>
           <Image
-            className='w-full'
+            className='w-full h-[335px] object-cover'
             alt={article.title}
             src={article.image ? (strapiImage(article.image.url) ?? "/thumbnail04.jpg") : "/thumbnail04.jpg"}
             width={1440}
-            height={600}
+            height={335}
             priority={false}
           />
         </div>
@@ -92,7 +93,7 @@ export async function BlogLayout({
           {children}
 
           <div className='mt-4'>
-              <p className='text-center'>{globalData?.Articles?.share_label ?? "Share this post"}</p>
+             <p className='text-center'>{globalData?.share_label ?? "Share this post"}</p>
               <div className='flex justify-center gap-6 mt-4'>
                   <div className="flex items-center gap-4">
                     <a
