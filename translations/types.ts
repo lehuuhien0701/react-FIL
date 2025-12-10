@@ -4,7 +4,9 @@ export type TranslationKeys = {
   previous: string;
   next: string;
   read_more: string;
+  find_out_more: string;
   menu: string;
+  allnews: string;
   more_news_button: string;
   message: string;
   submit: string;

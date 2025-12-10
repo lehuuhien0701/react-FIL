@@ -178,12 +178,28 @@ export const Blog = ({
           }) ?? [];
 
         setCategories([
-          { key: "all", label: "All News", slug: "all" },
+          {
+            key: "all",
+            label:
+              (translations as any)[currentLocale]?.allnews ||
+              (translations as any)[i18n.defaultLocale]?.allnews ||
+              "All News",
+            slug: "all",
+          },
           ...cats,
         ]);
       } catch (err) {
         console.error("Lỗi khi fetch categories:", err);
-        setCategories([{ key: "all", label: "All News", slug: "all" }]);
+        setCategories([
+          {
+            key: "all",
+            label:
+              (translations as any)[currentLocale]?.allnews ||
+              (translations as any)[i18n.defaultLocale]?.allnews ||
+              "All News",
+            slug: "all",
+          },
+        ]);
       }
     };
 
@@ -474,7 +490,11 @@ export const Blog = ({
                             href={href}
                             className="text-center inline-block w-full sm:w-auto text-sm leading-[44px] font-medium text-white bg-primary h-11 px-10 hover:bg-[#CCAB80] hover:text-[#2F324A] transition duration-200"
                           >
-                            {readmore?.trim() ? readmore : "Read more"}
+                            {readmore?.trim()
+                              ? readmore
+                              : (translations as any)[currentLocale]?.find_out_more ||
+                                (translations as any)[i18n.defaultLocale]?.find_out_more ||
+                                "Find out more"}
                           </Link>
                         </div>
                       </div>
@@ -557,7 +577,11 @@ export const Blog = ({
                             href={href}
                             className="font-inter text-[13px] leading-5 text-[#BBA25A] flex items-center"
                           >
-                            {readmore?.trim() ? readmore : "Find out more"}
+                            {readmore?.trim()
+                              ? readmore
+                              : (translations as any)[currentLocale]?.find_out_more ||
+                                (translations as any)[i18n.defaultLocale]?.find_out_more ||
+                                "Find out more"}
                             <svg
                               className="ml-3"
                               width="10"
