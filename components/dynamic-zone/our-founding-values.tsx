@@ -39,7 +39,7 @@ export const OurFoundingValues = ({
   return (
     <>
       <section className="py-20 bg-white bg-[url('/bg-line.svg')] bg-top bg-repeat-y">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-[1110px] mx-auto px-6">
           <h2 className="text-center text-[#0A2540] font-serif font-semibold text-2xl lg:text-3xl mb-10">
             {title_section}
           </h2>
