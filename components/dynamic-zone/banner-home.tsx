@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "../container";
 import parse from "html-react-parser";
 import Image from "next/image";
@@ -41,6 +41,22 @@ export const BannerHome = ({
     }
   };
 
+  // Popup state
+  const [showPopup, setShowPopup] = useState(false);
+
+  // Dynamically load Typeform script when popup is shown
+  useEffect(() => {
+    if (showPopup) {
+      const script = document.createElement("script");
+      script.src = "//embed.typeform.com/next/embed.js";
+      script.async = true;
+      document.body.appendChild(script);
+      return () => {
+        document.body.removeChild(script);
+      };
+    }
+  }, [showPopup]);
+
   return (
     
     <section className="bg-navy">
@@ -63,7 +79,7 @@ export const BannerHome = ({
                 </p>
               </div>
               <div className="flex items-center gap-[25px]">
-                {primary_button?.text && (
+                {/* {primary_button?.text && (
                   <Link
                     className="flex items-center justify-center gap-2.5 px-5 h-10 rounded-full border border-beige/20 bg-navy text-white text-sm leading-[14px]"
                     href={primary_button?.URL ?? "#"}
@@ -73,7 +89,23 @@ export const BannerHome = ({
                       <path d="M5.19727 12.6203L9.0006 8.81703C9.44977 8.36787 9.44977 7.63287 9.0006 7.1837L5.19727 3.38037" stroke="white" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </Link>
-                )}
+                )} */}
+
+                {primary_button?.text && (
+                  <button
+                    type="button"
+                    className="flex items-center justify-center gap-2.5 px-5 h-10 rounded-full border border-beige/20 bg-navy text-white text-sm leading-[14px]"
+                    onClick={() => setShowPopup(true)}
+                  >
+                    {primary_button.text}
+                    <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.19727 12.6203L9.0006 8.81703C9.44977 8.36787 9.44977 7.63287 9.0006 7.1837L5.19727 3.38037" stroke="white" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+                )}    
+
+
+
                 {second_button?.text && (
                   <Link
                     className="flex items-center gap-2.5 text-[#BBA25A] text-sm leading-[14px]"
@@ -108,6 +140,23 @@ export const BannerHome = ({
           
         </div>
         </Container>      
-      </section>
+      {/* Popup/modal */}
+      {showPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className="max-w-3xl w-full relative">
+            <button
+              className="absolute top-2 right-2 text-white hover:text-white z-10"
+              onClick={() => setShowPopup(false)}
+              aria-label="Close"
+            >
+              &times;
+            </button> 
+            <div>
+              <div data-tf-live={`${primary_button?.URL ?? ""}`}></div>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
   );
 };
