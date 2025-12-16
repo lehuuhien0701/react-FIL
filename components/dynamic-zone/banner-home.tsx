@@ -113,7 +113,7 @@ export const BannerHome = ({
                   >
                     {second_button.text}
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M4 12.0001L12.6667 3.3335M12.6667 3.3335V11.6535M12.6667 3.3335H4.34667" stroke="#BBA25A" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M4 12.0001L12.6667 3.3335M12.6667 3.3335V11.6535M12.6667 3.3335H4.34667" stroke="#BBA25A" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </Link>
                 )}

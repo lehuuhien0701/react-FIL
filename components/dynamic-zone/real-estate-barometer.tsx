@@ -35,7 +35,7 @@ export const RealEstateBarometer = ({
   const bgSrc = getImageSrc(background);
   const ArrowRight = () => (
     <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M1 11.8334L11.8333 1M11.8333 1V11.4M11.8333 1H1.43334" stroke="#0A2540" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1 11.8334L11.8333 1M11.8333 1V11.4M11.8333 1H1.43334" stroke="#0A2540" stroke-width="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 
 

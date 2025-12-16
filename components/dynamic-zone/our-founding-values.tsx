@@ -76,7 +76,7 @@ export const OurFoundingValues = ({
                       <Link href={item?.button_link} className="flex items-center text-[#BBA25A] text-sm font-medium mt-4 mx-auto">
                         {item?.button_text} 
                         <svg className="ml-3" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0.5 9.16663L9.16667 0.5M9.16667 0.5V8.82003M9.16667 0.5H0.84667" stroke="#BBA25A" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M0.5 9.16663L9.16667 0.5M9.16667 0.5V8.82003M9.16667 0.5H0.84667" stroke="#BBA25A" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>  
                       </Link>
                     )}

@@ -117,7 +117,7 @@ export const FormContact = ({
                           <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M30 0C46.5685 0 60 13.4315 60 30C60 46.5685 46.5685 60 30 60C13.4315 60 0 46.5685 0 30C0 13.4315 13.4315 0 30 0Z" fill="#BBA25A"/>
                           <path d="M30 0C46.5685 0 60 13.4315 60 30C60 46.5685 46.5685 60 30 60C13.4315 60 0 46.5685 0 30C0 13.4315 13.4315 0 30 0Z" stroke="#BBA25A"/>
-                          <path d="M25 35.0004L35.8333 24.167M35.8333 24.167V34.567M35.8333 24.167H25.4333" stroke="#0A2540" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M25 35.0004L35.8333 24.167M35.8333 24.167V34.567M35.8333 24.167H25.4333" stroke="#0A2540" stroke-width="2" strokeLinecap="round" strokeLinejoin="round"/>
                           </svg>
 
                         </button>

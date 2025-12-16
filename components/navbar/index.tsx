@@ -337,7 +337,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                 <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg"
                                 className={`transition-transform duration-300 rotate-90 ${openSubmenus[item.id] ? "rotate-0" : ""}`}
                                 >
-                                <path d="M0.5 9.73997L4.30333 5.93666C4.7525 5.4875 4.7525 4.7525 4.30333 4.30333L0.5 0.5" stroke="#BBA25A" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M0.5 9.73997L4.30333 5.93666C4.7525 5.4875 4.7525 4.7525 4.30333 4.30333L0.5 0.5" stroke="#BBA25A" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
                                 </svg>
 
 

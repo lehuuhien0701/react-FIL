@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+//import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "../container";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +17,7 @@ export const WhyJoin = ({
   title = "",
   description = "",
   button_text = "",
-  button_link = "",
+  button_code_popup = "",
   background = null,
   multiple_logo = null,
   icon_comment = null,
@@ -38,7 +39,7 @@ export const WhyJoin = ({
   title?: string;
   description?: string;
   button_text?: string;
-  button_link?: string;
+  button_code_popup?: string;
   background?: { id?: string; url?: string } | null;
   multiple_logo?: { id?: string; url?: string } | null;
   icon_comment?: { id?: string; url?: string } | null;
@@ -69,6 +70,19 @@ export const WhyJoin = ({
     <path d="M5 15.0587L15.8333 4.22534M15.8333 4.22534V14.6253M15.8333 4.22534H5.43334" stroke="#0A2540" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
     </svg> 
   );
+    const [showPopup, setShowPopup] = useState(false);
+  // Dynamically load Typeform script when popup is shown
+    useEffect(() => {
+      if (showPopup) {
+        const script = document.createElement("script");
+        script.src = "//embed.typeform.com/next/embed.js";
+        script.async = true;
+        document.body.appendChild(script);
+        return () => {
+          document.body.removeChild(script);
+        };
+      }
+    }, [showPopup]);
  
 
   return (
@@ -81,7 +95,7 @@ export const WhyJoin = ({
         >  
         </div>  
         
-          <article className="relative z-20">
+          <article className="relative z-30">
               
               {(layout === "curved_background" || layout === "why_it_matters_curved_background") && (
                 <div className="relative">
@@ -261,17 +275,45 @@ export const WhyJoin = ({
                             </div>
                           ))}
                         </div>
-                        {button_link && (
-                          <div className="flex items-center gap-4 mt-10">
-                            <a href={button_link} className="flex items-center gap-3 text-[#BBA25A] font-medium hover:underline">{button_text}
-                              <span aria-label="Go" className="w-14 h-14 rounded-full bg-[#BBA25A] flex items-center justify-center hover:bg-[#e0c56d] transition-colors">
+                     
+
+                        {button_text && (
+                          <button
+                            type="button"
+                            className="flex items-center gap-3 text-[#BBA25A] font-medium hover:underline"
+                            onClick={() => setShowPopup(true)}
+                          >
+                            {button_text }
+                            <span aria-label="Go" className="w-14 h-14 rounded-full bg-[#BBA25A] flex items-center justify-center hover:bg-[#e0c56d] transition-colors">
                                 <svg className="rotate-[-45deg]" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                   <path d="M5 12h14M13 5l6 7-6 7" stroke="#042033" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path>
                                 </svg> 
                               </span>
-                            </a>
+                          </button>
+                        )}    
+
+
+
+                        {/* Popup/modal */}
+                        {showPopup && (
+                          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
+                            <div className="max-w-3xl w-full relative">
+                              <button
+                                className="absolute top-2 right-2 text-white hover:text-white z-10"
+                                onClick={() => setShowPopup(false)}
+                                aria-label="Close"
+                              >
+                                &times;
+                              </button> 
+                              <div>
+                                <div data-tf-live={`${button_code_popup ?? ""}`}></div>
+                              </div>
+                            </div>
                           </div>
                         )}
+
+
+
                       </div>
                   </div>
                   
@@ -288,7 +330,7 @@ export const WhyJoin = ({
                 <Link href={`${link_members_directory}?search=sec`} className="w-[30px] h-[30px] flex items-center justify-center">
                     <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M15 0.558594C23.0081 0.558594 29.5 7.05046 29.5 15.0586C29.5 23.0667 23.0081 29.5586 15 29.5586C6.99187 29.5586 0.5 23.0667 0.5 15.0586C0.5 7.05046 6.99187 0.558594 15 0.558594Z" stroke="#ffffff"/>
-                      <path d="M11 15.0586H19M19 15.0586L15.5 11.0586M19 15.0586L15.5 19.0586" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M11 15.0586H19M19 15.0586L15.5 11.0586M19 15.0586L15.5 19.0586" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg> 
                 </Link>
               </div>

@@ -47,17 +47,17 @@ export const Footer = ({ data, locale }: { data: any, locale: string }) => {
     
 
   // Lấy dữ liệu tĩnh và social
-  const copyright = data?.copyright ?? "Copyright © Fédération Immobilière du Luxembourg 2025";
-  const designed_developed_by = data?.designed_developed_by ?? "Designed by"; 
-  const email = data?.email ?? "hello@example.com";
-  const phone = data?.phone ?? "(123) 555-1234";
-  const address = data?.address ?? "Luxembourg 1234";
+  const copyright = data?.copyright ?? "";
+  const designed_developed_by = data?.designed_developed_by ?? ""; 
+  const email = data?.email ?? "";
+  const phone = data?.phone ?? "";
+  const address = data?.address ?? "";
   const logo = data?.logo; 
 
   // lấy dữ liệu tĩnh newsletter
-  const title_newsletter = data?.title_newsletter ?? "Subscribe to receive our news, analyses, and invitations.";
-  const placeholder_newsletter = data?.placeholder_newsletter ?? "Enter your email";
-  const checking_newsletter = data?.checking_newsletter ?? "Checking this box and submitting the form means I agree my personal data is used only to contact me about my request here. No other use of my info.";
+  const title_newsletter = data?.title_newsletter ?? "";
+  const placeholder_newsletter = data?.placeholder_newsletter ?? "";
+  const checking_newsletter = data?.checking_newsletter ?? "";
 
   // LẤY DỮ LIỆU MENU FOOTER ĐỘNG
   // Giả sử menu_footer là một Repeatable Component (Link)

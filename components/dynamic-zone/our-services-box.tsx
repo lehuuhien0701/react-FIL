@@ -105,7 +105,7 @@ export const OurServicesBox = ({
                       <div className="flex items-center gap-4 flex-1">
                         <div className='w-4'>
                           <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g clip-path="url(#clip0_2939_38)">
+                          <g clipPath="url(#clip0_2939_38)">
                           <path d="M5.84192 11.5008C5.56569 11.5008 5.28999 11.3971 5.07904 11.1891L0 6.18272L1.52576 4.67825L5.84192 8.93268L14.4742 0.423828L16 1.9283L6.6048 11.1891C6.39385 11.3971 6.11816 11.5008 5.84192 11.5008Z" fill="#BBA25A"/>
                           </g>
                           <defs>
@@ -201,7 +201,7 @@ export const OurServicesBox = ({
                       <div className="flex items-center gap-4 flex-1">
                         <div className='w-4'>
                           <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <g clip-path="url(#clip0_2939_700)">
+                          <g clipPath="url(#clip0_2939_700)">
                           <path d="M5.84192 11.5008C5.56569 11.5008 5.28999 11.3971 5.07904 11.1891L0 6.18272L1.52576 4.67825L5.84192 8.93268L14.4742 0.423828L16 1.9283L6.6048 11.1891C6.39385 11.3971 6.11816 11.5008 5.84192 11.5008Z" fill="white"/>
                           </g>
                           <defs>

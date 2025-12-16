@@ -1,5 +1,6 @@
 "use client";
-import React from "react";
+//import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "../container";
 import parse from "html-react-parser";
 import Image from "next/image";
@@ -16,6 +17,7 @@ export const SectionBlock = ({
   blockcta = null,
   background = null,
   content_bottom ="",
+  content_bottom_code_popup ="",
   layout = "ImageLeft", // add layout prop with default
 }: {
   title?: string;
@@ -25,6 +27,7 @@ export const SectionBlock = ({
   blockcta?: any[] | null;
   background?: any | null;
   content_bottom?: string;
+  content_bottom_code_popup?: string;
   layout?: "ImageLeft" | "ImageRight";
 }) => {
   // helper to safely get strapi image url or fallback
@@ -40,6 +43,19 @@ export const SectionBlock = ({
       return fallback;
     }
   };
+   const [showPopup, setShowPopup] = useState(false);
+    // Dynamically load Typeform script when popup is shown
+      useEffect(() => {
+        if (showPopup) {
+          const script = document.createElement("script");
+          script.src = "//embed.typeform.com/next/embed.js";
+          script.async = true;
+          document.body.appendChild(script);
+          return () => {
+            document.body.removeChild(script);
+          };
+        }
+      }, [showPopup]);
 
   // Determine section class based on layout
   const sectionClass = `bg-[#EDEBE7] bg-[url('/bg-line2.svg')] bg-top bg-repeat-y${
@@ -101,9 +117,36 @@ export const SectionBlock = ({
                 <BlockCta content={note ?? null} />
               )}
             </div> 
-            <p className="text-[#88938F] text-[15px] leading-[26px]">
-              {content_bottom ? parse(content_bottom) : null}
-            </p>
+           
+            {content_bottom && (
+              <button
+                type="button"
+                className="text-left text-[#88938F] text-[15px] leading-[26px]"
+                onClick={() => setShowPopup(true)}
+              >
+                {content_bottom } 
+              </button>
+            )}      
+
+            {/* Popup/modal */}
+            {showPopup && (
+              <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
+                <div className="max-w-3xl w-full relative">
+                  <button
+                    className="absolute top-2 right-2 text-white hover:text-white z-10"
+                    onClick={() => setShowPopup(false)}
+                    aria-label="Close"
+                  >
+                    &times;
+                  </button> 
+                  <div>
+                    <div data-tf-live={`${content_bottom_code_popup ?? ""}`}></div>
+                  </div>
+                </div>
+              </div>
+            )}    
+
+
           </div>
 
 

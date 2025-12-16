@@ -10,14 +10,18 @@ import ClientSlugHandler from "../../ClientSlugHandler";
 export async function generateMetadata({
   params,
 }: {
-  params: { locale: string };
+  params: { slug: string; locale: string };
 }): Promise<Metadata> {
   const pageData = await fetchContentType('articles', {
-    filters: { locale: params.locale },
-    populate: "seo.metaImage",
+    filters: {
+      slug: params.slug,
+    },
+    locale: params.locale,
+    populate: ['seo', 'seo.metaImage'],
   }, true)
 
   const seo = pageData?.seo;
+  //console.log("SEO Metadata:", seo);
   const metadata = generateMetadataObject(seo);
   return metadata;
 }
