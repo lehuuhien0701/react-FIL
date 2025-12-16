@@ -30,7 +30,7 @@ export const PageDefault = ({
        {content && (
         <section className="max-w-[1240px] m-auto px-6 py-10 lg:py-20">
           <div className="text-left">
-            {typeof content === "string" ? parse(content.replace(/\n/g, "<br />")) : null}
+            {typeof content === "string" ? parse(content) : null}
           </div>
         </section>
        )}

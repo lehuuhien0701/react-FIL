@@ -86,3 +86,9 @@
 .page-default strong {
   @apply font-inter font-bold text-[16px] leading-[26px] text-[#0A2540];
 }
+.page-default p {
+  @apply mb-2;
+}
+.page-default ul li {
+  @apply list-disc ml-5 mb-1;
+}
