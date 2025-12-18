@@ -64,7 +64,7 @@ export const SectionBlock = ({
 
   return (
     <section className={sectionClass}>
-      <div className="relative px-5 lg:px-20 py-10 lg:py-20 pb-40 lg:flex items-center max-w-[1440px] m-auto w-full">
+      <div className="relative z-[9999] px-5 lg:px-20 py-10 lg:py-20 pb-40 lg:flex items-center max-w-[1440px] m-auto w-full">
         {background && (
           <Image
             width={1000}
@@ -130,8 +130,14 @@ export const SectionBlock = ({
 
             {/* Popup/modal */}
             {showPopup && (
-              <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
-                <div className="max-w-3xl w-full relative">
+              <div
+                className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60"
+                onClick={() => setShowPopup(false)}
+              >
+                <div
+                  className="max-w-3xl w-full relative"
+                  onClick={e => e.stopPropagation()}
+                >
                   <button
                     className="absolute top-2 right-2 text-white hover:text-white z-10"
                     onClick={() => setShowPopup(false)}

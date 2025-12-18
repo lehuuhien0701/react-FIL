@@ -296,8 +296,14 @@ export const WhyJoin = ({
 
                         {/* Popup/modal */}
                         {showPopup && (
-                          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60">
-                            <div className="max-w-3xl w-full relative">
+                          <div
+                            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60"
+                            onClick={() => setShowPopup(false)}
+                          >
+                            <div
+                              className="max-w-3xl w-full relative"
+                              onClick={e => e.stopPropagation()}
+                            >
                               <button
                                 className="absolute top-2 right-2 text-white hover:text-white z-10"
                                 onClick={() => setShowPopup(false)}

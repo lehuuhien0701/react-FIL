@@ -59,7 +59,7 @@ export const BannerHome = ({
 
   return (
     
-    <section className="bg-navy">
+    <section className="bg-navy z-[99999] relative"> 
         <Container className='flex flex-col-reverse lg:flex-row'>
         <div className="lg:w-[50%] flex-1 px-5 lg:px-20 py-10 lg:py-[120px] flex flex-col gap-[60px]">
           <div className="flex flex-col gap-[18px]">
@@ -142,8 +142,14 @@ export const BannerHome = ({
         </Container>      
       {/* Popup/modal */}
       {showPopup && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className="max-w-3xl w-full relative">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+          onClick={() => setShowPopup(false)}
+        >
+          <div
+            className="max-w-3xl w-full relative"
+            onClick={e => e.stopPropagation()}
+          >
             <button
               className="absolute top-2 right-2 text-white hover:text-white z-10"
               onClick={() => setShowPopup(false)}
