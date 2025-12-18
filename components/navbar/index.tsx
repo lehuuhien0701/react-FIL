@@ -82,6 +82,20 @@ export function Navbar({ data, logo, footer, locale }: Props) {
         svgClose.addEventListener("click", closeHandler);
         document.addEventListener("click", onDocumentClick);
 
+        // Đóng tất cả submenu khi click ra ngoài nav
+        const onNavOutsideClick = (e: MouseEvent) => {
+            const navDiv = document.querySelector('.wrap-header');
+            if (!navDiv) return;
+            const target = e.target as Node | null;
+            if (!target) return;
+            // Nếu click ngoài navDiv thì đóng tất cả submenu
+            if (!navDiv.contains(target)) {
+                setOpenSubmenus({});
+                setOpenThirdLevel({});
+            }
+        };
+        document.addEventListener("mousedown", onNavOutsideClick);
+
         return () => {
             svgOpen.removeEventListener("click", openHandler);
             svgClose.removeEventListener("click", closeHandler);
@@ -90,6 +104,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                 formSubmitButton.removeEventListener("click", handleFormSubmitClick);
             }
             document.body.classList.remove("menu-open");
+            document.removeEventListener("mousedown", onNavOutsideClick);
         };
     }, []);
     
