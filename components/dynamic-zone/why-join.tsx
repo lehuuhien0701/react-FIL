@@ -7,8 +7,7 @@ import Link from "next/link";
 import { strapiImage } from "@/lib/strapi/strapiImage";
 import { color } from "framer-motion"; 
 import parse from "html-react-parser";
-
- 
+import { usePathname } from "next/navigation";
 
 export const WhyJoin = ({ 
   title_top_section = "",
@@ -17,7 +16,7 @@ export const WhyJoin = ({
   title = "",
   description = "",
   button_text = "",
-  button_code_popup = "",
+  button_code_popup_or_link = "",
   background = null,
   multiple_logo = null,
   icon_comment = null,
@@ -39,7 +38,7 @@ export const WhyJoin = ({
   title?: string;
   description?: string;
   button_text?: string;
-  button_code_popup?: string;
+  button_code_popup_or_link?: string;
   background?: { id?: string; url?: string } | null;
   multiple_logo?: { id?: string; url?: string } | null;
   icon_comment?: { id?: string; url?: string } | null;
@@ -83,19 +82,19 @@ export const WhyJoin = ({
         };
       }
     }, [showPopup]);
- 
+    const pathname = usePathname();
 
   return (
     <>
       
       <section className="relative bg-navy"> 
           <div 
-            className="h-full absolute z-10 left-0 right-0 bottom-0 overflow-hidden" 
+            className="h-full absolute left-0 right-0 bottom-0 overflow-hidden" 
             style={{ backgroundImage: "url('/bg-text.svg')", backgroundRepeat: "no-repeat", backgroundPosition: "top left" }}
         >  
         </div>  
         
-          <article className="relative z-30">
+          <article className="relative">
               
               {(layout === "curved_background" || layout === "why_it_matters_curved_background") && (
                 <div className="relative">
@@ -240,7 +239,7 @@ export const WhyJoin = ({
                     height={550}
                     className="w-full lg:w-[50%] flex-1 object-cover"
                   />
-                <div className="flex-1 px-5 lg:px-20 py-10 lg:py-20 flex flex-col gap-10 lg:gap-20 relative z-10">
+                <div className="flex-1 px-5 lg:px-20 py-10 lg:py-20 flex flex-col gap-10 lg:gap-20 relative">
                   <div className="flex flex-col">
                     <div>
                       <h2 className="mb-5 font-display text-[32px] leading-[40px] lg:text-[37.3px] lg:leading-[45.6px] font-bold text-gold">{title}</h2>
@@ -277,21 +276,34 @@ export const WhyJoin = ({
                         </div>
                      
 
-                        {button_text && (
+                        {button_text && pathname === "/" && (
                           <button
                             type="button"
                             className="flex items-center gap-3 text-[#BBA25A] font-medium hover:underline"
                             onClick={() => setShowPopup(true)}
                           >
-                            {button_text }
+                            {button_text}
                             <span aria-label="Go" className="w-14 h-14 rounded-full bg-[#BBA25A] flex items-center justify-center hover:bg-[#e0c56d] transition-colors">
-                                <svg className="rotate-[-45deg]" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                  <path d="M5 12h14M13 5l6 7-6 7" stroke="#042033" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path>
-                                </svg> 
-                              </span>
+                              <svg className="rotate-[-45deg]" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M5 12h14M13 5l6 7-6 7" stroke="#042033" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                              </svg>
+                            </span>
                           </button>
                         )}    
-
+                        {button_text && button_code_popup_or_link && pathname !== "/" && (
+                          <Link
+                            href={button_code_popup_or_link}
+                            className="flex items-center gap-3 text-[#BBA25A] font-medium hover:underline"
+                            rel="noopener noreferrer"
+                          > 
+                            {button_text}
+                            <span aria-label="Go" className="w-14 h-14 rounded-full bg-[#BBA25A] flex items-center justify-center hover:bg-[#e0c56d] transition-colors">
+                              <svg className="rotate-[-45deg]" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M5 12h14M13 5l6 7-6 7" stroke="#042033" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                              </svg>
+                            </span>
+                          </Link>
+                        )}
 
 
                         {/* Popup/modal */}
@@ -312,7 +324,7 @@ export const WhyJoin = ({
                                 &times;
                               </button> 
                               <div>
-                                <div data-tf-live={`${button_code_popup ?? ""}`}></div>
+                                <div data-tf-live={`${button_code_popup_or_link ?? ""}`}></div>
                               </div>
                             </div>
                           </div>
@@ -329,7 +341,7 @@ export const WhyJoin = ({
 
           {/* Member Search & Logo Carousel */}
           {pmembers_directory_search === "show" && (
-          <article className="pb-20 pt-20 flex flex-col items-center gap-10 relative z-20">
+          <article className="pb-20 pt-20 flex flex-col items-center gap-10 relative">
             <div className="px-5 lg:px-20 flex flex-col items-center gap-5 w-full">
               <div className="w-full md:w-[600px] px-5 py-4 rounded-[5px] border border-white flex items-center justify-between">
                 <span className="text-white text-[15px] leading-[26px]">{text_search_members_directory}</span>

@@ -422,7 +422,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
 
     return (
         // ... (phần render Navbar giữ nguyên)
-        <div className='wrap-header bg-[#0A2540]'>
+        <div className='wrap-header bg-[#0A2540] relative z-[99999]'>  
             <div className='max-w-[1400px] mx-auto w-full px-5 md:px-10 lg:px-20 relative z-10'>
                 <nav className="border-b border-white/10 sticky top-0">
                     <div className="h-[69px] flex items-center justify-between">

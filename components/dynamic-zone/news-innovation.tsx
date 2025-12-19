@@ -100,7 +100,7 @@ export const NewsInnovation = ({
 
       <section className="bg-white bg-[url('/bg-line.svg')] bg-top bg-repeat-y">
         
-        <div className='relative z-20 px-5 lg:px-20 py-10 lg:py-[120px] lg:flex gap-20 max-w-[1440px] m-auto w-full'>
+        <div className='relative px-5 lg:px-20 py-10 lg:py-[120px] lg:flex gap-20 max-w-[1440px] m-auto w-full'>
             <div className="mb-10 lg:mb-0 flex-1 flex flex-col justify-center gap-12">
               <div>
                 <h2 className="font-display text-[32px] leading-[40px] lg:text-[37.3px] lg:leading-[45px] font-bold text-black mb-5 lg:mb-14">{title}</h2>
@@ -200,7 +200,7 @@ export const NewsInnovation = ({
                     className="absolute right-0 bottom-0 w-[222px] h-[324px] opacity-70 mix-blend-luminosity"
                   />
 
-                <div className="flex flex-col gap-5 relative z-10"> 
+                <div className="flex flex-col gap-5 relative"> 
                   <Image
                     alt=""
                     src={icon_box_big?.url ? strapiImage(icon_box_big.url) : ""}

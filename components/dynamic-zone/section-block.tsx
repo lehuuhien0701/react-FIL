@@ -64,9 +64,9 @@ export const SectionBlock = ({
 
   return (
     <section className={sectionClass}>
-      <div className="relative z-[9999] px-5 lg:px-20 py-10 lg:py-20 pb-40 lg:flex items-center max-w-[1440px] m-auto w-full">
+      <div className="relative px-5 lg:px-20 py-10 lg:py-20 pb-40 lg:flex items-center max-w-[1440px] m-auto w-full">
         {background && (
-          <Image
+          <Image 
             width={1000}
             height={1000}
             alt={background?.alternativeText ?? "background"}

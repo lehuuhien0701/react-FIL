@@ -61,7 +61,7 @@ export const SectionBlockCommitmentCard = ({
                  />
                  )}
  
-                 <div className="flex flex-col items-center gap-[14px] relative z-10 p-4">
+                 <div className="flex flex-col items-center gap-[14px] relative p-4">
                    {icon && (
                      <Image
                        width={28}
@@ -79,7 +79,7 @@ export const SectionBlockCommitmentCard = ({
                    </p>
                    )} 
                  </div>
-                 <div className="flex flex-col relative z-10 ">
+                 <div className="flex flex-col relative">
                   
                   {Array.isArray(blockcta) && blockcta.length > 0 ? (
                      blockcta.map((b, i) => {
@@ -94,7 +94,7 @@ export const SectionBlockCommitmentCard = ({
  
                  </div>
                  {note && (
-                  <p className="text-navy text-sm leading-5 text-center relative z-10">
+                  <p className="text-navy text-sm leading-5 text-center relative">
                     {note}
                   </p>
                  )} 

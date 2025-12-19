@@ -59,7 +59,7 @@ export const BannerHome = ({
 
   return (
     
-    <section className="bg-navy z-[99999] relative"> 
+    <section className="bg-navy relative"> 
         <Container className='flex flex-col-reverse lg:flex-row'>
         <div className="lg:w-[50%] flex-1 px-5 lg:px-20 py-10 lg:py-[120px] flex flex-col gap-[60px]">
           <div className="flex flex-col gap-[18px]">
@@ -143,7 +143,7 @@ export const BannerHome = ({
       {/* Popup/modal */}
       {showPopup && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60"
           onClick={() => setShowPopup(false)}
         >
           <div
