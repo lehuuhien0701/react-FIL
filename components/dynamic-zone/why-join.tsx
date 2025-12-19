@@ -243,7 +243,9 @@ export const WhyJoin = ({
                   <div className="flex flex-col">
                     <div>
                       <h2 className="mb-5 font-display text-[32px] leading-[40px] lg:text-[37.3px] lg:leading-[45.6px] font-bold text-gold">{title}</h2>
-                      <p className="text-[#D9D9D9] text-[15px] leading-[26px]">{description}</p>
+                      <p className="text-[#D9D9D9] text-[15px] leading-[26px]">
+                        {typeof description === "string" ? parse(description) : description}
+                      </p>
                     </div>
                     <div className="flex items-center mt-4 text-[#D9D9D9] text-[15px] leading-[26px]">
                       {icon_comment && (
