@@ -25,6 +25,8 @@ export type TranslationKeys = {
   message_label: string;
   field_required: string;
   invalid_email: string;
+  cookie_decline: string;
+  cookie_accept: string;
 };
 
 export type Translations = {

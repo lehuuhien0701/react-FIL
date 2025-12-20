@@ -25,7 +25,9 @@ export const translations: Translations = {
     phone_label: "Phone",
     message_label: "Message",
     field_required: "This field is required",
-    invalid_email: "Invalid email format"
+    invalid_email: "Invalid email format",
+    cookie_decline: "Decline",
+    cookie_accept: "Accept"
   },
   fr: {
     previous: "Précédent",
@@ -51,7 +53,9 @@ export const translations: Translations = {
     phone_label: "Téléphone",
     message_label: "Message",
     field_required: "Ce champ est obligatoire",
-    invalid_email: "Format d'email invalide"
+    invalid_email: "Format d'email invalide",
+    cookie_decline: "Refuser",
+    cookie_accept: "Accepter"
   },
   de: {
     previous: "Zurück",
@@ -77,6 +81,8 @@ export const translations: Translations = {
     phone_label: "Telefon",
     message_label: "Nachricht",
     field_required: "Dieses Feld ist erforderlich",
-    invalid_email: "Ungültiges E-Mail-Format"
+    invalid_email: "Ungültiges E-Mail-Format",
+    cookie_decline: "Ablehnen",
+    cookie_accept: "Akzeptieren"
   }
 };
