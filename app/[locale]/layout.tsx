@@ -3,7 +3,7 @@ import React from 'react'
 import { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import { generateMetadataObject } from '@/lib/shared/metadata';
-
+import { notFound } from "next/navigation";
 import { Footer } from '@/components/footer';
 import { Navbar } from '@/components/navbar';
 import { CartProvider } from '@/context/cart-context';
@@ -106,6 +106,7 @@ export default async function LocaleLayout({
     // ... (phần còn lại của component không đổi)
     if (!pageData) {
         console.error('Failed to fetch global data');
+        notFound(); // Kích hoạt trang 404
     }
 
     return (

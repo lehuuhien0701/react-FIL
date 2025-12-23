@@ -161,50 +161,56 @@ export const Blog = ({
 
   // Lấy categories (dùng slug làm filter)
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await fetchContentTypeClient("categories", {
-          populate: "*",
-        });
+    const fetchCategories = async () => {
+      try {
+        // CẢI TIẾN: Truyền thêm tham số locale vào query
+        const res = await fetchContentTypeClient("categories", {
+          locale: currentLocale, // Đảm bảo lấy đúng name theo ngôn ngữ đang chọn
+          populate: "*",
+          sort: ["name:asc"], // Tùy chọn: Sắp xếp tên theo bảng chữ cái
+        });
 
-        const cats =
-          res?.data?.map((cat: any) => {
-            const attrs = cat.attributes ?? cat;
-            return {
-              key: attrs.slug ?? String(cat.id),
-              label: attrs.name ?? "Unnamed",
-              slug: attrs.slug ?? "",
-            };
-          }) ?? [];
+        const cats =
+          res?.data?.map((cat: any) => {
+            const attrs = cat.attributes ?? cat;
+            return {
+              // Dùng slug làm key và slug để filter trên URL (không đổi theo ngôn ngữ)
+              key: attrs.slug ?? String(cat.id),
+              // Name sẽ thay đổi theo ngôn ngữ nhờ tham số locale ở trên
+              label: attrs.name ?? "Unnamed", 
+              slug: attrs.slug ?? "",
+            };
+          }) ?? [];
 
-        setCategories([
-          {
-            key: "all",
-            label:
-              (translations as any)[currentLocale]?.allnews ||
-              (translations as any)[i18n.defaultLocale]?.allnews ||
-              "All News",
-            slug: "all",
-          },
-          ...cats,
-        ]);
-      } catch (err) {
-        console.error("Lỗi khi fetch categories:", err);
-        setCategories([
-          {
-            key: "all",
-            label:
-              (translations as any)[currentLocale]?.allnews ||
-              (translations as any)[i18n.defaultLocale]?.allnews ||
-              "All News",
-            slug: "all",
-          },
-        ]);
-      }
-    };
+        setCategories([
+          {
+            key: "all",
+            label:
+              (translations as any)[currentLocale]?.allnews ||
+              (translations as any)[i18n.defaultLocale]?.allnews ||
+              "All News",
+            slug: "all",
+          },
+          ...cats,
+        ]);
+      } catch (err) {
+        console.error("Lỗi khi fetch categories:", err);
+        // Fallback giữ nguyên nút "All News" nếu lỗi
+        setCategories([
+          {
+            key: "all",
+            label:
+              (translations as any)[currentLocale]?.allnews ||
+              (translations as any)[i18n.defaultLocale]?.allnews ||
+              "All News",
+            slug: "all",
+          },
+        ]);
+      }
+    };
 
-    fetchCategories();
-  }, []);
+    fetchCategories();
+  }, [currentLocale]); 
 
   const isInternalLink = (link: string) => {
     return link?.startsWith?.("/") || link?.startsWith?.("#");

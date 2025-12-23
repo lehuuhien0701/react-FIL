@@ -18,6 +18,7 @@ export const ImageAddressSocial = ({
   social_facebook = "",
   social_youtube = "",
   social_instagram = "",
+  social_linkedin = "",
 
 }: {
   title?: string; 
@@ -30,6 +31,7 @@ export const ImageAddressSocial = ({
   social_facebook?: string;
   social_youtube?: string;
   social_instagram?: string;
+  social_linkedin?: string;
 }) => {
   // helper to safely get strapi image url or fallback
   const safeImageSrc = (media: any, fallback: string) => {
@@ -176,6 +178,21 @@ export const ImageAddressSocial = ({
                   </a>  
                 </li>
                 )}
+
+                {social_linkedin && (  
+                  <li className="mr-3">
+                    <a target="_blank" href={social_linkedin} className="font-inter font-normal text-[15px] leading-[26px] text-[#0A2540] flex items-center">
+                      {/* SVG LinkedIn */}
+                      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="17" cy="17" r="16.5" stroke="#0A2540"/>
+                        <rect x="10" y="14" width="3" height="10" fill="#0A2540"/>
+                        <rect x="15" y="14" width="3" height="10" fill="#0A2540"/>
+                        <rect x="20" y="14" width="3" height="10" fill="#0A2540"/>
+                        <circle cx="11.5" cy="11.5" r="1.5" fill="#0A2540"/>
+                      </svg>
+                    </a>  
+                  </li>
+                  )}
                 
               </ul>
  

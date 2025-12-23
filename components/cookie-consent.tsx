@@ -67,5 +67,5 @@ export const CookieConsent = ({ translations }: CookieConsentProps) => {
         </div>
       </div>
     </div>
-  );
+  ); 
 };
