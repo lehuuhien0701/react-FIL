@@ -183,13 +183,24 @@ export const ImageAddressSocial = ({
                   <li className="mr-3">
                     <a target="_blank" href={social_linkedin} className="font-inter font-normal text-[15px] leading-[26px] text-[#0A2540] flex items-center">
                       {/* SVG LinkedIn */}
-                      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="17" cy="17" r="16.5" stroke="#0A2540"/>
-                        <rect x="10" y="14" width="3" height="10" fill="#0A2540"/>
-                        <rect x="15" y="14" width="3" height="10" fill="#0A2540"/>
-                        <rect x="20" y="14" width="3" height="10" fill="#0A2540"/>
-                        <circle cx="11.5" cy="11.5" r="1.5" fill="#0A2540"/>
-                      </svg>
+                     
+                      <svg width="34px" height="34px" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="jam jam-linkedin-circle">
+
+                     
+                      <circle
+                        cx="10"
+                        cy="10"
+                        r="9.5"
+                        fill="none"
+                        stroke="#000000"
+                        stroke-width="1" />
+ 
+                      <path fill="#000000"
+                        d="M15 11.13v3.697h-2.143v-3.45c0-.866-.31-1.457-1.086-1.457-.592 0-.945.398-1.1.784-.056.138-.071.33-.071.522v3.601H8.456s.029-5.842 0-6.447H10.6v.913h.014c.285-.44.793-1.066 1.932-1.066 1.41 0 2.468.922 2.468 2.902zM6.213 5.271C5.48 5.271 5 5.753 5 6.385c0 .62.466 1.115 1.185 1.115h.014c.748 0 1.213-.496 1.213-1.115-.014-.632-.465-1.114-1.199-1.114zm-1.086 9.556h2.144V8.38H5.127v6.447z"/>
+                    </svg>
+
                     </a>  
                   </li>
                   )}
