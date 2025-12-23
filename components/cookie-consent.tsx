@@ -56,7 +56,7 @@ export const CookieConsent = ({ translations }: CookieConsentProps) => {
             className="text-base w-full font-medium py-[10px] border border-[#EDEBE733] text-white text-center rounded-[40px] cursor-pointer"
             onClick={declineCookies}
           >
-            {translations.cookie_decline || "Refuser"}
+            {translations.cookie_decline || "Refuser"} 
           </a>
           <a
             className="text-primary w-full font-medium py-[10px] bg-[#BBA25A] text-center rounded-[40px] cursor-pointer"

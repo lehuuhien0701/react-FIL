@@ -94,13 +94,13 @@ export default async function LocaleLayout({
     });
 
 
-    // 🏆 Phần code lấy description đã chính xác:
+    // Phần code lấy description đã chính xác:
     const cookieTranslations = {
         title: pageData?.cookie_consent?.title || 'Cookies',
-        // Description được lấy từ global cookie_consent field
-        description: pageData?.cookie_consent?.description || 'We use cookies to improve your experience.',
-        accept: pageData?.cookie_consent?.accept_button || 'Accept',
-        decline: pageData?.cookie_consent?.decline_button || 'Decline'
+        description: pageData?.cookie_consent?.description || '',
+        // Sửa tên key cho đúng với Interface của Component
+        cookie_accept: pageData?.cookie_consent?.accept || 'Accept', 
+        cookie_decline: pageData?.cookie_consent?.decline || 'Decline'
     };
     
     // ... (phần còn lại của component không đổi)
