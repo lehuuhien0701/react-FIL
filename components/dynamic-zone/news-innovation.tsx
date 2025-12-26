@@ -110,7 +110,7 @@ export const NewsInnovation = ({
                   </p>
                    
 
-                  <div className="flex flex-col lg:flex-row gap-5">
+                  <div className="flex flex-row gap-2 md:gap-5">
                     <div className="flex-1 flex flex-col gap-2">
                       <Image
                         alt=""

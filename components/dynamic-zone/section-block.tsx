@@ -63,8 +63,8 @@ export const SectionBlock = ({
   }`;
 
   return (
-    <section className={sectionClass}>
-      <div className="relative px-5 lg:px-20 py-10 lg:py-20 pb-40 lg:flex items-center max-w-[1440px] m-auto w-full">
+    <section className={sectionClass}> 
+      <div className="relative px-5 lg:px-20 py-10 lg:py-20 pb-15 lg:pb-40 flex flex-col lg:flex-row items-center max-w-[1440px] m-auto w-full">
         {background && (
           <Image 
             width={1000}
@@ -80,7 +80,7 @@ export const SectionBlock = ({
 
         <div
           className="
-          lg:w-[656px] p-10 bg-white 
+          lg:w-[656px] w-full p-5 md:p-10 bg-white 
           shadow-[10px_24px_70px_-12px_rgba(0,0,0,0.08)] 
           flex flex-col gap-5 
           relative z-10 
@@ -153,13 +153,10 @@ export const SectionBlock = ({
             )}    
 
 
-          </div>
-
-
-
-
-          
+          </div> 
         </div>
+
+        
       </div>
     </section>
   );

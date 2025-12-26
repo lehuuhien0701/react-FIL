@@ -197,9 +197,11 @@ export const OurRole = ({
 
                             return (
                                 <div key={item?.id ?? idx} className={itemClass}>
-                                    <h3 className="text-xl text-[#BBA25A] font-semibold mb-3">{item?.title}</h3>
-                                    <p className="text-sm text-white/80 leading-[26px] mb-5">{item?.description}</p>
+                                    <h3 className="text-xl text-[#BBA25A] font-semibold mb-0">{item?.title}</h3>
+                                    <div className="mb-10 md:mb-0">
+                                    <p className="text-sm text-white/80 leading-[26px] mb-2">{item?.description}</p>
                                     <p className="text-xs text-white/40 mt-3 text-[#88938F]">{item?.sub_description}</p>
+                                    </div>
                                 </div>
                             );
                         })}
@@ -255,13 +257,15 @@ export const OurRole = ({
                       }
                       return (
                         <div key={item?.id ?? idx} className={itemClass}>
-                          <h3 className="text-xl text-[#BBA25A] font-semibold mb-3">{item?.title}</h3>
-                          <p className="text-sm text-white/80 leading-[26px] mb-5">{item?.description}</p>
-                          <p className="text-xs text-white/40 mt-3 text-[#88938F]">{item?.sub_description}</p>
+                          <h3 className="text-xl text-[#BBA25A] font-semibold mb-0">{item?.title}</h3> 
+                          <div className="mb-10 md:mb-0">
+                            <p className="text-sm text-white/80 leading-[26px] mb-2">{item?.description}</p>
+                            <p className="text-xs text-white/40 mt-3 text-[#88938F]">{item?.sub_description}</p>
+                          </div>
                         </div>
                       );
                     })}
-                  </div>
+                  </div> 
                 );
               })()}
               

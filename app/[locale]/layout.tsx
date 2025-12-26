@@ -147,7 +147,7 @@ export default async function LocaleLayout({
             <head>
                 {/* Google tag (gtag.js) */}
                 <Script
-                    src="https://www.googletagmanager.com/gtag/js?id=G-S7H6W58NG4"
+                    src="https://www.googletagmanager.com/gtag/js?id=G-SVCVX7203V"
                     strategy="afterInteractive"
                 />
                 <Script id="gtag-init" strategy="afterInteractive">
@@ -155,7 +155,7 @@ export default async function LocaleLayout({
                       window.dataLayer = window.dataLayer || [];
                       function gtag(){dataLayer.push(arguments);}
                       gtag('js', new Date());
-                      gtag('config', 'G-S7H6W58NG4');
+                      gtag('config', 'G-SVCVX7203V');
                     `}
                 </Script>
             </head>

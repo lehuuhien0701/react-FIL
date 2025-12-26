@@ -153,7 +153,7 @@ export const Footer = ({ data, locale }: { data: any, locale: string }) => {
           <div className="w-full lg:w-[calc(100%-315px)] md:flex justify-between lg:justify-end gap-10 xl:gap-24">
             
             {/* DYNAMIC FOOTER MENU */}
-            <div className="flex flex-col gap-2 text-center md:text-left">
+            <div className="mb-14 md:mb-0 flex flex-col gap-2 text-center md:text-left">
               {menu_footer.map((item) => (
                 <Link
                   key={item.id}
@@ -175,7 +175,7 @@ export const Footer = ({ data, locale }: { data: any, locale: string }) => {
                   <p className="text-navy text-sm leading-5"><a href={`mailto:${parse(email)}`}>{parse(email)}{" "}</a></p>
                   <p className="text-navy text-sm leading-5"><a href={`tel:${parse(phone)}`}>{parse(phone)}{" "}</a></p>
                 </div>
-                <div className='text-center md:text-left'>
+                <div className='mb-10 md:mb-0 text-center md:text-left'>
                   <p className="text-navy text-sm leading-5">{parse(address)}</p>
                 </div>
               </div>

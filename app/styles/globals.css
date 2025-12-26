@@ -16,10 +16,7 @@
 } 
 .custom-box > div:nth-child(even) p {
     @apply text-white;
-}
-.img-right >div {
-  @apply flex-row-reverse
-}
+} 
 .img-right >div >div {
   @apply ml-0 lg:mr-[-60px]
 }
@@ -92,6 +89,16 @@
 .page-default ul li {
   @apply list-disc ml-5 mb-1;
 }
+@media only screen and (min-width: 1024px) {
+    .img-right >div {
+      @apply flex-row-reverse;
+    }
+ }
+ @media only screen and (max-width: 1023px) {
+    .img-right >div {
+      @apply flex-col-reverse;
+    }
+ }
 @media only screen and (max-width: 480px) {
     .logo-responsive {
       @apply w-[180px];

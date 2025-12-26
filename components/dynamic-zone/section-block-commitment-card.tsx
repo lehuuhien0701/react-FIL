@@ -43,7 +43,7 @@ export const SectionBlockCommitmentCard = ({
  
             // apply different classes for even/odd items
             const isEven = idx % 2 === 0;
-            const cardBase = "flex-1 p-[40px_40px_60px] lg:p-[60px_60px_80px] border border-black/20 shadow-[10px_24px_70px_-12px_rgba(0,0,0,0.08)] flex flex-col gap-[20px] relative overflow-hidden";
+            const cardBase = "flex-1 p-[20px_20px_60px] lg:p-[60px_60px_80px] border border-black/20 shadow-[10px_24px_70px_-12px_rgba(0,0,0,0.08)] flex flex-col gap-[20px] relative overflow-hidden";
             const cardBgClass = isEven ? "mb-10 md:mb-0 bg-white" : "bg-[#88938F]";
             const titleDescColor = isEven ? "text-[#000]" : "text-[#fff]";
             const descriptionDescColor = isEven ? "text-[#88938F]" : "text-[#fff]";
@@ -61,7 +61,7 @@ export const SectionBlockCommitmentCard = ({
                  />
                  )}
  
-                 <div className="flex flex-col items-center gap-[14px] relative p-4">
+                 <div className="flex flex-col items-center gap-[14px] relative p-0 md:p-4">
                    {icon && (
                      <Image
                        width={28}

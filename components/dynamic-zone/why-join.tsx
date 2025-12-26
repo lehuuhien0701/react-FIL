@@ -127,7 +127,7 @@ export const WhyJoin = ({
                     return (
                       <div className={gridClass}>
                         {items.map((item, idx) => {
-                          let itemClass = "col-span-12"; // mobile 100%
+                          let itemClass = "w-full"; // mobile 100% không scroll
                           // Logic cho màn hình MD trở lên:
                           if (mod === 0) {
                             // Chia hết cho 4: mỗi item chiếm 3/12
@@ -292,10 +292,11 @@ export const WhyJoin = ({
                             </span>
                           </button>
                         )}    
+                        <div className="hidden">
                         {button_text && button_code_popup_or_link && pathname !== "/" && (
                           <Link
                             href={button_code_popup_or_link}
-                            className="flex items-center gap-3 text-[#BBA25A] font-medium hover:underline"
+                            className="flex items-center gap-3 text-[#BBA25A] font-medium hover:underline 1"
                             rel="noopener noreferrer"
                           > 
                             {button_text}
@@ -306,6 +307,7 @@ export const WhyJoin = ({
                             </span>
                           </Link>
                         )}
+                        </div>
 
 
                         {/* Popup/modal */}
@@ -343,7 +345,7 @@ export const WhyJoin = ({
 
           {/* Member Search & Logo Carousel */}
           {pmembers_directory_search === "show" && (
-          <article className="pb-20 pt-20 flex flex-col items-center gap-10 relative">
+          <article className="pb-20 pt-20 hidden md:flex flex-col items-center gap-10 relative">
             <div className="px-5 lg:px-20 flex flex-col items-center gap-5 w-full">
               <div className="w-full md:w-[600px] px-5 py-4 rounded-[5px] border border-white flex items-center justify-between">
                 <span className="text-white text-[15px] leading-[26px]">{text_search_members_directory}</span>

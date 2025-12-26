@@ -449,21 +449,21 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                         </h1>
                         <div className="flex items-center">
                             {/* Menu desktop: chỉ hiện khi lg trở lên */}
-                            <ul className='hidden lg:flex items-center pr-10'>
+                            <ul className='hidden lg:flex items-center pr-2 md:pr-10'>
                                 {renderMenuItems(data)}
                             </ul>
                             <div className="block">
                                 <LocaleSwitcher currentLocale={locale} />
                             </div>
                             {/* Menu mobile: chỉ hiện khi nhỏ hơn lg */}
-                            <div className='flex items-center lg:hidden pl-5 md:pl-10'>
+                            <div className='flex items-center lg:hidden pl-2 md:pl-10'>
                                 <svg className='open cursor-pointer' width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <rect x="15.1602" y="30.2928" width="20.9723" height="3.22651" rx="1.61326" fill="#CCAB80"/>
                                     <rect x="23.2265" y="21.4199" width="12.9061" height="3.22651" rx="1.61326" fill="#CCAB80"/>
                                     <rect x="3.86743" y="13.3536" width="32.2651" height="3.22651" rx="1.61326" fill="#CCAB80"/>
                                     <rect x="15.1602" y="4.48069" width="20.9723" height="3.22651" rx="1.61326" fill="#CCAB80"/>
                                 </svg>
-                                <span className='font-inter font-bold text-base leading-6 text-[#CCAB80] ml-[10px]'>
+                                <span className='font-inter font-bold text-base leading-6 text-[#CCAB80] ml-[5px] md:ml-[10px]'>
                                     {(translations as any)[currentLocale]?.menu || (translations as any)[i18n.defaultLocale]?.menu || "Menu"} 
                                 </span>
                             </div>

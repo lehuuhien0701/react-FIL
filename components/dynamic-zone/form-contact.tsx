@@ -17,6 +17,7 @@ export const FormContact = ({
   box_right_location,
   list_details = [],
   member = [],
+  select_purpose, // thêm dòng này
 }: {
   full_name_label: string;
   email_label: string;
@@ -31,6 +32,7 @@ export const FormContact = ({
   box_right_location: string;
   list_details?: { id?: string | number; title?: string }[];
   member?: { id?: string | number; name?: string }[];
+  select_purpose?: string; // thêm dòng này
 }) => {
 
   const data = {
@@ -42,7 +44,8 @@ export const FormContact = ({
     agreement_label: agreement_label,
     submit_label: submit_label,
     list_details: list_details,
-    member: member
+    member: member,
+    select_purpose: select_purpose // thêm dòng này
   };
  
   return (

@@ -337,31 +337,72 @@ export const Blog = ({
       <div className="max-w-[1400px] mx-auto w-full px-5 md:px-10 lg:px-20 text-center">
 
         {/* Tabs */}
-        <div className="inline-block mb-12 justify-center border border-[#88938F] p-[2px] rounded-full">
-          {categories.map((tab) => (
-            <button
-              key={tab.key}
-              className={`px-5 py-[5px] rounded-full text-[15px] font-medium transition ${
-                activeTab === tab.slug
-                  ? "bg-[#0A2540] text-white"
-                  : "bg-transparent text-[#0A2540] hover:bg-[#ecebe6]"
-              }`}
-              onClick={() => {
-                // Update tab param in URL
-                const params = new URLSearchParams(window.location.search);
-                if (tab.slug === "all") {
-                  params.delete("tab");
-                } else {
-                  params.set("tab", tab.slug);
-                }
-                router.replace(`?${params.toString()}`, { scroll: false });
-                setCurrentPage(1);
-              }}
-              type="button"
-            >
-              {tab.label}
-            </button>
-          ))}
+        <div className="mb-12">
+          {/* Desktop tab buttons */}
+          <div className="hidden lg:inline-block justify-center border border-[#88938F] p-[2px] rounded-full">
+            {categories.map((tab) => (
+              <button
+                key={tab.key}
+                className={`px-5 py-[5px] rounded-full text-[15px] font-medium transition ${
+                  activeTab === tab.slug
+                    ? "bg-[#0A2540] text-white"
+                    : "bg-transparent text-[#0A2540] hover:bg-[#ecebe6]"
+                }`}
+                onClick={() => {
+                  // Update tab param in URL
+                  const params = new URLSearchParams(window.location.search);
+                  if (tab.slug === "all") {
+                    params.delete("tab");
+                  } else {
+                    params.set("tab", tab.slug);
+                  }
+                  router.replace(`?${params.toString()}`, { scroll: false });
+                  setCurrentPage(1);
+                }}
+                type="button"
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile dropdown */}
+          <div className="flex lg:hidden items-center gap-2 justify-center">
+            <span className="text-[15px] text-[#0A2540]">
+              {(translations as any)[currentLocale]?.select_category ||
+                (translations as any)[i18n.defaultLocale]?.select_category ||
+                "Select category"}
+            </span>
+            <div className="relative">
+              <select
+                className="bg-transparent appearance-none border border-[#88938F] rounded-full px-4 py-2 text-[15px] font-medium text-[#0A2540] pr-8"
+                value={activeTab}
+                onChange={(e) => {
+                  const slug = e.target.value;
+                  const params = new URLSearchParams(window.location.search);
+                  if (slug === "all") {
+                    params.delete("tab");
+                  } else {
+                    params.set("tab", slug);
+                  }
+                  router.replace(`?${params.toString()}`, { scroll: false });
+                  setCurrentPage(1);
+                }}
+              >
+                {categories.map((tab) => (
+                  <option key={tab.key} value={tab.slug}>
+                    {tab.label}
+                  </option>
+                ))}
+              </select>
+              {/* Dropdown arrow */}
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#0A2540]">
+                <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.70768 3.89575L5.49935 7.10409L2.29102 3.89575" stroke="#0A2540" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg> 
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* DefaultGrid */}

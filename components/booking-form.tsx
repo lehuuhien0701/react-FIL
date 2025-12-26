@@ -188,7 +188,7 @@ export const BookingForm = ({
         <label className="text-sm w-full">
           <div className="text-[14px] mb-2 text-white/80">{purpose_label}</div>
           <select
-            className="w-full bg-transparent border border-[#88938F] px-3 py-[14px] text-[#88938F] text-[15px]"
+            className="aaaaaaa w-full bg-transparent border border-[#88938F] px-3 py-[14px] text-[#88938F] text-[15px]"
             value={formData.purpose} // <-- make select controlled
             onChange={e => handleInputChange('purpose', e.target.value)}
           >

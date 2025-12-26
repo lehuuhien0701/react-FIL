@@ -27,7 +27,8 @@ export const translations: Translations = {
     field_required: "This field is required",
     invalid_email: "Invalid email format",
     cookie_decline: "Decline",
-    cookie_accept: "Accept"
+    cookie_accept: "Accept",
+    select_category: "Select category"
   },
   fr: {
     previous: "Précédent",
@@ -55,7 +56,8 @@ export const translations: Translations = {
     field_required: "Ce champ est obligatoire",
     invalid_email: "Format d'email invalide",
     cookie_decline: "Refuser",
-    cookie_accept: "Accepter"
+    cookie_accept: "Accepter",
+    select_category: "Sélectionner une catégorie"
   },
   de: {
     previous: "Zurück",
@@ -83,6 +85,7 @@ export const translations: Translations = {
     field_required: "Dieses Feld ist erforderlich",
     invalid_email: "Ungültiges E-Mail-Format",
     cookie_decline: "Ablehnen",
-    cookie_accept: "Akzeptieren"
+    cookie_accept: "Akzeptieren",
+    select_category: "Kategorie auswählen"
   }
 };
