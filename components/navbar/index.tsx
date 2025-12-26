@@ -438,7 +438,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                   alt={logo?.alternativeText || logo?.logo_text || "Logo"}
                                   width={logo?.width || 30}
                                   height={logo?.height || 27}
-                                  className="inline-block"
+                                  className="inline-block logo-responsive"
                                 />
                               ) : (
                                 <span>

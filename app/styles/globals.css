@@ -92,3 +92,8 @@
 .page-default ul li {
   @apply list-disc ml-5 mb-1;
 }
+@media only screen and (max-width: 480px) {
+    .logo-responsive {
+      @apply w-[180px];
+    }
+}
