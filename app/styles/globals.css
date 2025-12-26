@@ -98,6 +98,9 @@
     .img-right >div {
       @apply flex-col-reverse;
     }
+    .mobile-image.top {
+      @apply flex-col-reverse;
+    }
  }
 @media only screen and (max-width: 480px) {
     .logo-responsive {

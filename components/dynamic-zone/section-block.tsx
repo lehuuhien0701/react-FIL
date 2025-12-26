@@ -19,6 +19,7 @@ export const SectionBlock = ({
   content_bottom ="",
   content_bottom_code_popup ="",
   layout = "ImageLeft", // add layout prop with default
+  custom_mobile_image_top = "Default", // thêm prop mới, mặc định "Default"
 }: {
   title?: string;
   subtitle?: string;
@@ -29,6 +30,7 @@ export const SectionBlock = ({
   content_bottom?: string;
   content_bottom_code_popup?: string;
   layout?: "ImageLeft" | "ImageRight";
+  custom_mobile_image_top?: "Default" | "MobileImageTop"; // thêm type cho prop mới
 }) => {
   // helper to safely get strapi image url or fallback
   const safeImageSrc = (media: any, fallback: string) => {
@@ -62,9 +64,14 @@ export const SectionBlock = ({
     layout === "ImageRight" ? " img-right" : ""
   }`;
 
+  // Thêm logic class cho mobile-image
+  const mobileImageClass =
+    "mobile-image" +
+    (custom_mobile_image_top === "MobileImageTop" ? " top" : "");
+
   return (
     <section className={sectionClass}> 
-      <div className="relative px-5 lg:px-20 py-10 lg:py-20 pb-15 lg:pb-40 flex flex-col lg:flex-row items-center max-w-[1440px] m-auto w-full">
+      <div className={`${mobileImageClass} relative px-5 lg:px-20 py-10 lg:py-20 pb-10 lg:pb-40 flex flex-col lg:flex-row items-center max-w-[1440px] m-auto w-full`}>
         {background && (
           <Image 
             width={1000}
