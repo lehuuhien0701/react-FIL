@@ -14,6 +14,7 @@ import fetchContentType from '@/lib/strapi/fetchContentType';
 import { i18n } from '@/i18n.config'
 import { CookieConsent } from '@/components/cookie-consent';
 import fetchContentTypeClient from "@/lib/strapi/fetchContentTypeClient";
+import Script from 'next/script';
 
 // use CSS variables so Tailwind can map font-family to var(--font-*)
 const inter = Inter({
@@ -47,7 +48,39 @@ export async function generateMetadata({
 
     const seo = pageData?.seo;
     const metadata = generateMetadataObject(seo);
-    return metadata;
+    const siteUrl = process.env.WEBSITE_URL || 'https://federation-immobiliere.lu';
+    
+    return {
+        ...metadata,
+        metadataBase: new URL(siteUrl),
+        icons: {
+            icon: [
+                // ⭐ QUAN TRỌNG: Dùng absolute URLs cho tất cả
+                { url: `${siteUrl}/favicon.ico`, sizes: 'any' },
+                { url: `${siteUrl}/favicon-16x16.png`, sizes: '16x16', type: 'image/png' },
+                { url: `${siteUrl}/favicon-32x32.png`, sizes: '32x32', type: 'image/png' },
+                // Google yêu cầu ít nhất 1 favicon >= 48x48px
+                { url: `${siteUrl}/favicon-48x48.png`, sizes: '48x48', type: 'image/png' },
+                { url:  `${siteUrl}/android-chrome-192x192.png`, sizes: '192x192', type: 'image/png' },
+                { url: `${siteUrl}/android-chrome-512x512.png`, sizes: '512x512', type: 'image/png' },
+            ],
+            apple: [
+                { url: `${siteUrl}/apple-touch-icon.png`, sizes: '180x180', type: 'image/png' },
+            ],
+            shortcut:  [`${siteUrl}/favicon.ico`],
+        },
+        robots: {
+            index: true,
+            follow: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                'max-video-preview': -1,
+                'max-image-preview': 'large',
+                'max-snippet': -1,
+            },
+        },
+    };
 }
 
 export default async function LocaleLayout({
@@ -111,6 +144,21 @@ export default async function LocaleLayout({
 
     return (
         <html lang={currentLocale}>
+            <head>
+                {/* Google tag (gtag.js) */}
+                <Script
+                    src="https://www.googletagmanager.com/gtag/js?id=G-S7H6W58NG4"
+                    strategy="afterInteractive"
+                />
+                <Script id="gtag-init" strategy="afterInteractive">
+                    {`
+                      window.dataLayer = window.dataLayer || [];
+                      function gtag(){dataLayer.push(arguments);}
+                      gtag('js', new Date());
+                      gtag('config', 'G-S7H6W58NG4');
+                    `}
+                </Script>
+            </head>
             <ViewTransitions>
                 <CartProvider>
                     <body
