@@ -71,7 +71,7 @@ export const SectionBlock = ({
 
   return (
     <section className={sectionClass}> 
-      <div className={`${mobileImageClass} relative px-5 lg:px-20 py-10 lg:py-20 pb-10 lg:pb-40 flex flex-col lg:flex-row items-center max-w-[1440px] m-auto w-full`}>
+      <div className={`${mobileImageClass} relative px-5 lg:px-20 py-10 lg:py-20 pb-15 lg:pb-40 flex flex-col lg:flex-row items-center max-w-[1440px] m-auto w-full`}>
         {background && (
           <Image 
             width={1000}

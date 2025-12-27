@@ -203,7 +203,7 @@ export const WhyJoin = ({
                   ) : (
                      <div className="lg:flex md:gap-[100px]">
                         <div className='mb-10 lg:mb-0'>
-                          <p className="w-[380px] text-[#D9D9D9] text-[15px] leading-[26px] pb-4">
+                          <p className="w-full max-w-[380px] text-[#D9D9D9] text-[15px] leading-[26px] pb-4">
                             {typeof description_top_section === "string" && description_top_section.trim()
                               ? parse(description_top_section)
                               : null}

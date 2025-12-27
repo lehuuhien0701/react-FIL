@@ -367,7 +367,7 @@ export const Blog = ({
           </div>
 
           {/* Mobile dropdown */}
-          <div className="flex lg:hidden items-center gap-2 justify-center">
+          <div className="flex flex-wrap lg:hidden items-center gap-2 justify-center">
             <span className="text-[15px] text-[#0A2540]">
               {(translations as any)[currentLocale]?.select_category ||
                 (translations as any)[i18n.defaultLocale]?.select_category ||

@@ -463,7 +463,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                                     <rect x="3.86743" y="13.3536" width="32.2651" height="3.22651" rx="1.61326" fill="#CCAB80"/>
                                     <rect x="15.1602" y="4.48069" width="20.9723" height="3.22651" rx="1.61326" fill="#CCAB80"/>
                                 </svg>
-                                <span className='font-inter font-bold text-base leading-6 text-[#CCAB80] ml-[5px] md:ml-[10px]'>
+                                <span className='hidden md:block font-inter font-bold text-base leading-6 text-[#CCAB80] ml-[5px] md:ml-[10px]'>
                                     {(translations as any)[currentLocale]?.menu || (translations as any)[i18n.defaultLocale]?.menu || "Menu"} 
                                 </span>
                             </div>
