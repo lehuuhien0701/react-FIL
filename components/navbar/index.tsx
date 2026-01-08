@@ -322,7 +322,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                 return (
                     <li
                         key={item.id}
-                        className={`relative font-inter font-medium text-sm leading-[18px] text-white group ${isActive ? "border-[#D9BA92]" : "border-transparent"}`}
+                        className={`relative font-inter font-medium text-sm leading-[18px] text-white group ${isActive ? "border-[#D9BA92]" : "border-transparent"}${item.show_in_menu === false ? " opacity-50" : ""}`}
                     >
                         {item.url ? (
                             <Link
