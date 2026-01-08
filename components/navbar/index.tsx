@@ -199,8 +199,9 @@ export function Navbar({ data, logo, footer, locale }: Props) {
             .filter(item => !item.parent) 
             .sort((a, b) => a.order - b.order) 
             .map(item => {
+                // Only show children with show_in_menu !== false
                 const children = menuData
-                    .filter(child => child.parent?.id === item.id)
+                    .filter(child => child.parent?.id === item.id && child.show_in_menu !== false)
                     .sort((a, b) => a.order - b.order);
 
                 const isActive =
@@ -240,8 +241,9 @@ export function Navbar({ data, logo, footer, locale }: Props) {
 
                 // Hàm render cấp 3
                 const renderSubMenu = (parentId: number, level = 2) => {
+                    // Only show subItems with show_in_menu !== false
                     const subItems = menuData
-                        .filter(sub => sub.parent?.id === parentId)
+                        .filter(sub => sub.parent?.id === parentId && sub.show_in_menu !== false)
                         .sort((a, b) => a.order - b.order);
 
                     if (!subItems.length) return null;
@@ -250,7 +252,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                         <ul className={`submenu lg:absolute top-0 left-[100%] lg:w-[190px] bg-white transition-all duration-300 overflow-hidden`}>
                             {subItems.map(sub => {
                                 const isSubActive = sub.url === currentPath;
-                                const hasThirdLevel = menuData.some(third => third.parent?.id === sub.id);
+                                const hasThirdLevel = menuData.some(third => third.parent?.id === sub.id && third.show_in_menu !== false);
 
                                 return (
                                     <li
@@ -363,7 +365,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                             <ul className={`lg:absolute m-auto w-[95%] lg:w-[196px] left-[20px] top-[54px] mt-5 lg:mt-0 submenu bg-white transition-all duration-300 overflow-hidden-bk max-h-screen lg:block`}>
                                 {children.map(child => {
                                     const isChildActive = child.url === currentPath;
-                                    const hasThirdLevel = menuData.some(third => third.parent?.id === child.id);
+                                    const hasThirdLevel = menuData.some(third => third.parent?.id === child.id && third.show_in_menu !== false);
                                     // Kiểm tra cấp 3 active
                                     const isThirdLevelActive = menuData.some(
                                         third => third.parent?.id === child.id && third.url === currentPath
