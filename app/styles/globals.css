@@ -89,7 +89,7 @@
 .page-default ul li {
   @apply list-disc ml-5 mb-1;
 }
-.custom-menu li:last-child {
+.custom-menu >li:last-child {
   @apply opacity-50;
 }
 @media only screen and (min-width: 1024px) {

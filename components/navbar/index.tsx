@@ -193,11 +193,12 @@ export function Navbar({ data, logo, footer, locale }: Props) {
             return [];
         }
 
+        // Loại bỏ useState trong hàm này, dùng state ở ngoài như trên
+
         return menuData
-            .filter(item => !item.parent && item.show_in_menu !== false) // Thêm điều kiện này! 
-            .sort((a, b) => a.order - b.order)
+            .filter(item => !item.parent) 
+            .sort((a, b) => a.order - b.order) 
             .map(item => {
-                // Only show children with show_in_menu !== false
                 const children = menuData
                     .filter(child => child.parent?.id === item.id && child.show_in_menu !== false)
                     .sort((a, b) => a.order - b.order);
@@ -239,9 +240,8 @@ export function Navbar({ data, logo, footer, locale }: Props) {
 
                 // Hàm render cấp 3
                 const renderSubMenu = (parentId: number, level = 2) => {
-                    // Only show subItems with show_in_menu !== false
                     const subItems = menuData
-                        .filter(sub => sub.parent?.id === parentId && sub.show_in_menu !== false)
+                        .filter(sub => sub.parent?.id === parentId)
                         .sort((a, b) => a.order - b.order);
 
                     if (!subItems.length) return null;
@@ -250,7 +250,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                         <ul className={`submenu lg:absolute top-0 left-[100%] lg:w-[190px] bg-white transition-all duration-300 overflow-hidden`}>
                             {subItems.map(sub => {
                                 const isSubActive = sub.url === currentPath;
-                                const hasThirdLevel = menuData.some(third => third.parent?.id === sub.id && third.show_in_menu !== false);
+                                const hasThirdLevel = menuData.some(third => third.parent?.id === sub.id);
 
                                 return (
                                     <li
@@ -322,7 +322,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                 return (
                     <li
                         key={item.id}
-                        className={`relative  font-inter font-medium text-sm leading-[18px] text-white group ${isActive ? "border-[#D9BA92]" : "border-transparent"}`}
+                        className={`relative font-inter font-medium text-sm leading-[18px] text-white group ${isActive ? "border-[#D9BA92]" : "border-transparent"}`}
                     >
                         {item.url ? (
                             <Link
@@ -342,8 +342,11 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                             <div
                                 className={`inline-flex xl:flex items-center gap-3 pl-[10px] lg:pl-[20px] xl:pl-[40px] cursor-pointer${item.is_active == true ? " border border-[#BBA25A] rounded-full pr-10 py-[10px] pl-10 xl:pl-5 xl:pr-5 xl:ml-10 [&>span]:text-[#BBA25A] w-auto" : ""}`}
                                 onClick={() => {
-                                    toggleSubmenu(item.id);
-                                    closeAllThirdLevel(); // Đóng tất cả menu cấp 3 khi mở menu cha khác
+                                    // Chỉ mở submenu nếu menu cha show_in_menu !== false và có children
+                                    if (item.show_in_menu !== false && children.length > 0) {
+                                        toggleSubmenu(item.id);
+                                        closeAllThirdLevel();
+                                    }
                                 }}
                             >
                                 <span>{item.title}</span>
@@ -363,7 +366,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                             <ul className={`lg:absolute m-auto w-[95%] lg:w-[196px] left-[20px] top-[54px] mt-5 lg:mt-0 submenu bg-white transition-all duration-300 overflow-hidden-bk max-h-screen lg:block`}>
                                 {children.map(child => {
                                     const isChildActive = child.url === currentPath;
-                                    const hasThirdLevel = menuData.some(third => third.parent?.id === child.id && third.show_in_menu !== false);
+                                    const hasThirdLevel = menuData.some(third => third.parent?.id === child.id);
                                     // Kiểm tra cấp 3 active
                                     const isThirdLevelActive = menuData.some(
                                         third => third.parent?.id === child.id && third.url === currentPath
