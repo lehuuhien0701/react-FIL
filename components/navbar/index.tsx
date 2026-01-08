@@ -449,7 +449,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                         </h1>
                         <div className="flex items-center">
                             {/* Menu desktop: chỉ hiện khi lg trở lên */}
-                            <ul className='hidden lg:flex items-center pr-2 md:pr-10'>
+                            <ul className='custom-menu hidden lg:flex items-center pr-2 md:pr-10'>
                                 {renderMenuItems(data)}
                             </ul>
                             <div className="block">
