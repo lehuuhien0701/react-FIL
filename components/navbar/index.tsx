@@ -340,7 +340,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                             </Link>
                         ) : (
                             <div
-                                className={`inline-flex xl:flex items-center gap-3 pl-[10px] lg:pl-[20px] xl:pl-[40px] cursor-pointer${item.is_active == true ? " border border-[#BBA25A] rounded-full pr-10 py-[10px] pl-10 xl:pl-5 xl:pr-5 xl:ml-10 [&>span]:text-[#BBA25A] w-auto" : ""}`}
+                                className={`inline-flex xl:flex items-center gap-3 pl-[10px] lg:pl-[20px] xl:pl-[20px] cursor-pointer${item.is_active == true ? " border border-[#BBA25A] rounded-full pr-10 py-[10px] pl-10 xl:pl-5 xl:pr-5 xl:ml-10 [&>span]:text-[#BBA25A] w-auto" : ""}`}
                                 onClick={() => {
                                     // Chỉ mở submenu nếu menu cha show_in_menu !== false và có children
                                     if (item.show_in_menu !== false && children.length > 0) {
@@ -351,12 +351,13 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                             >
                                 <span>{item.title}</span>
                                 
-
-                                <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                className={`transition-transform duration-300 rotate-90 ${openSubmenus[item.id] ? "rotate-0" : ""}`}
-                                >
-                                <path d="M0.5 9.73997L4.30333 5.93666C4.7525 5.4875 4.7525 4.7525 4.30333 4.30333L0.5 0.5" stroke="#BBA25A" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
-                                </svg>
+                                {item.show_in_menu !== false && (    
+                                    <svg width="6" height="11" viewBox="0 0 6 11" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                    className={`transition-transform duration-300 rotate-90 ${openSubmenus[item.id] ? "rotate-0" : ""}`}
+                                    >
+                                    <path d="M0.5 9.73997L4.30333 5.93666C4.7525 5.4875 4.7525 4.7525 4.30333 4.30333L0.5 0.5" stroke="#BBA25A" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+                                    </svg>
+                                )}
 
 
 
