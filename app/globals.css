@@ -179,6 +179,3 @@ body {
     fill: #fff;
 }
 
-.custom-menu li:last-child {
-  @apply opacity-50;
-}
