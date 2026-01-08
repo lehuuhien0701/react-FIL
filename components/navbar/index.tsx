@@ -193,11 +193,9 @@ export function Navbar({ data, logo, footer, locale }: Props) {
             return [];
         }
 
-        // Loại bỏ useState trong hàm này, dùng state ở ngoài như trên
-
         return menuData
-            .filter(item => !item.parent) 
-            .sort((a, b) => a.order - b.order) 
+            .filter(item => !item.parent && item.show_in_menu !== false) // Thêm điều kiện này! 
+            .sort((a, b) => a.order - b.order)
             .map(item => {
                 // Only show children with show_in_menu !== false
                 const children = menuData
