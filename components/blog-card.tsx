@@ -66,7 +66,6 @@ export const BlogCardSmall = ({ article, locale }: { article: Article, locale: s
           </div>
         ) : (
           <div className=" h-64 md:h-96 flex items-center justify-center">
-            {/* <Logo /> */}
           </div>
         )}
       </div>
