@@ -88,7 +88,7 @@ console.log('Fetched globalData:', globalData);
           </h2>
         </div>
 
-        <div className='single-content-style font-inter text-[15px] leading-[26px] text-[#6B7280] max-w-[880px] lg:max-w-[960px] mx-auto w-full px-5 md:px-10 lg:px-20 relative z-10 pb-[60px]'>
+        <div className='single-content-style font-inter text-[15px] leading-[26px] text-[#6B7280] max-w-[880px] lg:max-w-[960px] mx-auto w-full px-5 md:px-10 lg:px-20 relative z-10 pb-[60px] [&_a]:text-[#0A2540] [&_a]:hover:text-primary [&_a]:transition-colors'>
        
           {children}
 
