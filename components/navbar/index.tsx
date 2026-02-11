@@ -327,7 +327,7 @@ export function Navbar({ data, logo, footer, locale }: Props) {
                         {item.url ? (
                             <Link
                                 href={item.url}
-                                className={`pl-[10px] lg:pl-[20px] xl:pl-[40px] ${item.url === currentPath ? "text-[#CCAB80]" : ""} ${item.is_active == true ? "border border-[#BBA25A] rounded-full py-[10px] xl:pl-5 xl:pr-5 xl:ml-10 [&>span]:text-[#BBA25A] w-auto" : ""}`} 
+                                className={`pl-[10px] lg:pl-[20px] xl:pl-[20px] ${item.url === currentPath ? "text-[#CCAB80]" : ""} ${item.is_active == true ? "border border-[#BBA25A] rounded-full py-[10px] xl:pl-5 xl:pr-5 xl:ml-10 [&>span]:text-[#BBA25A] w-auto" : ""}`} 
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     closeAllSubmenus();
