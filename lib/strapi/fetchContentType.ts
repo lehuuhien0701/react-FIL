@@ -51,7 +51,7 @@ export default async function fetchContentType(
       cache: 'no-store',
     });
 
-    //console.log(`Fetching Strapi content type: ${url.href}?${qs.stringify(queryParams)}`);
+    //if( contentType == 'member-profiles') console.log(`Fetching Strapi content type: ${url.href}?${qs.stringify(queryParams)}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch data from Strapi (url=${url.toString()}, status=${response.status})`);
